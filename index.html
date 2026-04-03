@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chez Hub — Portal del Agente</title>
+<title>Chez Hub — Agent Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -31,8 +31,8 @@ a{text-decoration:none;color:inherit}
 
 /* SIDEBAR */
 .sidebar{width:230px;min-height:100vh;background:var(--black);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
-.slogo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07)}
-.slogo-chez{font-family:'Lato',sans-serif;font-size:24px;font-weight:900;color:var(--orange);letter-spacing:1px;text-transform:uppercase;line-height:1}
+.slogo{padding:20px 20px 18px;border-bottom:1px solid rgba(255,255,255,0.07)}.slogo-lockup{display:flex;align-items:center;gap:11px}
+.slogo-chez{font-family:'Lato',sans-serif;font-size:22px;font-weight:900;color:var(--orange);letter-spacing:2px;text-transform:uppercase;line-height:1}
 .slogo-sub{font-size:10px;color:rgba(255,255,255,0.28);letter-spacing:0.2em;text-transform:uppercase;margin-top:3px}
 .snav{padding:12px 0;flex:1}
 .slabel{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.2);padding:12px 20px 4px}
@@ -120,12 +120,12 @@ a{text-decoration:none;color:inherit}
 .mktg-powered{font-size:11px;color:var(--gray-500)}
 .mktg-powered span{color:var(--orange);font-weight:500}
 .mktg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.mbtn{background:var(--gray-50);border:1px solid var(--border);border-radius:var(--radius);padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.12s}
-.mbtn:hover{border-color:var(--orange);background:var(--orange-pale)}
-.mbtn-icon{width:36px;height:36px;border-radius:9px;background:var(--orange-pale);display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
-.mbtn-label{font-size:12px;font-weight:500;color:var(--gray-900)}
-.mbtn-sub{font-size:10px;color:var(--gray-500);margin-top:2px}
-.mbtn-new{border-style:dashed;border-color:rgba(232,101,26,0.35);background:transparent}
+.mbtn{background:var(--orange);border:1px solid var(--orange);border-radius:var(--radius);padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.12s}
+.mbtn:hover{border-color:var(--orange-dark);background:var(--orange-dark)}
+.mbtn-icon{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.mbtn-label{font-size:12px;font-weight:500;color:white}
+.mbtn-sub{font-size:10px;color:rgba(255,255,255,0.7);margin-top:2px}
+.mbtn-new{border-style:dashed;border-color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.1)}
 .mbtn-new .mbtn-icon{background:transparent}
 
 /* TEAM */
@@ -229,34 +229,33 @@ a{text-decoration:none;color:inherit}
 
 <div class="sidebar">
   <div class="slogo">
-    <div class="slogo-chez">Chez</div>
-    <div class="slogo-sub">Hub · Miami RE</div>
+    <span style="font-family:'Lato',sans-serif;font-size:22px;font-weight:900;color:#E8651A;letter-spacing:3px;text-transform:uppercase;line-height:1">CHEZ HUB</span>
   </div>
   <nav class="snav">
-    <div class="slabel">Mi portal</div>
-    <a class="sitem active" href="#inicio"><span class="sdot"></span>Inicio</a>
-    <a class="sitem" href="#onboarding"><span class="sdot"></span>Mi onboarding <span class="sbadge sbadge-pct">40%</span></a>
-    <a class="sitem" href="#perfil"><span class="sdot"></span>Mi perfil</a>
-    <div class="slabel">Conocimiento</div>
-    <a class="sitem" href="#guias"><span class="sdot"></span>Guías & Procesos</a>
-    <a class="sitem" href="#scripts"><span class="sdot"></span>Scripts de ventas</a>
-    <a class="sitem" href="#cursos"><span class="sdot"></span>Cursos</a>
+    <div class="slabel">My Portal</div>
+    <a class="sitem active" href="#inicio"><span class="sdot"></span>Home</a>
+    <a class="sitem" href="#onboarding"><span class="sdot"></span>My Onboarding <span class="sbadge sbadge-pct">40%</span></a>
+    <a class="sitem" href="#perfil"><span class="sdot"></span>My Profile</a>
+    <div class="slabel">Knowledge</div>
+    <a class="sitem" href="#guias"><span class="sdot"></span>Guides & Processes</a>
+    <a class="sitem" href="#scripts"><span class="sdot"></span>Sales Scripts</a>
+    <a class="sitem" href="#cursos"><span class="sdot"></span>Courses</a>
     <div class="slabel">Tech & Tools</div>
     <a class="sitem" href="https://app.followupboss.com" target="_blank"><span class="sdot"></span>Follow Up Boss</a>
     <a class="sitem" href="https://www.zillow.com" target="_blank"><span class="sdot"></span>Zillow</a>
     <a class="sitem" href="https://www.miamiresidential.com" target="_blank"><span class="sdot"></span>MLS Miami</a>
     <a class="sitem" href="https://chezre.com" target="_blank"><span class="sdot"></span>Luxury Presence</a>
-    <div class="slabel">Soporte</div>
+    <div class="slabel">Support</div>
     <a class="sitem" href="#marketing"><span class="sdot"></span>Marketing · Agentz <span class="sbadge sbadge-new">new</span></a>
-    <a class="sitem" href="#legal"><span class="sdot"></span>Soporte legal</a>
-    <a class="sitem" href="#admin"><span class="sdot"></span>Admin & contratos</a>
-    <div class="slabel">Comunidad</div>
-    <a class="sitem" href="#equipo"><span class="sdot"></span>El equipo</a>
-    <a class="sitem" href="#celebraciones"><span class="sdot"></span>Celebraciones</a>
-    <a class="sitem" href="#anuncios"><span class="sdot"></span>Anuncios</a>
+    <a class="sitem" href="#legal"><span class="sdot"></span>Legal Support</a>
+    <a class="sitem" href="#admin"><span class="sdot"></span>Admin & Contracts</a>
+    <div class="slabel">Community</div>
+    <a class="sitem" href="#equipo"><span class="sdot"></span>The Team</a>
+    <a class="sitem" href="#celebraciones"><span class="sdot"></span>Celebrations</a>
+    <a class="sitem" href="#anuncios"><span class="sdot"></span>Announcements</a>
   </nav>
   <div class="suser">
-    <img class="suser-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/ut91qyz8skq0tp6yqkbb" alt="Jose Medina">
+    <img class="suser-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JOSE%20MEDINA.jpg" alt="Jose Medina">
     <div>
       <div class="suser-name">Jose Medina</div>
       <div class="suser-role">Founder</div>
@@ -267,7 +266,7 @@ a{text-decoration:none;color:inherit}
 <div class="main">
   <div class="topbar">
     <div style="display:flex;align-items:baseline;gap:8px">
-      <span class="topbar-title">Buenos días, Jose</span>
+      <span class="topbar-title">Good morning, Jose</span>
       <span class="topbar-sub">· Miami, FL</span>
     </div>
     <div class="topbar-right">
@@ -275,7 +274,7 @@ a{text-decoration:none;color:inherit}
         <span style="color:var(--gray-500);font-size:15px">⌕</span>
         <input type="text" placeholder="Buscar agente, guía, tool..." oninput="filterAgents(this.value)">
       </div>
-      <div class="notif-pill"><div class="notif-dot"></div>3 novedades hoy</div>
+      <div class="notif-pill"><div class="notif-dot"></div>3 updates today</div>
     </div>
   </div>
 
@@ -284,15 +283,15 @@ a{text-decoration:none;color:inherit}
     <!-- HERO CON CASA -->
     <div class="hero-banner">
       <div class="hero-content">
-        <div class="hero-tag">Bienvenido, Jose</div>
+        <div class="hero-tag">Welcome, Jose</div>
         <h1 class="hero-title">Chez Hub</h1>
-        <p class="hero-sub">Tu centro de operaciones · Miami Real Estate</p>
+        <p class="hero-sub">Your operations center · Miami Real Estate</p>
         <div class="hero-stats">
-          <div class="hstat"><div class="hstat-n">38</div><div class="hstat-l">Agentes</div></div>
+          <div class="hstat"><div class="hstat-n">40</div><div class="hstat-l">Agents</div></div>
           <div class="hstat-div"></div>
-          <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">Grupos</div></div>
+          <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">Groups</div></div>
           <div class="hstat-div"></div>
-          <div class="hstat"><div class="hstat-n">$4.2M</div><div class="hstat-l">Ventas Abril</div></div>
+          <div class="hstat"><div class="hstat-n">165</div><div class="hstat-l">Sales/Year</div></div>
         </div>
       </div>
       <div class="hero-visual">
@@ -308,119 +307,180 @@ a{text-decoration:none;color:inherit}
     <!-- 3 WIDGETS PRINCIPALES -->
     <div class="widgets-row">
 
-      <!-- TRAININGS DEL MES -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+      <!-- TRAININGS -->
       <div class="widget-card">
         <div class="widget-header">
           <div class="widget-icon" style="background:#FDF2EB">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
           </div>
-          <span class="widget-title">Trainings de Abril</span>
-          <span class="widget-count">4</span>
+          <span class="widget-title">April Trainings</span>
+          <span class="widget-count">3</span>
         </div>
         <div class="widget-list">
           <div class="witem">
-            <div class="witem-date"><div class="wdate-d">08</div><div class="wdate-m">ABR</div></div>
-            <div class="witem-info"><div class="witem-name">Objeción de precios</div><div class="witem-sub">Jose Medina · 10:00am</div></div>
-            <span class="wbadge wbadge-soon">Pronto</span>
+            <div class="witem-date"><div class="wdate-d">08</div><div class="wdate-m">APR</div></div>
+            <div class="witem-info"><div class="witem-name">Price Objections</div><div class="witem-sub">Jose Medina · 10:00am</div></div>
+            <span class="wbadge wbadge-soon">Soon</span>
           </div>
           <div class="witem">
-            <div class="witem-date"><div class="wdate-d">11</div><div class="wdate-m">ABR</div></div>
-            <div class="witem-info"><div class="witem-name">Toledo Group · Cierre avanzado</div><div class="witem-sub">Ramses Toledo · 9:00am</div></div>
-            <span class="wbadge wbadge-group">Grupo</span>
+            <div class="witem-date"><div class="wdate-d">11</div><div class="wdate-m">APR</div></div>
+            <div class="witem-info"><div class="witem-name">Toledo Group · Advanced Closing</div><div class="witem-sub">Ramses Toledo · 9:00am</div></div>
+            <span class="wbadge wbadge-group">Group</span>
           </div>
           <div class="witem">
-            <div class="witem-date"><div class="wdate-d">18</div><div class="wdate-m">ABR</div></div>
-            <div class="witem-info"><div class="witem-name">FUB · Masterclass leads</div><div class="witem-sub">Todo el equipo · 11:00am</div></div>
-            <span class="wbadge wbadge-all">Todos</span>
+            <div class="witem-date"><div class="wdate-d">18</div><div class="wdate-m">APR</div></div>
+            <div class="witem-info"><div class="witem-name">FUB · Leads Masterclass</div><div class="witem-sub">Full Team · 11:00am</div></div>
+            <span class="wbadge wbadge-all">All</span>
           </div>
           <div class="witem">
-            <div class="witem-date"><div class="wdate-d">25</div><div class="wdate-m">ABR</div></div>
-            <div class="witem-info"><div class="witem-name">Open House · Best practices</div><div class="witem-sub">Dexter Brandao · 2:00pm</div></div>
-            <span class="wbadge wbadge-all">Todos</span>
+            <div class="witem-date"><div class="wdate-d">25</div><div class="wdate-m">APR</div></div>
+            <div class="witem-info"><div class="witem-name">Open House · Best Practices</div><div class="witem-sub">Dexter Brandao · 2:00pm</div></div>
+            <span class="wbadge wbadge-all">All</span>
           </div>
         </div>
       </div>
 
-      <!-- CUMPLEAÑOS -->
+      <!-- MARKETING SUPPORT -->
+      <div class="mktg" style="padding:14px 16px">
+        <div class="mktg-top" style="margin-bottom:10px">
+          <span class="ctitle">Marketing Support</span>
+          <span class="mktg-powered">by <span>Agentz</span></span>
+        </div>
+        <div class="mktg-grid">
+          <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div class="mbtn-label">Social Post</div><div class="mbtn-sub">IG · FB</div></div>
+          <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="mbtn-label">Flyer</div><div class="mbtn-sub">PDF</div></div>
+          <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div><div class="mbtn-label">Email</div><div class="mbtn-sub">Leads</div></div>
+          <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><div class="mbtn-label">Video</div><div class="mbtn-sub">Reel</div></div>
+          <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div><div class="mbtn-label">Open House</div><div class="mbtn-sub">Signage</div></div>
+          <div class="mbtn mbtn-new"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="mbtn-label">Custom</div><div class="mbtn-sub">Request</div></div>
+        </div>
+      </div>
+      </div><!-- /col1 -->
+
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+      <!-- APRIL BIRTHDAYS -->
       <div class="widget-card">
         <div class="widget-header">
           <div class="widget-icon" style="background:#FDF2EB">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
-          <span class="widget-title">Cumpleaños de Abril</span>
+          <span class="widget-title">April Birthdays</span>
           <span class="widget-count">3</span>
         </div>
         <div class="widget-list">
           <div class="bday-item">
-            <img class="bday-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/a6vclk3nedmslqz8pkim" alt="Melissa">
+            <img class="bday-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/MARIO%20CABRERA%20JR.png" alt="Mario Cabrera Jr">
             <div class="bday-info">
-              <div class="bday-name">Melissa Sanchez</div>
-              <div class="bday-date">5 de Abril 🎂</div>
+              <div class="bday-name">Mario Cabrera Jr</div>
+              <div class="bday-date">April 6 · Cabrera Group</div>
             </div>
-            <div class="bday-days bday-today">¡Hoy!</div>
+            <div class="bday-days">4 days</div>
           </div>
           <div class="bday-item">
-            <img class="bday-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/hiy9olud3kbganshichc" alt="Johana">
+            <img class="bday-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JOSE%20MEDINA.jpg" alt="Jose Medina">
             <div class="bday-info">
-              <div class="bday-name">Johana Cabrera</div>
-              <div class="bday-date">14 de Abril</div>
+              <div class="bday-name">Jose Medina</div>
+              <div class="bday-date">April 15 · Founder</div>
             </div>
-            <div class="bday-days">9 días</div>
+            <div class="bday-days">13 days</div>
           </div>
           <div class="bday-item">
-            <img class="bday-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/wlgv7pye78xaev1tnclr" alt="Alexander">
+            <img class="bday-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/AMALYN%20CABRERA_SQUARE.png" alt="Amalyn Cabrera">
             <div class="bday-info">
-              <div class="bday-name">Alexander Novo</div>
-              <div class="bday-date">28 de Abril</div>
+              <div class="bday-name">Amalyn Cabrera</div>
+              <div class="bday-date">April 17 · Cabrera Group</div>
             </div>
-            <div class="bday-days">23 días</div>
+            <div class="bday-days">15 days</div>
           </div>
         </div>
       </div>
 
-      <!-- VENTAS IMPORTANTES -->
+
+      <!-- APRIL ANNIVERSARIES -->
+      <div class="widget-card">
+        <div class="widget-header">
+          <div class="widget-icon" style="background:#FDF2EB">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+          </div>
+          <span class="widget-title">April Anniversaries</span>
+          <span class="widget-count">5</span>
+        </div>
+        <div class="widget-list">
+          <div class="bday-item">
+            <img class="bday-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/ALEJANDRO%20CUBAS_SQ.png" alt="Alejandro Cubas">
+            <div class="bday-info"><div class="bday-name">Alejandro Cubas</div><div class="bday-date">April 1 · Cabrera · 1 yr</div></div>
+            <div class="bday-days bday-today">Yesterday!</div>
+          </div>
+          <div class="bday-item">
+            <img class="bday-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/ERICK%20DAVILA_SQ.png" alt="Erick Davila">
+            <div class="bday-info"><div class="bday-name">Erick Davila</div><div class="bday-date">April 4 · Toledo · 1 yr</div></div>
+            <div class="bday-days">2 days</div>
+          </div>
+          <div class="bday-item">
+            <img class="bday-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/KARY%20VALDES_SQ.png" alt="Kary Valdes">
+            <div class="bday-info"><div class="bday-name">Kary Valdes</div><div class="bday-date">April 5 · Chez · 1 yr</div></div>
+            <div class="bday-days">3 days</div>
+          </div>
+          <div class="bday-item">
+            <img class="bday-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/KEVIN%20ACOSTA_SQ.png" alt="Kevin Acosta">
+            <div class="bday-info"><div class="bday-name">Kevin Acosta</div><div class="bday-date">April 8 · Chez · 1 yr</div></div>
+            <div class="bday-days">6 days</div>
+          </div>
+          <div class="bday-item">
+            <img class="bday-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/YENI%20MARTINEZ_SQ.png" alt="Yeni Martinez">
+            <div class="bday-info"><div class="bday-name">Yeni Martinez</div><div class="bday-date">April 15 · Chez · 1 yr</div></div>
+            <div class="bday-days">13 days</div>
+          </div>
+        </div>
+      </div>
+      </div><!-- /col2 -->
+
+      <!-- ACTIVE LISTINGS -->
       <div class="widget-card">
         <div class="widget-header">
           <div class="widget-icon" style="background:#FDF2EB">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </div>
-          <span class="widget-title">Ventas recientes</span>
-          <span class="widget-count">$6.8M</span>
+          <span class="widget-title">Active Listings</span>
+          <span class="widget-count">25</span>
         </div>
         <div class="widget-list">
           <div class="sale-item">
-            <div class="sale-icon">🏠</div>
-            <div class="sale-info"><div class="sale-addr">Coral Gables · 4/2</div><div class="sale-agent">Melissa Sanchez</div></div>
-            <div class="sale-price">$1.2M</div>
-          </div>
-          <div class="sale-item">
-            <div class="sale-icon">🏡</div>
-            <div class="sale-info"><div class="sale-addr">Brickell · Penthouse</div><div class="sale-agent">Alex Mirambell</div></div>
+            <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JOHANA%20CABRERA.jpg" style="width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0">
+            <div class="sale-info"><div class="sale-addr">7305 SW 123rd Ter, Pinecrest</div><div class="sale-agent">Johana Cabrera · 6bd/4ba</div></div>
             <div class="sale-price">$2.1M</div>
           </div>
           <div class="sale-item">
-            <div class="sale-icon">🏘</div>
-            <div class="sale-info"><div class="sale-addr">Doral · 3/2</div><div class="sale-agent">Ramses Toledo</div></div>
-            <div class="sale-price">$685K</div>
+            <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/ALEX%20MIRAMBELL.jpg" style="width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0">
+            <div class="sale-info"><div class="sale-addr">5431 SW 109th Ave, Davie</div><div class="sale-agent">Alex Mirambell · 5bd/5ba</div></div>
+            <div class="sale-price">$2.2M</div>
           </div>
           <div class="sale-item">
-            <div class="sale-icon">🏠</div>
-            <div class="sale-info"><div class="sale-addr">Hialeah · 3/2</div><div class="sale-agent">Mario Cabrera Jr</div></div>
-            <div class="sale-price">$520K</div>
+            <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JOSE%20MEDINA.jpg" style="width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0">
+            <div class="sale-info"><div class="sale-addr">11907 SW 247th Ter, Homestead</div><div class="sale-agent">Jose Medina · 3bd/3ba</div></div>
+            <div class="sale-price">$465K</div>
           </div>
           <div class="sale-item">
-            <div class="sale-icon">🏡</div>
-            <div class="sale-info"><div class="sale-addr">Miami Beach · Condo</div><div class="sale-agent">Dexter Brandao</div></div>
-            <div class="sale-price">$2.3M</div>
+            <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/DEXTER%20BRANDAO.jpg" style="width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0">
+            <div class="sale-info"><div class="sale-addr">3916 SW 48th Ave, Hollywood</div><div class="sale-agent">Dexter Brandao · 2bd/2ba</div></div>
+            <div class="sale-price">$270K</div>
+          </div>
+          <div class="sale-item">
+            <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/YENSI%20FUERTE.jpg" style="width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0">
+            <div class="sale-info"><div class="sale-addr">2390 SE 17th Ter, Homestead</div><div class="sale-agent">Yensi Toledo · 3bd/3ba</div></div>
+            <div class="sale-price">$360K</div>
           </div>
         </div>
+        <a href="https://www.zillow.com/profile/chezrealty" target="_blank" style="display:block;text-align:center;font-size:11px;color:var(--orange);font-weight:500;padding-top:8px;text-decoration:none;border-top:1px solid var(--gray-100);margin-top:8px">View all 570 on Zillow →</a>
       </div>
 
     </div>
 
     <div class="grid2">
       <div class="card">
-        <div class="card-title">Tech & Tools · acceso rápido</div>
+        <div class="card-title">Tech & Tools · quick access</div>
         <div class="tools">
           <a class="tool" href="https://app.followupboss.com" target="_blank">
             <div class="ticon" style="background:#2A2A2A">FUB</div>
@@ -428,103 +488,327 @@ a{text-decoration:none;color:inherit}
             <span class="tarr">↗</span>
           </a>
           <a class="tool" href="https://www.zillow.com" target="_blank">
-            <div class="ticon" style="background:#2D7A2D">Z</div>
+            <div class="ticon" style="background:#006AFF">Z</div>
             <div><div class="tn">Zillow</div><div class="td">Listings · leads</div></div>
             <span class="tarr">↗</span>
           </a>
           <a class="tool" href="https://www.miamiresidential.com" target="_blank">
             <div class="ticon" style="background:#5A3E28">MLS</div>
-            <div><div class="tn">MLS Miami</div><div class="td">Búsqueda de propiedades</div></div>
+            <div><div class="tn">MLS Miami</div><div class="td">Property search</div></div>
             <span class="tarr">↗</span>
           </a>
           <a class="tool" href="https://chezre.com" target="_blank">
             <div class="ticon" style="background:#3A3A3A">LP</div>
-            <div><div class="tn">Luxury Presence</div><div class="td">Tu sitio web Chez</div></div>
+            <div><div class="tn">Luxury Presence</div><div class="td">Your Chez website</div></div>
             <span class="tarr">↗</span>
           </a>
         </div>
       </div>
       <div class="card">
-        <div class="card-title">Novedades del equipo</div>
+        <div class="card-title">Team Updates</div>
         <div class="feed">
           <div class="fi">
-            <img class="fi-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/a6vclk3nedmslqz8pkim" alt="Melissa">
-            <div><div class="fi-text"><strong>Melissa Sanchez</strong> cerró en Coral Gables — $1.2M</div><div class="fi-time">Hace 2h</div></div>
+            <img class="fi-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/MELISSA%20SANCHEZ.jpg" alt="Melissa">
+            <div><div class="fi-text"><strong>Melissa Sanchez</strong> closed in Coral Gables — $1.2M</div><div class="fi-time">Hace 2h</div></div>
           </div>
           <div class="fi">
-            <img class="fi-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/ut91qyz8skq0tp6yqkbb" alt="Jose">
-            <div><div class="fi-text"><strong>Jose Medina</strong> publicó nuevas guías de objeción de precios</div><div class="fi-time">Hace 4h</div></div>
+            <img class="fi-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JOSE%20MEDINA.jpg" alt="Jose">
+            <div><div class="fi-text"><strong>Jose Medina</strong> published new price objection guides</div><div class="fi-time">Hace 4h</div></div>
           </div>
           <div class="fi">
-            <img class="fi-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/svc3d67qzobvu9lbes3f" alt="Ramses">
-            <div><div class="fi-text"><strong>Ramses Toledo</strong> — Entrenamiento Toledo Group: Viernes 10am</div><div class="fi-time">Ayer</div></div>
+            <img class="fi-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/RAMSES%20TOLEDO.jpg" alt="Ramses">
+            <div><div class="fi-text"><strong>Ramses Toledo</strong> — Toledo Group Training: Friday 10am</div><div class="fi-time">Ayer</div></div>
           </div>
           <div class="fi">
-            <img class="fi-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/vat6hncwliakyolxxij7" alt="Dexter">
-            <div><div class="fi-text"><strong>Dexter Brandao</strong> — Webinar de cierre: Martes 7pm</div><div class="fi-time">Ayer</div></div>
+            <img class="fi-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/DEXTER%20BRANDAO.jpg" alt="Dexter">
+            <div><div class="fi-text"><strong>Dexter Brandao</strong> — Closing webinar: Tuesday 7pm</div><div class="fi-time">Ayer</div></div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="mktg" id="marketing">
-      <div class="mktg-header">
-        <span class="card-title">Marketing Support · Requests</span>
-        <span class="mktg-powered">Powered by <span>Agentz</span></span>
-      </div>
-      <div class="mktg-grid">
-        <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div class="mbtn-label">Post para redes</div><div class="mbtn-sub">Instagram · Facebook</div></div>
-        <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="mbtn-label">Flyer propiedad</div><div class="mbtn-sub">PDF · Digital</div></div>
-        <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div><div class="mbtn-label">Email campaign</div><div class="mbtn-sub">Leads · Clientes</div></div>
-        <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><div class="mbtn-label">Video / Reel</div><div class="mbtn-sub">Listing · Personal</div></div>
-        <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div><div class="mbtn-label">Open House</div><div class="mbtn-sub">Signage · Digital</div></div>
-        <div class="mbtn mbtn-new"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="mbtn-label">Otro request</div><div class="mbtn-sub">Personalizado</div></div>
+    <!-- EVENTS SECTION -->
+    <div style="margin-bottom:22px">
+      <div style="font-family:'Lato',sans-serif;font-size:13px;font-weight:900;color:var(--gray-500);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px">Upcoming Events</div>
+
+      <!-- Side x Side Card -->
+      <div style="background:linear-gradient(135deg,#2D1B4E 0%,#4A2D7A 40%,#6B4FA0 70%,#8B6BC4 100%);border-radius:var(--radius-lg);overflow:hidden;position:relative">
+
+        <!-- Image banner top -->
+        <div style="width:100%;height:180px;overflow:hidden;position:relative">
+          <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/SIDEXSIDE.png" style="width:100%;height:100%;object-fit:cover;object-position:center top" onerror="this.style.display='none'">
+          <!-- Fallback SVG ocean scene -->
+          <svg style="position:absolute;bottom:0;left:0;right:0" viewBox="0 0 800 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,30 Q200,0 400,30 Q600,60 800,30 L800,60 L0,60Z" fill="#2D1B4E" opacity="0.8"/>
+          </svg>
+        </div>
+
+        <!-- Content -->
+        <div style="padding:20px 24px 24px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start">
+          <div>
+            <!-- Logo text -->
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+              <span style="font-size:16px;color:rgba(255,255,255,0.6);font-weight:300;letter-spacing:2px">side</span>
+              <svg width="16" height="16" viewBox="0 0 20 20"><polygon points="10,2 12,8 18,8 13,12 15,18 10,14 5,18 7,12 2,8 8,8" fill="#C084E8"/></svg>
+              <span style="font-size:16px;color:rgba(255,255,255,0.6);font-weight:300;letter-spacing:2px">side</span>
+              <span style="font-size:10px;font-weight:700;color:#C084E8;letter-spacing:0.15em;text-transform:uppercase;margin-left:4px">2026</span>
+            </div>
+
+            <div style="font-family:'Lato',sans-serif;font-size:26px;font-weight:900;color:white;line-height:1;margin-bottom:4px">Making Waves</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:14px;font-style:italic">Lead Where Others Follow</div>
+
+            <!-- Details -->
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C084E8" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span style="font-size:12px;color:rgba(255,255,255,0.85);font-weight:600">April 14–16, 2026</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C084E8" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span style="font-size:12px;color:rgba(255,255,255,0.7)">Hyatt Regency · Huntington Beach, CA</span>
+              </div>
+            </div>
+
+            <!-- Keynote -->
+            <div style="background:rgba(192,132,232,0.15);border:1px solid rgba(192,132,232,0.3);border-radius:8px;padding:9px 12px;margin-bottom:14px">
+              <div style="font-size:10px;color:#C084E8;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:2px">Keynote Speaker</div>
+              <div style="font-size:12px;color:white;font-weight:500">Arthur C. Brooks</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.5)">Harvard Professor · Bestselling Author</div>
+            </div>
+
+            <!-- Agenda pills -->
+            <div style="display:flex;gap:6px">
+              <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:7px 10px;text-align:center;flex:1">
+                <div style="font-size:9px;color:#C084E8;font-weight:700;margin-bottom:2px">TUE 14</div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.8)">Arrivals</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:7px 10px;text-align:center;flex:1">
+                <div style="font-size:9px;color:#C084E8;font-weight:700;margin-bottom:2px">WED 15</div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.8)">Sessions + Awards</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:7px 10px;text-align:center;flex:1">
+                <div style="font-size:9px;color:#C084E8;font-weight:700;margin-bottom:2px">THU 16</div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.8)">Keynote + Farewell</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: countdown + CTA -->
+          <div style="text-align:center;min-width:120px">
+            <div style="background:rgba(192,132,232,0.2);border:1px solid rgba(192,132,232,0.3);border-radius:12px;padding:16px 12px;margin-bottom:12px">
+              <div style="font-size:9px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Days left</div>
+              <div style="font-family:'Lato',sans-serif;font-size:42px;font-weight:900;color:white;line-height:1" id="sxs-days">12</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px">until the event</div>
+            </div>
+            <a href="https://sidexside.side.com/register" target="_blank" style="display:block;background:#C084E8;color:white;text-decoration:none;border-radius:8px;padding:10px 14px;font-size:12px;font-weight:700;margin-bottom:6px;text-align:center">Register Now</a>
+            <a href="https://sidexside.side.com" target="_blank" style="display:block;color:rgba(255,255,255,0.4);text-decoration:none;font-size:11px;text-align:center">sidexside.side.com →</a>
+          </div>
+        </div>
+
+        <!-- Bottom wave decoration -->
+        <div style="height:4px;background:linear-gradient(90deg,#E87DB8,#C084E8,#8B6BC4,#5BA8C4)"></div>
       </div>
     </div>
 
+    <script>
+    (function(){
+      var event = new Date('2026-04-14T00:00:00');
+      var now = new Date();
+      var diff = Math.ceil((event - now) / (1000*60*60*24));
+      var el = document.getElementById('sxs-days');
+      if(el) el.textContent = diff > 0 ? diff : '🎉';
+    })();
+    </script>
+    <!-- Q1 NUMBERS -->
+    <div style="background:#1A1208;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:22px">
+
+      <!-- Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--orange);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px">Q1 2026 · January — March</div>
+          <div style="font-family:'Lato',sans-serif;font-size:26px;font-weight:900;color:white;letter-spacing:-0.5px">Q1 Numbers</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'Lato',sans-serif;font-size:32px;font-weight:900;color:var(--orange);line-height:1">$48.8M</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px">Closed & Pending Volume</div>
+          <div style="font-size:13px;font-weight:600;color:white;margin-top:4px">75 Units Sold & Pending</div>
+        </div>
+      </div>
+
+      <!-- 3 columns -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
+
+        <!-- Top Producers -->
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--orange);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)">Top Producers</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/YENSI%20FUERTE.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;border:1.5px solid var(--orange)">
+              <div style="flex:1"><div style="font-size:12px;font-weight:500;color:white">Yensi Fuerte</div><div style="font-size:10px;color:rgba(255,255,255,0.35)">Toledo Group</div></div>
+              <div style="font-size:12px;font-weight:700;color:var(--orange)">$10.0M</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/MARIO%20CABRERA%20JR.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;border:1.5px solid rgba(255,255,255,0.15)">
+              <div style="flex:1"><div style="font-size:12px;font-weight:500;color:white">Mario Cabrera Jr</div><div style="font-size:10px;color:rgba(255,255,255,0.35)">Cabrera Group</div></div>
+              <div style="font-size:12px;font-weight:700;color:white">$4.4M</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/MELISSA%20SANCHEZ.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;border:1.5px solid rgba(255,255,255,0.15)">
+              <div style="flex:1"><div style="font-size:12px;font-weight:500;color:white">Melissa Sanchez</div><div style="font-size:10px;color:rgba(255,255,255,0.35)">Senior Agent</div></div>
+              <div style="font-size:12px;font-weight:700;color:white">$4.2M</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/ALEX%20MIRAMBELL.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;border:1.5px solid rgba(255,255,255,0.15)">
+              <div style="flex:1"><div style="font-size:12px;font-weight:500;color:white">Alex Mirambell</div><div style="font-size:10px;color:rgba(255,255,255,0.35)">Senior Agent</div></div>
+              <div style="font-size:12px;font-weight:700;color:white">$3.9M</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JESSICA%20ALVAREZ-DUCOS_SQ.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;border:1.5px solid rgba(255,255,255,0.15)">
+              <div style="flex:1"><div style="font-size:12px;font-weight:500;color:white">Jessica A. Ducos</div><div style="font-size:10px;color:rgba(255,255,255,0.35)">Chez</div></div>
+              <div style="font-size:12px;font-weight:700;color:white">$3.8M</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/KARY%20VALDES_SQ.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;border:1.5px solid rgba(255,255,255,0.15)">
+              <div style="flex:1"><div style="font-size:12px;font-weight:500;color:white">Kary Valdes</div><div style="font-size:10px;color:rgba(255,255,255,0.35)">Chez</div></div>
+              <div style="font-size:12px;font-weight:700;color:white">$2.3M</div>
+            </div>
+          </div>
+
+          <!-- Founders -->
+          <div style="font-size:10px;font-weight:700;color:var(--orange);letter-spacing:0.15em;text-transform:uppercase;margin:16px 0 10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)">Founders Q1</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JOSE%20MEDINA.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;border:1.5px solid rgba(232,101,26,0.5)">
+              <div style="flex:1"><div style="font-size:12px;font-weight:500;color:white">Jose Medina</div></div>
+              <div style="font-size:12px;font-weight:700;color:var(--orange)">$5.2M</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/DEXTER%20BRANDAO.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;border:1.5px solid rgba(232,101,26,0.5)">
+              <div style="flex:1"><div style="font-size:12px;font-weight:500;color:white">Dexter Brandao</div></div>
+              <div style="font-size:12px;font-weight:700;color:var(--orange)">$3.9M</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Magnifique Sales -->
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--orange);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)">Magnifique Sales</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
+              <div style="font-size:11px;font-weight:600;color:var(--orange);margin-bottom:2px">$2,200,000</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.8);margin-bottom:2px">11461 SW 93rd St, Miami</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.35)">Yensi Fuerte</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
+              <div style="font-size:11px;font-weight:600;color:var(--orange);margin-bottom:2px">$1,845,000</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.8);margin-bottom:2px">806 Medina Ave, Coral Gables</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.35)">Jessica Alvarez-Ducos</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
+              <div style="font-size:11px;font-weight:600;color:var(--orange);margin-bottom:2px">$1,800,000</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.8);margin-bottom:2px">27510 SW 170th Ave, Homestead</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.35)">Melissa Sanchez</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
+              <div style="font-size:11px;font-weight:600;color:var(--orange);margin-bottom:2px">$1,300,000</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.8);margin-bottom:2px">2850 SW 137th Path, Miami</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.35)">Yensi Fuerte</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
+              <div style="font-size:11px;font-weight:600;color:var(--orange);margin-bottom:2px">$1,125,000</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.8);margin-bottom:2px">6625 SW 45th St, Miami</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.35)">Alex Mirambell</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
+              <div style="font-size:11px;font-weight:600;color:var(--orange);margin-bottom:2px">$1,050,000</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.8);margin-bottom:2px">17050 SW 90th Ave, Palmetto Bay</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.35)">Yensi Fuerte</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pending + Partnership -->
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--orange);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)">Pending 🔥</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+            <div style="background:rgba(232,101,26,0.1);border:1px solid rgba(232,101,26,0.2);border-radius:8px;padding:10px 12px">
+              <div style="font-size:11px;font-weight:600;color:var(--orange);margin-bottom:2px">$3,490,000 · Asking</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.8);margin-bottom:2px">19236 Fisher Island Dr, Miami Beach</div>
+              <div style="display:flex;align-items:center;gap:5px;margin-top:4px">
+                <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JOSE%20MEDINA.jpg" style="width:16px;height:16px;border-radius:50%;object-fit:cover;object-position:top">
+                <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/DEXTER%20BRANDAO.jpg" style="width:16px;height:16px;border-radius:50%;object-fit:cover;object-position:top;margin-left:-5px">
+                <span style="font-size:10px;color:rgba(255,255,255,0.4)">Jose & Dexter</span>
+              </div>
+            </div>
+            <div style="background:rgba(232,101,26,0.1);border:1px solid rgba(232,101,26,0.2);border-radius:8px;padding:10px 12px">
+              <div style="font-size:11px;font-weight:600;color:var(--orange);margin-bottom:2px">$2,400,000 · Asking</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.8);margin-bottom:2px">1 Grove Isle Dr A1110, Coconut Grove</div>
+              <div style="display:flex;align-items:center;gap:5px;margin-top:4px">
+                <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/MARIO%20CABRERA%20JR.png" style="width:16px;height:16px;border-radius:50%;object-fit:cover;object-position:top">
+                <span style="font-size:10px;color:rgba(255,255,255,0.4)">Mario Cabrera Jr</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Partnership -->
+          <div style="font-size:10px;font-weight:700;color:var(--orange);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)">Partnership</div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:12px">
+            <div style="width:36px;height:36px;border-radius:8px;background:var(--orange);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            </div>
+            <div>
+              <div style="font-size:12px;font-weight:600;color:white">Kelly Blue Book Homes</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px">Miami-Dade Partner · Official</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
     <div class="team-section" id="equipo">
       <div class="section-hdr">
-        <span class="card-title">El equipo Chez</span>
-        <button class="see-all">Ver todos →</button>
+        <span class="card-title">Chez Team</span>
+        <button class="see-all">View all →</button>
       </div>
       <div class="team-grid" id="agentsGrid">
-        <div class="agent-card founder" data-name="jose medina" data-role="founder"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/ut91qyz8skq0tp6yqkbb" alt="Jose Medina"><div class="agent-name">Jose Medina</div><div class="agent-role">Founder</div><span class="abadge b-founder">Founder</span></div>
-        <div class="agent-card founder" data-name="dexter brandao" data-role="founder"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/vat6hncwliakyolxxij7" alt="Dexter Brandao"><div class="agent-name">Dexter Brandao</div><div class="agent-role">Founder</div><span class="abadge b-founder">Founder</span></div>
-        <div class="agent-card" data-name="johanna bolick" data-role="managing broker"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/da8c11d5-9800-4bb5-941f-1e827d3eb0b7" alt="Johanna Bolick"><div class="agent-name">Johanna Bolick</div><div class="agent-role">Managing Broker</div><span class="abadge b-broker">Broker</span></div>
-        <div class="agent-card" data-name="ruben grana" data-role="broker associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/3a5479a9-7469-4407-91b3-853ece290566" alt="Ruben Grana"><div class="agent-name">Ruben Grana</div><div class="agent-role">Broker Associate</div><span class="abadge b-broker">Broker</span></div>
-        <div class="agent-card" data-name="alex mirambell" data-role="senior agent"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/j1qma6u09icum4my0bbc" alt="Alex Mirambell"><div class="agent-name">Alex Mirambell</div><div class="agent-role">Senior Agent</div><span class="abadge b-senior">Senior</span></div>
-        <div class="agent-card" data-name="melissa sanchez" data-role="senior agent"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/a6vclk3nedmslqz8pkim" alt="Melissa Sanchez"><div class="agent-name">Melissa Sanchez</div><div class="agent-role">Senior Agent</div><span class="abadge b-senior">Senior</span></div>
-        <div class="agent-card" data-name="ramses toledo" data-role="lead toledo group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/svc3d67qzobvu9lbes3f" alt="Ramses Toledo"><div class="agent-name">Ramses Toledo</div><div class="agent-role">Lead · Toledo Group</div><span class="abadge b-lead">Lead</span></div>
-        <div class="agent-card" data-name="yensi toledo" data-role="lead toledo group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/wzqqbhtgzaukv9crhpxh" alt="Yensi Toledo"><div class="agent-name">Yensi Toledo</div><div class="agent-role">Lead · Toledo Group</div><span class="abadge b-lead">Lead</span></div>
-        <div class="agent-card" data-name="johana cabrera" data-role="lead lo group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/hiy9olud3kbganshichc" alt="Johana Cabrera"><div class="agent-name">Johana Cabrera</div><div class="agent-role">Lead · Lo Group</div><span class="abadge b-lead">Lead</span></div>
-        <div class="agent-card" data-name="mario cabrera jr" data-role="lead cabrera group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/f5a4e6a5-7b04-4fb8-8380-07151f073c14" alt="Mario Cabrera Jr"><div class="agent-name">Mario Cabrera Jr</div><div class="agent-role">Lead · Cabrera Group</div><span class="abadge b-lead">Lead</span></div>
-        <div class="agent-card" data-name="mario cabrera sr" data-role="lead cabrera group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/10ef8b29-a6e3-4b21-9ddc-a51e09a15f09" alt="Mario Cabrera Sr"><div class="agent-name">Mario Cabrera Sr</div><div class="agent-role">Lead · Cabrera Group</div><span class="abadge b-lead">Lead</span></div>
-        <div class="agent-card" data-name="alexander novo" data-role="agent"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/wlgv7pye78xaev1tnclr" alt="Alexander Novo"><div class="agent-name">Alexander Novo</div><div class="agent-role">Agent</div><span class="abadge b-assoc">Agent</span></div>
-        <div class="agent-card" data-name="amalyn cabrera" data-role="associate cabrera"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/398664e6-6764-41b0-ada1-9434775f96ae" alt="Amalyn Cabrera"><div class="agent-name">Amalyn Cabrera</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="angie irizarry" data-role="associate lo group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/c86fcb79-f696-4507-bc45-e2d5612912f3" alt="Angie Irizarry"><div class="agent-name">Angie Irizarry</div><div class="agent-role">Associate · Lo Group</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="arelis fuentes" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/da9be652-07f4-419d-816a-e512e36de8be" alt="Arelis Fuentes"><div class="agent-name">Arelis Fuentes</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="brian leon" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/qhpgqrozvhdfml3dm39z" alt="Brian Leon"><div class="agent-name">Brian Leon</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="camila ciochon" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/2bd3de88-8656-46a8-92d2-7410cad7f3df" alt="Camila Ciochon"><div class="agent-name">Camila Ciochon</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="christian padron" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/f7a2a51f-7c77-4f64-b5a4-abab141d2cce" alt="Christian Padron"><div class="agent-name">Christian Padron</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="danielle urrutia" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/9a63385e-e246-4a16-86f9-53ac5aecd57a" alt="Danielle Urrutia"><div class="agent-name">Danielle Urrutia</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="dayana jimenez" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/5b71d787-b9cb-4221-b962-23114b6c2ba6" alt="Dayana Jimenez"><div class="agent-name">Dayana Jimenez</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="erick davila" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/e113908b-9ce6-4d46-b613-9d13b1e9cdac" alt="Erick Davila"><div class="agent-name">Erick Davila</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="franger cintas" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/fcfcbba2-0c7f-4eb9-9d47-32fe99befb8e" alt="Franger Cintas"><div class="agent-name">Franger Cintas</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="jessica alvarez" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/38526397-0c7f-4eb9-9d47-32fe99befb8e" alt="Jessica Alvarez"><div class="agent-name">Jessica A. Ducos</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="jessica gonzalez" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/1a8e42c0-ce74-41f9-986d-b8bb7711b9e8" alt="Jessica Gonzalez"><div class="agent-name">Jessica Gonzalez</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="kary valdes" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/9aebb8a7-ffb9-4aa0-b21c-de0c48f7692d" alt="Kary Valdes"><div class="agent-name">Kary Valdes</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="kevin acosta" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/f347f036-7daf-4fcc-b18e-eb572b87491e" alt="Kevin Acosta"><div class="agent-name">Kevin Acosta</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="laurie moreno" data-role="agent"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/638f3a9b-5868-4446-99d1-6d511ef69a7f" alt="Laurie Moreno"><div class="agent-name">Laurie Moreno</div><div class="agent-role">Licensed Agent</div><span class="abadge b-assoc">Agent</span></div>
-        <div class="agent-card" data-name="leonardo fundora" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/65fac5a7-f25c-4ef4-a071-b99e1d432f59" alt="Leonardo Fundora"><div class="agent-name">Leonardo Fundora</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="linda escobar" data-role="associate cabrera"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/65fac5a7-f25c-4ef4-a071-b99e1d432f59" alt="Linda Escobar"><div class="agent-name">Linda Escobar</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="marc plasencia" data-role="associate cabrera"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/294007b6-d940-438f-84ae-141adc3ceaed" alt="Marc Plasencia"><div class="agent-name">Marc Plasencia</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="maria garcia" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/d2b336c4-beae-4bc2-88c3-e7ee7e4fd77c" alt="Maria Garcia"><div class="agent-name">Maria Garcia</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="maria rodriguez" data-role="admin"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/07d8ef46-6d44-4c23-a2fe-f86bdb0e9575" alt="Maria Rodriguez"><div class="agent-name">Maria A. Rodriguez</div><div class="agent-role">Admin Assistant</div><span class="abadge b-admin">Admin</span></div>
-        <div class="agent-card" data-name="nicole paneque" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/cdc94b8a-fca1-44e0-be5f-3ffaa2c2851a" alt="Nicole Paneque"><div class="agent-name">Nicole Paneque</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="alejandro cubas" data-role="associate cabrera"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/c0590b15-f171-4bb4-9d27-67357535368f" alt="Alejandro Cubas"><div class="agent-name">Alejandro Cubas</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="yenelis martinez" data-role="associate lo group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/88abc6e9-2a55-40ec-847a-218b04e32a27" alt="Yenelis Martinez"><div class="agent-name">Yenelis Martinez</div><div class="agent-role">Associate · Lo Group</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="yeni martinez" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/4a5511c6-a936-4231-babd-92fdf801318f" alt="Yeni Martinez"><div class="agent-name">Yeni Martinez</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
-        <div class="agent-card" data-name="zuzy gonzalez" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/faae370b-8bb2-4b2e-b73c-421153f0e5a8" alt="Zuzy Gonzalez"><div class="agent-name">Zuzy Gonzalez</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card founder" data-name="jose medina" data-role="founder"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JOSE%20MEDINA.jpg" alt="Jose Medina"><div class="agent-name">Jose Medina</div><div class="agent-role">Founder</div><span class="abadge b-founder">Founder</span></div>
+        <div class="agent-card founder" data-name="dexter brandao" data-role="founder"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/DEXTER%20BRANDAO.jpg" alt="Dexter Brandao"><div class="agent-name">Dexter Brandao</div><div class="agent-role">Founder</div><span class="abadge b-founder">Founder</span></div>
+        <div class="agent-card" data-name="johanna bolick" data-role="managing broker"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JOHANNA%20BOLICK.png" alt="Johanna Bolick"><div class="agent-name">Johanna Bolick</div><div class="agent-role">Managing Broker</div><span class="abadge b-broker">Broker</span></div>
+        <div class="agent-card" data-name="ruben grana" data-role="broker associate"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/RUBEN%20GRANA_SQ.png" alt="Ruben Grana"><div class="agent-name">Ruben Grana</div><div class="agent-role">Broker Associate</div><span class="abadge b-broker">Broker</span></div>
+        <div class="agent-card" data-name="alex mirambell" data-role="senior agent"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/ALEX%20MIRAMBELL.jpg" alt="Alex Mirambell"><div class="agent-name">Alex Mirambell</div><div class="agent-role">Senior Agent</div><span class="abadge b-senior">Senior</span></div>
+        <div class="agent-card" data-name="melissa sanchez" data-role="senior agent"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/MELISSA%20SANCHEZ.jpg" alt="Melissa Sanchez"><div class="agent-name">Melissa Sanchez</div><div class="agent-role">Senior Agent</div><span class="abadge b-senior">Senior</span></div>
+        <div class="agent-card" data-name="ramses toledo" data-role="lead toledo group"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/RAMSES%20TOLEDO.jpg" alt="Ramses Toledo"><div class="agent-name">Ramses Toledo</div><div class="agent-role">Lead · Toledo Group</div><span class="abadge b-lead">Lead</span></div>
+        <div class="agent-card" data-name="yensi toledo" data-role="lead toledo group"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/RAMSES%20TOLEDO.jpg" alt="Yensi Toledo"><div class="agent-name">Yensi Toledo</div><div class="agent-role">Lead · Toledo Group</div><span class="abadge b-lead">Lead</span></div>
+        <div class="agent-card" data-name="johana cabrera" data-role="lead lo group"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JOHANA%20CABRERA.jpg" alt="Johana Cabrera"><div class="agent-name">Johana Cabrera</div><div class="agent-role">Lead · Lo Group</div><span class="abadge b-lead">Lead</span></div>
+        <div class="agent-card" data-name="mario cabrera jr" data-role="lead cabrera group"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/MARIO%20CABRERA%20JR.png" alt="Mario Cabrera Jr"><div class="agent-name">Mario Cabrera Jr</div><div class="agent-role">Lead · Cabrera Group</div><span class="abadge b-lead">Lead</span></div>
+        <div class="agent-card" data-name="mario cabrera sr" data-role="lead cabrera group"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/MARIO%20CABRERA%20SENIOR.png" alt="Mario Cabrera Sr"><div class="agent-name">Mario Cabrera Sr</div><div class="agent-role">Lead · Cabrera Group</div><span class="abadge b-lead">Lead</span></div>
+        <div class="agent-card" data-name="alexander novo" data-role="agent"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/ALEXANDER%20NOVO.jpg" alt="Alexander Novo"><div class="agent-name">Alexander Novo</div><div class="agent-role">Agent</div><span class="abadge b-assoc">Agent</span></div>
+        <div class="agent-card" data-name="amalyn cabrera" data-role="associate cabrera"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/AMALYN%20CABRERA_SQUARE.png" alt="Amalyn Cabrera"><div class="agent-name">Amalyn Cabrera</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="angie irizarry" data-role="associate lo group"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/ANGIE%20IRIZARRI_SQ.png" alt="Angie Irizarry"><div class="agent-name">Angie Irizarry</div><div class="agent-role">Associate · Lo Group</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="arelis fuentes" data-role="associate toledo"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/ARELIS%20FUENTES.png" alt="Arelis Fuentes"><div class="agent-name">Arelis Fuentes</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="brian leon" data-role="associate"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/BRIAN%20LEON.jpg" alt="Brian Leon"><div class="agent-name">Brian Leon</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="camila ciochon" data-role="associate"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/CAMILA%20CIOCHON%20SQ.png" alt="Camila Ciochon"><div class="agent-name">Camila Ciochon</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="christian padron" data-role="associate"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/CHRISTIAN%20PADRON%20SQ.png" alt="Christian Padron"><div class="agent-name">Christian Padron</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="danielle urrutia" data-role="associate"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/DANIELLE%20URRUTIA_Square.png" alt="Danielle Urrutia"><div class="agent-name">Danielle Urrutia</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="dayana jimenez" data-role="associate toledo"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/DAYANA%20JIMENEZ__SQUARE.png" alt="Dayana Jimenez"><div class="agent-name">Dayana Jimenez</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="erick davila" data-role="associate toledo"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/ERICK%20DAVILA_SQ.png" alt="Erick Davila"><div class="agent-name">Erick Davila</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="franger cintas" data-role="associate toledo"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/FRANGER%20CINTAS.png" alt="Franger Cintas"><div class="agent-name">Franger Cintas</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="jessica alvarez" data-role="associate"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JESSICA%20ALVAREZ-DUCOS_SQ.png" alt="Jessica Alvarez"><div class="agent-name">Jessica A. Ducos</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="jessica gonzalez" data-role="associate"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JESSICA%20GONZALEZ_SQUARE.png" alt="Jessica Gonzalez"><div class="agent-name">Jessica Gonzalez</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="kary valdes" data-role="associate"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/KARY%20VALDES_SQ.png" alt="Kary Valdes"><div class="agent-name">Kary Valdes</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="kevin acosta" data-role="associate"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/KEVIN%20ACOSTA_SQ.png" alt="Kevin Acosta"><div class="agent-name">Kevin Acosta</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="laurie moreno" data-role="agent"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/LAURIE%20MORENO%20SQ.png" alt="Laurie Moreno"><div class="agent-name">Laurie Moreno</div><div class="agent-role">Licensed Agent</div><span class="abadge b-assoc">Agent</span></div>
+        <div class="agent-card" data-name="leonardo fundora" data-role="associate toledo"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/LEONARDO%20FUNDORA_SQ.png" alt="Leonardo Fundora"><div class="agent-name">Leonardo Fundora</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="linda escobar" data-role="associate cabrera"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/LINDA%20ESCOBAR_SQ.png" alt="Linda Escobar"><div class="agent-name">Linda Escobar</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="marc plasencia" data-role="associate cabrera"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/MARC%20PLASENCIA.png" alt="Marc Plasencia"><div class="agent-name">Marc Plasencia</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="maria garcia" data-role="associate toledo"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/MARIA%20GARCIA_SQUARE.png" alt="Maria Garcia"><div class="agent-name">Maria Garcia</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="maria rodriguez" data-role="admin"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/MARIA%20A%20RODRIGUEZ_SQUARE.png" alt="Maria Rodriguez"><div class="agent-name">Maria A. Rodriguez</div><div class="agent-role">Admin Assistant</div><span class="abadge b-admin">Admin</span></div>
+        <div class="agent-card" data-name="nicole paneque" data-role="associate"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/NICOLE%20PANEQUE_SQ.png" alt="Nicole Paneque"><div class="agent-name">Nicole Paneque</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="alejandro cubas" data-role="associate cabrera"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/ALEJANDRO%20CUBAS_SQ.png" alt="Alejandro Cubas"><div class="agent-name">Alejandro Cubas</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="yenelis martinez" data-role="associate lo group"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/YENELIS%20MARTINEZ_SQUARE.png" alt="Yenelis Martinez"><div class="agent-name">Yenelis Martinez</div><div class="agent-role">Associate · Lo Group</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="yeni martinez" data-role="associate"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/YENI%20MARTINEZ_SQ.png" alt="Yeni Martinez"><div class="agent-name">Yeni Martinez</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="zuzy gonzalez" data-role="associate toledo"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/ZUZY%20GONZALEZ%20SQ.png" alt="Zuzy Gonzalez"><div class="agent-name">Zuzy Gonzalez</div>
+        <div class="agent-card" data-name="damian ruiz" data-role="associate chez"><img class="agent-photo" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/DAMIAN%20RUIZ_SQ.png" alt="Damian Ruiz"><div class="agent-name">Damian Ruiz</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
       </div>
     </div>
 
