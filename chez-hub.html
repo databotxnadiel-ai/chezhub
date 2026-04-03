@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chez Hub — Portal del Agente</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange:      #E8651A;
+  --orange-pale: #FDF2EB;
+  --orange-dark: #C04F0C;
+  --black:       #1A1208;
+  --gray-900:    #2C2416;
+  --gray-700:    #6B5D4F;
+  --gray-500:    #9C8E82;
+  --gray-300:    #D6CFC8;
+  --gray-100:    #F0EDE9;
+  --gray-50:     #F7F5F2;
+  --white:       #FFFFFF;
+  --border:      rgba(0,0,0,0.08);
+  --border-med:  rgba(0,0,0,0.13);
+  --font-serif:  'Playfair Display', Georgia, serif;
+  --font-body:   'DM Sans', system-ui, sans-serif;
+  --radius:      10px;
+  --radius-lg:   14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--gray-50);color:var(--gray-900);min-height:100vh;display:flex;font-size:14px;line-height:1.5}
+a{text-decoration:none;color:inherit}
+
+/* SIDEBAR */
+.sidebar{width:230px;min-height:100vh;background:var(--black);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
+.slogo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.slogo-chez{font-family:var(--font-serif);font-size:26px;font-weight:700;color:var(--orange);letter-spacing:-0.5px;line-height:1}
+.slogo-sub{font-size:10px;color:rgba(255,255,255,0.28);letter-spacing:0.2em;text-transform:uppercase;margin-top:3px}
+.snav{padding:12px 0;flex:1}
+.slabel{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.2);padding:12px 20px 4px}
+.sitem{display:flex;align-items:center;gap:9px;padding:9px 20px;font-size:13px;color:rgba(255,255,255,0.42);cursor:pointer;border-left:2px solid transparent;transition:all 0.12s}
+.sitem:hover{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.04)}
+.sitem.active{color:var(--orange);border-left-color:var(--orange);background:rgba(232,101,26,0.1);font-weight:500}
+.sdot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
+.sbadge{margin-left:auto;font-size:9px;font-weight:500;padding:1px 7px;border-radius:20px}
+.sbadge-pct{background:var(--orange);color:white}
+.sbadge-new{background:rgba(232,101,26,0.2);color:var(--orange)}
+.suser{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:10px}
+.suser-avt{width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(232,101,26,0.5);flex-shrink:0;background:#2a1a08}
+.suser-name{font-size:13px;font-weight:500;color:rgba(255,255,255,0.85)}
+.suser-role{font-size:10px;color:rgba(255,255,255,0.28);margin-top:1px}
+
+/* MAIN */
+.main{margin-left:230px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* TOPBAR */
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.topbar-title{font-size:16px;font-weight:500;color:var(--gray-900)}
+.topbar-sub{font-size:12px;color:var(--gray-500);margin-left:8px}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.search{display:flex;align-items:center;gap:8px;background:var(--gray-50);border:1px solid var(--border-med);border-radius:var(--radius);padding:8px 14px}
+.search input{border:none;background:transparent;font-family:var(--font-body);font-size:13px;color:var(--gray-900);outline:none;width:180px}
+.search input::placeholder{color:var(--gray-500)}
+.notif-pill{display:flex;align-items:center;gap:6px;background:var(--orange-pale);border:1px solid rgba(232,101,26,0.2);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:500;color:var(--orange-dark)}
+.notif-dot{width:7px;height:7px;border-radius:50%;background:var(--orange);flex-shrink:0}
+
+/* BODY */
+.body{padding:28px 32px;flex:1}
+
+/* WELCOME */
+.welcome{background:var(--black);border-radius:var(--radius-lg);padding:22px 28px;margin-bottom:22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.welcome h2{font-family:var(--font-serif);font-size:22px;font-weight:500;color:white;letter-spacing:-0.3px;margin-bottom:4px}
+.welcome p{font-size:12px;color:rgba(255,255,255,0.38);line-height:1.6}
+.welcome-badge{background:var(--orange);color:white;font-size:12px;font-weight:500;padding:7px 18px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+
+/* ONBOARDING */
+.onboard{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:22px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.ob-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.ob-title{font-size:14px;font-weight:500;color:var(--gray-900)}
+.ob-pct{font-size:13px;font-weight:500;color:var(--orange)}
+.pbar{height:5px;background:var(--gray-100);border-radius:3px;margin-bottom:16px;overflow:hidden}
+.pfill{height:100%;background:var(--orange);border-radius:3px;width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.steps{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.step{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius);background:var(--gray-50);border:1px solid transparent}
+.step.step-active{background:var(--orange-pale);border-color:rgba(232,101,26,0.2)}
+.step.step-done{opacity:0.65}
+.sc{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;flex-shrink:0}
+.sc-done{background:var(--orange);color:white}
+.sc-active{background:white;border:2px solid var(--orange);color:var(--orange);font-size:10px}
+.sc-todo{background:var(--gray-100);color:var(--gray-500);border:1px solid var(--gray-300)}
+.step-label{font-size:12px;color:var(--gray-900);flex:1;line-height:1.3}
+.step.step-done .step-label{color:var(--gray-500)}
+
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+
+/* CARD */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.card-title{font-size:13px;font-weight:500;color:var(--gray-900);margin-bottom:12px}
+
+/* TOOLS */
+.tools{display:flex;flex-direction:column;gap:7px}
+.tool{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:var(--radius);background:var(--gray-50);cursor:pointer;transition:background 0.12s}
+.tool:hover{background:var(--gray-100)}
+.ticon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0;color:white;letter-spacing:-0.3px}
+.tn{font-size:13px;font-weight:500;color:var(--gray-900)}
+.td{font-size:11px;color:var(--gray-500)}
+.tarr{margin-left:auto;color:var(--gray-500);font-size:14px}
+
+/* FEED */
+.feed{display:flex;flex-direction:column}
+.fi{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--gray-100);align-items:flex-start}
+.fi:last-child{border-bottom:none;padding-bottom:0}
+.fi-avt{width:34px;height:34px;border-radius:50%;object-fit:cover;object-position:center top;flex-shrink:0;background:var(--gray-100)}
+.fi-text{font-size:12px;color:var(--gray-700);line-height:1.5}
+.fi-text strong{color:var(--gray-900);font-weight:500}
+.fi-time{font-size:10px;color:var(--gray-500);margin-top:2px}
+
+/* MARKETING */
+.mktg{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.06);margin-bottom:22px}
+.mktg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.mktg-powered{font-size:11px;color:var(--gray-500)}
+.mktg-powered span{color:var(--orange);font-weight:500}
+.mktg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mbtn{background:var(--gray-50);border:1px solid var(--border);border-radius:var(--radius);padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.12s}
+.mbtn:hover{border-color:var(--orange);background:var(--orange-pale)}
+.mbtn-icon{width:36px;height:36px;border-radius:9px;background:var(--orange-pale);display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.mbtn-label{font-size:12px;font-weight:500;color:var(--gray-900)}
+.mbtn-sub{font-size:10px;color:var(--gray-500);margin-top:2px}
+.mbtn-new{border-style:dashed;border-color:rgba(232,101,26,0.35);background:transparent}
+.mbtn-new .mbtn-icon{background:transparent}
+
+/* TEAM */
+.team-section{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.see-all{font-size:12px;color:var(--orange);font-weight:500;cursor:pointer;background:none;border:none;font-family:var(--font-body)}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:10px}
+.agent-card{background:var(--gray-50);border:1px solid var(--border);border-radius:var(--radius);padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.12s}
+.agent-card:hover{border-color:rgba(232,101,26,0.3);background:var(--orange-pale)}
+.agent-photo{width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:center top;margin:0 auto 8px;display:block;background:var(--gray-100);border:2px solid var(--gray-300)}
+.agent-card.founder .agent-photo{border-color:var(--orange)}
+.agent-name{font-size:11px;font-weight:500;color:var(--gray-900);margin-bottom:2px;line-height:1.3}
+.agent-role{font-size:10px;color:var(--gray-500);margin-bottom:7px}
+.abadge{display:inline-block;font-size:9px;font-weight:500;padding:2px 8px;border-radius:20px}
+.b-founder{background:var(--orange);color:white}
+.b-broker{background:var(--black);color:var(--orange)}
+.b-senior{background:var(--orange-pale);color:var(--orange-dark)}
+.b-lead{background:#F5E8D8;color:#7A4010}
+.b-assoc{background:var(--gray-100);color:var(--gray-700)}
+.b-admin{background:var(--gray-100);color:var(--gray-500)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .sidebar{width:60px}
+  .slogo-sub,.sitem span:not(.sdot),.suser-info,.slabel{display:none}
+  .slogo-chez{font-size:18px}
+  .sitem{padding:12px;justify-content:center}
+  .main{margin-left:60px}
+  .grid2{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .mktg-grid{grid-template-columns:repeat(2,1fr)}
+  .topbar{padding:0 16px}
+  .body{padding:16px}
+  .welcome{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="slogo">
+    <div class="slogo-chez">Chez</div>
+    <div class="slogo-sub">Hub · Miami RE</div>
+  </div>
+  <nav class="snav">
+    <div class="slabel">Mi portal</div>
+    <a class="sitem active" href="#inicio"><span class="sdot"></span>Inicio</a>
+    <a class="sitem" href="#onboarding"><span class="sdot"></span>Mi onboarding <span class="sbadge sbadge-pct">40%</span></a>
+    <a class="sitem" href="#perfil"><span class="sdot"></span>Mi perfil</a>
+    <div class="slabel">Conocimiento</div>
+    <a class="sitem" href="#guias"><span class="sdot"></span>Guías & Procesos</a>
+    <a class="sitem" href="#scripts"><span class="sdot"></span>Scripts de ventas</a>
+    <a class="sitem" href="#cursos"><span class="sdot"></span>Cursos</a>
+    <div class="slabel">Tech & Tools</div>
+    <a class="sitem" href="https://app.followupboss.com" target="_blank"><span class="sdot"></span>Follow Up Boss</a>
+    <a class="sitem" href="https://www.zillow.com" target="_blank"><span class="sdot"></span>Zillow</a>
+    <a class="sitem" href="https://www.miamiresidential.com" target="_blank"><span class="sdot"></span>MLS Miami</a>
+    <a class="sitem" href="https://chezre.com" target="_blank"><span class="sdot"></span>Luxury Presence</a>
+    <div class="slabel">Soporte</div>
+    <a class="sitem" href="#marketing"><span class="sdot"></span>Marketing · Agentz <span class="sbadge sbadge-new">new</span></a>
+    <a class="sitem" href="#legal"><span class="sdot"></span>Soporte legal</a>
+    <a class="sitem" href="#admin"><span class="sdot"></span>Admin & contratos</a>
+    <div class="slabel">Comunidad</div>
+    <a class="sitem" href="#equipo"><span class="sdot"></span>El equipo</a>
+    <a class="sitem" href="#celebraciones"><span class="sdot"></span>Celebraciones</a>
+    <a class="sitem" href="#anuncios"><span class="sdot"></span>Anuncios</a>
+  </nav>
+  <div class="suser">
+    <img class="suser-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/ut91qyz8skq0tp6yqkbb" alt="Jose Medina">
+    <div>
+      <div class="suser-name">Jose Medina</div>
+      <div class="suser-role">Founder</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:baseline;gap:8px">
+      <span class="topbar-title">Buenos días, Jose</span>
+      <span class="topbar-sub">· Miami, FL</span>
+    </div>
+    <div class="topbar-right">
+      <div class="search">
+        <span style="color:var(--gray-500);font-size:15px">⌕</span>
+        <input type="text" placeholder="Buscar agente, guía, tool..." oninput="filterAgents(this.value)">
+      </div>
+      <div class="notif-pill"><div class="notif-dot"></div>3 novedades hoy</div>
+    </div>
+  </div>
+
+  <div class="body" id="inicio">
+
+    <div class="welcome">
+      <div>
+        <h2>Bienvenido a Chez Hub</h2>
+        <p>Tu centro de operaciones · conocimiento · comunidad<br>Todo lo que necesitas para crecer en Chez, en un solo lugar.</p>
+      </div>
+      <div class="welcome-badge">Founder · Chez Realty</div>
+    </div>
+
+    <div class="onboard" id="onboarding">
+      <div class="ob-header">
+        <span class="ob-title">Mi onboarding</span>
+        <span class="ob-pct">40% completado</span>
+      </div>
+      <div class="pbar"><div class="pfill" id="pfill"></div></div>
+      <div class="steps">
+        <div class="step step-done"><div class="sc sc-done">✓</div><span class="step-label">Bienvenida a la oficina & equipo</span></div>
+        <div class="step step-done"><div class="sc sc-done">✓</div><span class="step-label">Licencia verificada & docs Chez</span></div>
+        <div class="step step-active"><div class="sc sc-active">3</div><span class="step-label">Setup Follow Up Boss (FUB) · CRM</span></div>
+        <div class="step"><div class="sc sc-todo">4</div><span class="step-label">Acceso MLS & configuración búsquedas</span></div>
+        <div class="step"><div class="sc sc-todo">5</div><span class="step-label">Perfil Zillow & Luxury Presence</span></div>
+        <div class="step"><div class="sc sc-todo">6</div><span class="step-label">Primer training con tu Lead Agent</span></div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Tech & Tools · acceso rápido</div>
+        <div class="tools">
+          <a class="tool" href="https://app.followupboss.com" target="_blank">
+            <div class="ticon" style="background:#1A1208">FUB</div>
+            <div><div class="tn">Follow Up Boss</div><div class="td">CRM · leads · pipeline</div></div>
+            <span class="tarr">↗</span>
+          </a>
+          <a class="tool" href="https://www.zillow.com" target="_blank">
+            <div class="ticon" style="background:#2D7A2D">Z</div>
+            <div><div class="tn">Zillow</div><div class="td">Listings · leads</div></div>
+            <span class="tarr">↗</span>
+          </a>
+          <a class="tool" href="https://www.miamiresidential.com" target="_blank">
+            <div class="ticon" style="background:#5A3E28">MLS</div>
+            <div><div class="tn">MLS Miami</div><div class="td">Búsqueda de propiedades</div></div>
+            <span class="tarr">↗</span>
+          </a>
+          <a class="tool" href="https://chezre.com" target="_blank">
+            <div class="ticon" style="background:#3A3A3A">LP</div>
+            <div><div class="tn">Luxury Presence</div><div class="td">Tu sitio web Chez</div></div>
+            <span class="tarr">↗</span>
+          </a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Novedades del equipo</div>
+        <div class="feed">
+          <div class="fi">
+            <img class="fi-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/a6vclk3nedmslqz8pkim" alt="Melissa">
+            <div><div class="fi-text"><strong>Melissa Sanchez</strong> cerró en Coral Gables — $1.2M</div><div class="fi-time">Hace 2h</div></div>
+          </div>
+          <div class="fi">
+            <img class="fi-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/ut91qyz8skq0tp6yqkbb" alt="Jose">
+            <div><div class="fi-text"><strong>Jose Medina</strong> publicó nuevas guías de objeción de precios</div><div class="fi-time">Hace 4h</div></div>
+          </div>
+          <div class="fi">
+            <img class="fi-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/svc3d67qzobvu9lbes3f" alt="Ramses">
+            <div><div class="fi-text"><strong>Ramses Toledo</strong> — Entrenamiento Toledo Group: Viernes 10am</div><div class="fi-time">Ayer</div></div>
+          </div>
+          <div class="fi">
+            <img class="fi-avt" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/vat6hncwliakyolxxij7" alt="Dexter">
+            <div><div class="fi-text"><strong>Dexter Brandao</strong> — Webinar de cierre: Martes 7pm</div><div class="fi-time">Ayer</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mktg" id="marketing">
+      <div class="mktg-header">
+        <span class="card-title">Marketing Support · Requests</span>
+        <span class="mktg-powered">Powered by <span>Agentz</span></span>
+      </div>
+      <div class="mktg-grid">
+        <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div class="mbtn-label">Post para redes</div><div class="mbtn-sub">Instagram · Facebook</div></div>
+        <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="mbtn-label">Flyer propiedad</div><div class="mbtn-sub">PDF · Digital</div></div>
+        <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div><div class="mbtn-label">Email campaign</div><div class="mbtn-sub">Leads · Clientes</div></div>
+        <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><div class="mbtn-label">Video / Reel</div><div class="mbtn-sub">Listing · Personal</div></div>
+        <div class="mbtn"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div><div class="mbtn-label">Open House</div><div class="mbtn-sub">Signage · Digital</div></div>
+        <div class="mbtn mbtn-new"><div class="mbtn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8651A" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="mbtn-label">Otro request</div><div class="mbtn-sub">Personalizado</div></div>
+      </div>
+    </div>
+
+    <div class="team-section" id="equipo">
+      <div class="section-hdr">
+        <span class="card-title">El equipo Chez</span>
+        <button class="see-all">Ver todos →</button>
+      </div>
+      <div class="team-grid" id="agentsGrid">
+        <div class="agent-card founder" data-name="jose medina" data-role="founder"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/ut91qyz8skq0tp6yqkbb" alt="Jose Medina"><div class="agent-name">Jose Medina</div><div class="agent-role">Founder</div><span class="abadge b-founder">Founder</span></div>
+        <div class="agent-card founder" data-name="dexter brandao" data-role="founder"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/vat6hncwliakyolxxij7" alt="Dexter Brandao"><div class="agent-name">Dexter Brandao</div><div class="agent-role">Founder</div><span class="abadge b-founder">Founder</span></div>
+        <div class="agent-card" data-name="johanna bolick" data-role="managing broker"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/da8c11d5-9800-4bb5-941f-1e827d3eb0b7" alt="Johanna Bolick"><div class="agent-name">Johanna Bolick</div><div class="agent-role">Managing Broker</div><span class="abadge b-broker">Broker</span></div>
+        <div class="agent-card" data-name="ruben grana" data-role="broker associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/3a5479a9-7469-4407-91b3-853ece290566" alt="Ruben Grana"><div class="agent-name">Ruben Grana</div><div class="agent-role">Broker Associate</div><span class="abadge b-broker">Broker</span></div>
+        <div class="agent-card" data-name="alex mirambell" data-role="senior agent"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/j1qma6u09icum4my0bbc" alt="Alex Mirambell"><div class="agent-name">Alex Mirambell</div><div class="agent-role">Senior Agent</div><span class="abadge b-senior">Senior</span></div>
+        <div class="agent-card" data-name="melissa sanchez" data-role="senior agent"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/a6vclk3nedmslqz8pkim" alt="Melissa Sanchez"><div class="agent-name">Melissa Sanchez</div><div class="agent-role">Senior Agent</div><span class="abadge b-senior">Senior</span></div>
+        <div class="agent-card" data-name="ramses toledo" data-role="lead toledo group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/svc3d67qzobvu9lbes3f" alt="Ramses Toledo"><div class="agent-name">Ramses Toledo</div><div class="agent-role">Lead · Toledo Group</div><span class="abadge b-lead">Lead</span></div>
+        <div class="agent-card" data-name="yensi toledo" data-role="lead toledo group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/wzqqbhtgzaukv9crhpxh" alt="Yensi Toledo"><div class="agent-name">Yensi Toledo</div><div class="agent-role">Lead · Toledo Group</div><span class="abadge b-lead">Lead</span></div>
+        <div class="agent-card" data-name="johana cabrera" data-role="lead lo group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/hiy9olud3kbganshichc" alt="Johana Cabrera"><div class="agent-name">Johana Cabrera</div><div class="agent-role">Lead · Lo Group</div><span class="abadge b-lead">Lead</span></div>
+        <div class="agent-card" data-name="mario cabrera jr" data-role="lead cabrera group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/f5a4e6a5-7b04-4fb8-8380-07151f073c14" alt="Mario Cabrera Jr"><div class="agent-name">Mario Cabrera Jr</div><div class="agent-role">Lead · Cabrera Group</div><span class="abadge b-lead">Lead</span></div>
+        <div class="agent-card" data-name="mario cabrera sr" data-role="lead cabrera group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/10ef8b29-a6e3-4b21-9ddc-a51e09a15f09" alt="Mario Cabrera Sr"><div class="agent-name">Mario Cabrera Sr</div><div class="agent-role">Lead · Cabrera Group</div><span class="abadge b-lead">Lead</span></div>
+        <div class="agent-card" data-name="alexander novo" data-role="agent"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/wlgv7pye78xaev1tnclr" alt="Alexander Novo"><div class="agent-name">Alexander Novo</div><div class="agent-role">Agent</div><span class="abadge b-assoc">Agent</span></div>
+        <div class="agent-card" data-name="amalyn cabrera" data-role="associate cabrera"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/398664e6-6764-41b0-ada1-9434775f96ae" alt="Amalyn Cabrera"><div class="agent-name">Amalyn Cabrera</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="angie irizarry" data-role="associate lo group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/c86fcb79-f696-4507-bc45-e2d5612912f3" alt="Angie Irizarry"><div class="agent-name">Angie Irizarry</div><div class="agent-role">Associate · Lo Group</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="arelis fuentes" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/da9be652-07f4-419d-816a-e512e36de8be" alt="Arelis Fuentes"><div class="agent-name">Arelis Fuentes</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="brian leon" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/qhpgqrozvhdfml3dm39z" alt="Brian Leon"><div class="agent-name">Brian Leon</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="camila ciochon" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/2bd3de88-8656-46a8-92d2-7410cad7f3df" alt="Camila Ciochon"><div class="agent-name">Camila Ciochon</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="christian padron" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/f7a2a51f-7c77-4f64-b5a4-abab141d2cce" alt="Christian Padron"><div class="agent-name">Christian Padron</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="danielle urrutia" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/9a63385e-e246-4a16-86f9-53ac5aecd57a" alt="Danielle Urrutia"><div class="agent-name">Danielle Urrutia</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="dayana jimenez" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/5b71d787-b9cb-4221-b962-23114b6c2ba6" alt="Dayana Jimenez"><div class="agent-name">Dayana Jimenez</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="erick davila" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/e113908b-9ce6-4d46-b613-9d13b1e9cdac" alt="Erick Davila"><div class="agent-name">Erick Davila</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="franger cintas" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/fcfcbba2-0c7f-4eb9-9d47-32fe99befb8e" alt="Franger Cintas"><div class="agent-name">Franger Cintas</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="jessica alvarez" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/38526397-0c7f-4eb9-9d47-32fe99befb8e" alt="Jessica Alvarez"><div class="agent-name">Jessica A. Ducos</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="jessica gonzalez" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/1a8e42c0-ce74-41f9-986d-b8bb7711b9e8" alt="Jessica Gonzalez"><div class="agent-name">Jessica Gonzalez</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="kary valdes" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/9aebb8a7-ffb9-4aa0-b21c-de0c48f7692d" alt="Kary Valdes"><div class="agent-name">Kary Valdes</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="kevin acosta" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/f347f036-7daf-4fcc-b18e-eb572b87491e" alt="Kevin Acosta"><div class="agent-name">Kevin Acosta</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="laurie moreno" data-role="agent"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/638f3a9b-5868-4446-99d1-6d511ef69a7f" alt="Laurie Moreno"><div class="agent-name">Laurie Moreno</div><div class="agent-role">Licensed Agent</div><span class="abadge b-assoc">Agent</span></div>
+        <div class="agent-card" data-name="leonardo fundora" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/65fac5a7-f25c-4ef4-a071-b99e1d432f59" alt="Leonardo Fundora"><div class="agent-name">Leonardo Fundora</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="linda escobar" data-role="associate cabrera"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/65fac5a7-f25c-4ef4-a071-b99e1d432f59" alt="Linda Escobar"><div class="agent-name">Linda Escobar</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="marc plasencia" data-role="associate cabrera"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/294007b6-d940-438f-84ae-141adc3ceaed" alt="Marc Plasencia"><div class="agent-name">Marc Plasencia</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="maria garcia" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/d2b336c4-beae-4bc2-88c3-e7ee7e4fd77c" alt="Maria Garcia"><div class="agent-name">Maria Garcia</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="maria rodriguez" data-role="admin"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/07d8ef46-6d44-4c23-a2fe-f86bdb0e9575" alt="Maria Rodriguez"><div class="agent-name">Maria A. Rodriguez</div><div class="agent-role">Admin Assistant</div><span class="abadge b-admin">Admin</span></div>
+        <div class="agent-card" data-name="nicole paneque" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/cdc94b8a-fca1-44e0-be5f-3ffaa2c2851a" alt="Nicole Paneque"><div class="agent-name">Nicole Paneque</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="alejandro cubas" data-role="associate cabrera"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/c0590b15-f171-4bb4-9d27-67357535368f" alt="Alejandro Cubas"><div class="agent-name">Alejandro Cubas</div><div class="agent-role">Associate · Cabrera</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="yenelis martinez" data-role="associate lo group"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/88abc6e9-2a55-40ec-847a-218b04e32a27" alt="Yenelis Martinez"><div class="agent-name">Yenelis Martinez</div><div class="agent-role">Associate · Lo Group</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="yeni martinez" data-role="associate"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/4a5511c6-a936-4231-babd-92fdf801318f" alt="Yeni Martinez"><div class="agent-name">Yeni Martinez</div><div class="agent-role">Associate</div><span class="abadge b-assoc">Associate</span></div>
+        <div class="agent-card" data-name="zuzy gonzalez" data-role="associate toledo"><img class="agent-photo" src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/faae370b-8bb2-4b2e-b73c-421153f0e5a8" alt="Zuzy Gonzalez"><div class="agent-name">Zuzy Gonzalez</div><div class="agent-role">Associate · Toledo</div><span class="abadge b-assoc">Associate</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.sitem').forEach(item => {
+  item.addEventListener('click', function() {
+    document.querySelectorAll('.sitem').forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+function filterAgents(q) {
+  document.querySelectorAll('.agent-card').forEach(card => {
+    const n = card.dataset.name || '';
+    const r = card.dataset.role || '';
+    card.style.display = (!q || n.includes(q.toLowerCase()) || r.includes(q.toLowerCase())) ? '' : 'none';
+  });
+}
+
+window.addEventListener('load', () => {
+  setTimeout(() => { document.getElementById('pfill').style.width = '40%'; }, 400);
+});
+</script>
+</body>
+</html>
