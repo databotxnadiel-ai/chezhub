@@ -905,13 +905,7 @@ function toggleSidebar() {
   document.getElementById('mainContent').style.marginLeft = collapsed ? '60px' : '230px';
   s.querySelector('.stoggle-icon').style.transform = collapsed ? 'rotate(180deg)' : '';
 }
-window.addEventListener('DOMContentLoaded', function(){
-  var s = document.getElementById('sidebar');
-  var m = document.getElementById('mainContent');
-  if (!s) return;
-  var c = localStorage.getItem('sidebarCollapsed')==='true' || window.innerWidth < 1100;
-  if (c) { s.classList.add('collapsed'); if(m) m.style.marginLeft='60px'; }
-});
+// Sidebar init merged into main DOMContentLoaded below
 window.addEventListener('resize', function(){
   var s = document.getElementById('sidebar');
   var m = document.getElementById('mainContent');
@@ -1052,108 +1046,337 @@ function avatarHTML(agent, size) {
 }
 
 // ─── NEW AGENT VIEW ────────────────────────────────────────────────────────
+
 function renderNewAgent(agentKey, agent) {
-  var main = document.getElementById('mainContent');
   var progress = getProgress(agentKey);
   var completed = countCompleted(agentKey);
   var total = ONBOARDING_STEPS.length;
   var pct = Math.round(completed/total*100);
 
-  // Update topbar greeting
-  var greet = document.querySelector('.topbar-greeting');
+  // Personalize topbar and sidebar
+  var greet = document.querySelector('.topbar-title');
   if (greet) greet.textContent = 'Welcome, ' + agent.name.split(' ')[0] + '!';
-
-  // Update sidebar avatar
-  var suserAvt = document.querySelector('.suser-avt');
-  if (suserAvt) {
-    suserAvt.outerHTML = avatarHTML(agent, 36);
-  }
   var suserName = document.querySelector('.suser-name');
   if (suserName) suserName.textContent = agent.name;
   var suserRole = document.querySelector('.suser-role');
-  if (suserRole) suserRole.textContent = agent.role;
+  if (suserRole) suserRole.textContent = agent.role + ' · New Agent';
 
-  // Replace main body content with new agent onboarding view
+  // Days since start
+  var daysSince = agent.startDate ? Math.floor((Date.now()-new Date(agent.startDate))/86400000) : '?';
+
+  // Step content definitions
+  var STEP_CONTENT = {
+    w1: {
+      desc: 'Your first stop is getting familiar with the Chez office. Here you'll find everything you need to know about access, parking, and the physical space where you'll be working.',
+      video: { title: 'Welcome to Chez HQ — Office Tour', dur: '4 min' },
+      links: [
+        { icon: '🗺️', title: 'Office Address & Parking Map', sub: '8749 SW 134th Street, Miami FL 33176', color: '#E8F5E9' },
+        { icon: '📱', title: 'Request office access code', sub: 'WhatsApp Male → (786) 280-4186', color: '#FFF0E8', href: 'https://wa.me/17862804186?text=Hi+Male,+I+need+my+office+access+code' },
+      ],
+      confirm: 'I have visited the office and know how to access it'
+    },
+    w2: {
+      desc: 'Your Lead Agent is your go-to person during onboarding. They will guide you through your first weeks, answer questions, and help you close your first deal.',
+      video: { title: 'How Chez Groups Work', dur: '5 min' },
+      links: [
+        { icon: '👤', title: 'Meet the Cabrera Group', sub: 'Mario Cabrera Jr · Lead Agent', color: '#E8F0FE' },
+        { icon: '📞', title: 'Schedule intro call with your Lead', sub: 'Mario Cabrera Jr · (786) 452-4644', color: '#FFF0E8', href: 'https://wa.me/17864524644?text=Hi+Mario,+I+am+your+new+team+member+Monica+Herrera' },
+      ],
+      confirm: 'I have connected with my Lead Agent'
+    },
+    w3: {
+      desc: 'Chez runs on WhatsApp for fast communication. You'll be added to the main team group and your group-specific channel. Make sure your notifications are on.',
+      video: null,
+      links: [
+        { icon: '💬', title: 'Chez Team — Main Group', sub: 'Ask Male or Jose to add you', color: '#E8F5E9' },
+        { icon: '💬', title: 'Cabrera Group Channel', sub: 'Ask Mario Jr to add you', color: '#FFF0E8' },
+        { icon: '📋', title: 'Chez Communication Guidelines', sub: 'Google Doc · How we communicate', color: '#F3E5F5' },
+      ],
+      confirm: 'I am in the Chez WhatsApp groups'
+    },
+    w4: {
+      desc: 'Understanding the Chez culture will help you thrive here. We are a team that leads with authenticity, supports each other, and sets the standard in Miami real estate.',
+      video: { title: 'Chez Culture & Values — Jose Medina', dur: '8 min' },
+      links: [
+        { icon: '📄', title: 'Chez Agent Handbook', sub: 'Google Doc · Read before your first week', color: '#FFF0E8' },
+        { icon: '🌐', title: 'Visit chezre.com', sub: 'Know your brand online', color: '#E8F0FE', href: 'https://www.chezre.com' },
+      ],
+      confirm: 'I have read the Chez handbook and understand our values'
+    },
+    t1: {
+      desc: 'Side is the brokerage platform that powers Chez Realty. Your Side account gives you your license under Chez, access to transactions, compliance tools, and legal support.',
+      video: { title: 'Getting Started with Side', dur: '6 min' },
+      links: [
+        { icon: '🔗', title: 'Activate your Side account', sub: 'side.com · Use your personal email', color: '#E8F0FE', href: 'https://www.side.com' },
+        { icon: '📋', title: 'Side Agent Checklist', sub: 'Google Doc · Step by step activation', color: '#FFF0E8' },
+      ],
+      confirm: 'My Side account is active and I can log in'
+    },
+    t2: {
+      desc: 'Your @chezre.com email is your professional identity. You'll use it for client communication, platform logins, and your email signature on all listings.',
+      video: { title: 'Setting up your Chez Email', dur: '3 min' },
+      links: [
+        { icon: '📬', title: 'Google Workspace — Activate account', sub: 'workspace.google.com', color: '#E8F0FE', href: 'https://workspace.google.com' },
+        { icon: '📋', title: 'Chez Email Signature Template', sub: 'Google Doc · Copy into Gmail settings', color: '#FFF0E8' },
+        { icon: '💬', title: 'Need help? Contact Male', sub: 'WhatsApp admin support', color: '#F3E5F5', href: 'https://wa.me/17862804186?text=Hi+Male,+I+need+help+setting+up+my+Chez+email' },
+      ],
+      confirm: 'I have activated my @chezre.com email and set up my signature'
+    },
+    t3: {
+      desc: 'Follow Up Boss (FUB) is our CRM — it's where all your leads live. You'll track conversations, set follow-up reminders, and manage your pipeline from day one.',
+      video: { title: 'FUB Basics for New Agents', dur: '10 min' },
+      links: [
+        { icon: '🔑', title: 'Log in to Follow Up Boss', sub: 'followupboss.com · Use your Chez email', color: '#E8F0FE', href: 'https://www.followupboss.com' },
+        { icon: '📋', title: 'Chez FUB Setup Guide', sub: 'Google Doc · Pipelines, tags & automations', color: '#FFF0E8' },
+      ],
+      confirm: 'I am logged into FUB and my account is configured'
+    },
+    t4: {
+      desc: 'MLS Miami is where you'll search properties, set up client searches, and submit listings. Your MLS access is tied to your active license — make sure it's connected.',
+      video: { title: 'MLS Miami — First Time Setup', dur: '7 min' },
+      links: [
+        { icon: '🏘', title: 'MLS Miami Portal', sub: 'mlsmiami.com · Agent login', color: '#E8F0FE', href: 'https://www.mlsmiami.com' },
+        { icon: '💬', title: 'Request MLS access from Johanna', sub: 'Managing Broker · WhatsApp', color: '#FFF0E8' },
+      ],
+      confirm: 'I have MLS Miami access and can search properties'
+    },
+    t5: {
+      desc: 'All Chez contracts are signed digitally. Setting up your digital signature now means you're ready to close from day one — no printing, no scanning, ever.',
+      video: { title: 'DocuSign Setup in 5 minutes', dur: '5 min' },
+      links: [
+        { icon: '✍️', title: 'Set up DocuSign account', sub: 'docusign.com · Free agent account', color: '#E8F0FE', href: 'https://www.docusign.com' },
+        { icon: '📋', title: 'Chez Signature Standards', sub: 'Google Doc · How to sign correctly', color: '#FFF0E8' },
+      ],
+      confirm: 'My digital signature is set up and ready to use'
+    },
+    b1: {
+      desc: 'Your Zillow profile is one of the first things clients see. A complete profile with reviews and listings builds trust instantly. Chez has a 5-star team profile — yours will be linked to it.',
+      video: { title: 'Zillow Profile Optimization — Chez Standard', dur: '8 min' },
+      links: [
+        { icon: '🏡', title: 'Chez Realty on Zillow', sub: 'zillow.com/profile/chezrealty · 330 reviews', color: '#E8F0FE', href: 'https://www.zillow.com/profile/chezrealty' },
+        { icon: '📋', title: 'Zillow Profile Checklist', sub: 'Google Doc · Photo, bio, service areas', color: '#FFF0E8' },
+      ],
+      confirm: 'My Zillow profile is complete and linked to Chez Realty'
+    },
+    b2: {
+      desc: 'Luxury Presence is your personal real estate website — branded to you, connected to your listings, and designed to capture leads. Chez provides this as part of your membership.',
+      video: { title: 'Setting Up Luxury Presence', dur: '9 min' },
+      links: [
+        { icon: '🌐', title: 'Luxury Presence Platform', sub: 'luxurypresence.com · Your Chez website', color: '#7B68EE20', href: 'https://www.luxurypresence.com' },
+        { icon: '📋', title: 'Chez Website Brand Guidelines', sub: 'Colors, fonts, bio template', color: '#FFF0E8' },
+      ],
+      confirm: 'My Luxury Presence website is live and configured'
+    },
+    b3: {
+      desc: 'Your social media presence is a key part of your personal brand. Update your Instagram, Facebook, and LinkedIn bio to reflect your role at Chez Realty before you start posting.',
+      video: { title: 'Agent Social Media Setup', dur: '6 min' },
+      links: [
+        { icon: '📸', title: 'Chez Social Media Brand Kit', sub: 'Canva templates · Colors, logos, fonts', color: '#E87DB820' },
+        { icon: '📋', title: 'Social Bio Template', sub: 'Google Doc · Copy for IG, FB, LinkedIn', color: '#FFF0E8' },
+        { icon: '💬', title: 'Submit your handles to Agentz', sub: 'They will tag you in Chez posts', color: '#E8F0FE' },
+      ],
+      confirm: 'My social media bios are updated with my Chez role'
+    },
+    m1: {
+      desc: 'Your professional headshot is one of the most important assets in your real estate career. It goes on Zillow, your website, your listings, and all Chez marketing materials. Schedule your photo session as soon as possible.',
+      video: { title: 'What to Expect at Your Photo Session', dur: '3 min' },
+      links: [
+        { icon: '📷', title: 'Schedule your Chez headshot session', sub: 'Contact Male to book your slot', color: '#E87DB820', href: 'https://wa.me/17862804186?text=Hi+Male,+I+need+to+schedule+my+headshot+session' },
+        { icon: '👗', title: 'Photo Session Guidelines', sub: 'Google Doc · What to wear, prep tips', color: '#FFF0E8' },
+      ],
+      confirm: 'I have scheduled my professional headshot session'
+    },
+    m2: {
+      desc: 'Agentz is your marketing team at Chez. They create your social posts, listing flyers, email campaigns, and more. Your first step is completing their onboarding so they know your brand.',
+      video: { title: 'Agentz Platform Overview', dur: '5 min' },
+      links: [
+        { icon: '🎨', title: 'Complete Agentz New Agent Form', sub: 'agentz.co · Brand preferences & goals', color: '#FFF0E8', href: 'https://www.agentz.co' },
+        { icon: '📋', title: 'Chez Marketing Playbook', sub: 'Google Doc · What Agentz can create for you', color: '#E8F0FE' },
+      ],
+      confirm: 'I have completed the Agentz onboarding form'
+    },
+    m3: {
+      desc: 'Having your marketing materials ready from day one gives you a professional edge. Work with Agentz to create your first set of flyers — for listings, open houses, and your personal brand.',
+      video: null,
+      links: [
+        { icon: '📄', title: 'Request your first flyers from Agentz', sub: 'Use the hub Marketing button', color: '#E87DB820' },
+        { icon: '📋', title: 'Flyer Request Guide', sub: 'Google Doc · What info to provide', color: '#FFF0E8' },
+      ],
+      confirm: 'I have requested my first marketing materials from Agentz'
+    },
+    f1: {
+      desc: 'Chez trainings are one of the most valuable parts of your membership. Attending your first training puts you in the room with your team, accelerates your learning, and makes you feel part of the Chez family.',
+      video: { title: 'Types of Chez Trainings Explained', dur: '4 min' },
+      links: [
+        { icon: '📅', title: 'View April Training Schedule', sub: 'Chez Hub · April Trainings section', color: '#E8F0FE' },
+        { icon: '💬', title: 'Confirm attendance with your Lead', sub: 'WhatsApp Mario Jr', color: '#FFF0E8' },
+      ],
+      confirm: 'I have attended my first Chez training session'
+    },
+    f2: {
+      desc: 'Open Houses are your fastest path to leads and experience. Even if you don't have a listing yet, you can assist a teammate. It's how most Chez agents close their first deal.',
+      video: { title: 'How to Run a Chez Open House', dur: '12 min' },
+      links: [
+        { icon: '🏠', title: 'Open House Best Practices Guide', sub: 'Google Doc · Setup, scripts, follow-up', color: '#E8F0FE' },
+        { icon: '💬', title: 'Ask your Lead to shadow an Open House', sub: 'Great way to learn by watching', color: '#FFF0E8' },
+      ],
+      confirm: 'I have hosted or assisted at a Chez Open House'
+    },
+    f3: {
+      desc: 'Your first deal is a milestone — and Chez will celebrate it with you. Whether you are the lead agent or in a co-broke with your team, getting that first contract signed is everything.',
+      video: { title: 'Chez Transaction Process A to Z', dur: '15 min' },
+      links: [
+        { icon: '📋', title: 'Chez Transaction Checklist', sub: 'Google Doc · From contract to close', color: '#E8F0FE' },
+        { icon: '💬', title: 'Talk to your Lead about your first lead', sub: 'They will help you convert', color: '#FFF0E8' },
+      ],
+      confirm: 'I have closed or assisted in my first Chez deal'
+    },
+  };
+
   var body = document.querySelector('.body');
   if (!body) return;
 
-  var catHTML = '';
-  Object.keys(CAT_META).forEach(function(cat) {
+  // Build category HTML
+  function buildStep(step, agentKey, progress) {
+    var done = !!progress[step.id];
+    var sc = STEP_CONTENT[step.id] || {};
+    var catColor = CAT_META[step.cat].color;
+
+    var videoHTML = '';
+    if (sc.video) {
+      videoHTML = '<div style="margin-top:12px">' +
+        '<div style="font-size:10px;font-weight:700;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Watch first</div>' +
+        '<div style="background:#1A1A1A;border-radius:8px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer">' +
+          '<div style="width:34px;height:34px;border-radius:50%;background:#E8651A;display:flex;align-items:center;justify-content:center;flex-shrink:0">' +
+            '<svg width="12" height="12" viewBox="0 0 24 24" fill="white" style="margin-left:2px"><polygon points="5 3 19 12 5 21 5 3"/></svg>' +
+          '</div>' +
+          '<div>' +
+            '<div style="font-size:12px;font-weight:500;color:white">' + sc.video.title + '</div>' +
+            '<div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px">' + sc.video.dur + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+
+    var linksHTML = '';
+    if (sc.links && sc.links.length) {
+      linksHTML = '<div style="margin-top:12px">' +
+        '<div style="font-size:10px;font-weight:700;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Resources</div>';
+      sc.links.forEach(function(link) {
+        var tag = link.href ? 'a href="'+link.href+'" target="_blank"' : 'div';
+        var endTag = link.href ? 'a' : 'div';
+        linksHTML += '<' + tag + ' style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:white;border:0.5px solid #eee;border-radius:8px;margin-bottom:6px;text-decoration:none;cursor:pointer">' +
+          '<div style="width:28px;height:28px;border-radius:6px;background:' + link.color + ';display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">' + link.icon + '</div>' +
+          '<div style="flex:1"><div style="font-size:12px;font-weight:500;color:#1A1A1A">' + link.title + '</div>' +
+          '<div style="font-size:10px;color:#999;margin-top:1px">' + link.sub + '</div></div>' +
+          '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>' +
+        '</' + endTag + '>';
+      });
+      linksHTML += '</div>';
+    }
+
+    var checkHTML = sc.confirm ? 
+      '<div style="margin-top:14px;padding:12px;background:#FFF8F5;border:1px solid #FFD5B8;border-radius:8px;display:flex;align-items:center;gap:10px">' +
+        '<div id="chk-'+step.id+'" onclick="toggleStep(this)" data-step="'+step.id+'" data-agent="'+agentKey+'" style="width:20px;height:20px;border-radius:5px;border:2px solid '+(done?'#E8651A':'#ddd')+';background:'+(done?'#E8651A':'white')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer">' +
+          '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="display:'+(done?'block':'none')+'">' +
+            '<polyline points="20 6 9 17 4 12"/></svg>' +
+        '</div>' +
+        '<div style="font-size:12px;color:#C8601A;font-weight:500">' + sc.confirm + '</div>' +
+      '</div>' : '';
+
+    return '<div class="chez-step" style="border-bottom:0.5px solid #f5f5f5">' +
+      '<div onclick="toggleStepExpand('' + step.id + '')" style="padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none">' +
+        '<div style="font-size:16px;width:22px;text-align:center;flex-shrink:0">' + step.icon + '</div>' +
+        '<div style="flex:1;font-size:13px;font-weight:500;color:'+(done?'#bbb':'#1A1A1A')+';'+(done?'text-decoration:line-through':'')+'">' + step.label + '</div>' +
+        '<div style="font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;background:'+(done?'#E8F5E9':'#F5F5F5')+';color:'+(done?'#2E7D32':'#999')+'">' + (done?'Done':'Pending') + '</div>' +
+        '<svg id="chev-'+step.id+'" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" style="flex-shrink:0;transition:transform 0.2s"><polyline points="6 9 12 15 18 9"/></svg>' +
+      '</div>' +
+      '<div id="content-'+step.id+'" style="display:none;padding:0 16px 16px 48px;background:#FAFAFA;border-top:0.5px solid #f0f0f0">' +
+        '<div style="font-size:12px;color:#555;line-height:1.65;margin-top:12px">' + (sc.desc||'') + '</div>' +
+        videoHTML + linksHTML + checkHTML +
+      '</div>' +
+    '</div>';
+  }
+
+  function buildCat(cat) {
     var meta = CAT_META[cat];
     var steps = ONBOARDING_STEPS.filter(function(s){ return s.cat===cat; });
     var catDone = steps.filter(function(s){ return progress[s.id]; }).length;
     var catPct = Math.round(catDone/steps.length*100);
-    
-    catHTML += '<div style="background:white;border:1px solid #eee;border-radius:12px;margin-bottom:12px;overflow:hidden">';
-    catHTML += '<div style="padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">';
-    catHTML += '<div style="width:10px;height:10px;border-radius:50%;background:'+meta.color+';flex-shrink:0"></div>';
-    catHTML += '<div style="flex:1"><div style="font-weight:600;font-size:14px">'+meta.label+'</div>';
-    catHTML += '<div style="font-size:11px;color:#888;margin-top:2px">'+catDone+' of '+steps.length+' complete</div></div>';
-    catHTML += '<div style="width:60px;height:6px;background:#f0f0f0;border-radius:3px;overflow:hidden"><div style="width:'+catPct+'%;height:100%;background:'+meta.color+';border-radius:3px;transition:width 0.3s"></div></div>';
-    catHTML += '</div>';
-    catHTML += '<div style="display:block;padding:0 18px 14px;border-top:1px solid #f5f5f5">';
-    steps.forEach(function(step){
-      var done = !!progress[step.id];
-      catHTML += '<label style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f9f9f9;cursor:pointer">';
-      catHTML += '<input type="checkbox" '+(done?'checked':'')+' data-step="'+step.id+'" data-agent="'+agentKey+'" onchange="toggleStep(this)" style="width:18px;height:18px;accent-color:'+meta.color+';flex-shrink:0">';
-      catHTML += '<span style="font-size:15px">'+step.icon+'</span>';
-      catHTML += '<span style="font-size:13px;'+(done?'text-decoration:line-through;color:#aaa':'')+'" class="step-'+step.id+'">'+step.label+'</span>';
-      catHTML += '</label>';
-    });
-    catHTML += '</div></div>';
-  });
+    var stepsHTML = steps.map(function(s){ return buildStep(s, agentKey, progress); }).join('');
 
-  body.innerHTML = 
-    // Hero
-    '<div style="background:#2A2A2A;border-radius:16px;padding:28px 32px;margin-bottom:20px;display:flex;align-items:center;gap:20px">' +
-      avatarHTML(agent, 64) +
-      '<div style="flex:1">' +
-        '<div style="font-size:11px;font-weight:700;color:#E8651A;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:4px">Welcome to Chez · '+agent.group+' Group</div>' +
-        '<div style="font-family:Lato,sans-serif;font-size:28px;font-weight:900;color:white">'+agent.name+'</div>' +
-        '<div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px">'+agent.role+'</div>' +
+    return '<div style="background:white;border:0.5px solid #eee;border-radius:12px;margin-bottom:10px;overflow:hidden">' +
+      '<div style="padding:14px 16px;display:flex;align-items:center;gap:10px">' +
+        '<div style="width:8px;height:8px;border-radius:50%;background:'+meta.color+';flex-shrink:0"></div>' +
+        '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#1A1A1A">'+meta.label+'</div>' +
+        '<div style="font-size:11px;color:#999;margin-top:1px">'+catDone+' of '+steps.length+' complete</div></div>' +
+        '<div style="width:60px;height:5px;background:#f0f0f0;border-radius:3px;overflow:hidden">' +
+          '<div style="width:'+catPct+'%;height:100%;background:'+meta.color+';border-radius:3px;transition:width 0.3s"></div>' +
+        '</div>' +
       '</div>' +
-      '<div style="text-align:center">' +
-        '<div style="font-family:Lato,sans-serif;font-size:42px;font-weight:900;color:white;line-height:1">'+pct+'%</div>' +
-        '<div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">'+completed+' of '+total+' steps</div>' +
-        '<div style="width:100%;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;margin-top:8px;overflow:hidden">' +
-          '<div style="width:'+pct+'%;height:100%;background:#E8651A;border-radius:3px;transition:width 0.4s" id="main-progress-bar"></div>' +
+      '<div style="border-top:0.5px solid #f5f5f5">' + stepsHTML + '</div>' +
+    '</div>';
+  }
+
+  var catsHTML = Object.keys(CAT_META).map(buildCat).join('');
+
+  body.innerHTML =
+    '<div style="background:#2A2A2A;border-radius:14px;padding:22px 26px;margin-bottom:18px;display:flex;align-items:center;gap:18px">' +
+      avatarHTML(agent, 60) +
+      '<div style="flex:1">' +
+        '<div style="font-size:10px;font-weight:700;color:#E8651A;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:4px">Welcome to Chez · '+agent.group+' Group</div>' +
+        '<div style="font-family:Lato,sans-serif;font-size:24px;font-weight:900;color:white;line-height:1.1">'+agent.name+'</div>' +
+        '<div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:3px">'+agent.role+' · Day '+daysSince+'</div>' +
+      '</div>' +
+      '<div style="text-align:center;flex-shrink:0">' +
+        '<div id="pct-display" style="font-family:Lato,sans-serif;font-size:38px;font-weight:900;color:white;line-height:1">'+pct+'%</div>' +
+        '<div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px" id="steps-display">'+completed+' of '+total+' steps</div>' +
+        '<div style="width:90px;height:5px;background:rgba(255,255,255,0.1);border-radius:3px;margin-top:8px;overflow:hidden">' +
+          '<div id="main-bar" style="width:'+pct+'%;height:100%;background:#E8651A;border-radius:3px;transition:width 0.4s"></div>' +
         '</div>' +
       '</div>' +
     '</div>' +
-    // Onboarding steps
-    '<div style="font-family:Lato,sans-serif;font-size:11px;font-weight:700;color:#999;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px">Your Onboarding</div>' +
-    catHTML +
-    // Help button
-    '<div style="margin-top:16px;padding:16px;background:#FFF8F5;border:1px solid #FFD5B8;border-radius:12px;display:flex;align-items:center;gap:12px">' +
-      '<div style="font-size:24px">💬</div>' +
-      '<div style="flex:1"><div style="font-weight:600;font-size:13px">Need help?</div><div style="font-size:12px;color:#888">Your admin team is here for you</div></div>' +
-      '<a href="https://wa.me/17862804186?text=Hi+Jose,+I+need+help+with+my+onboarding" target="_blank" style="background:#E8651A;color:white;text-decoration:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:600">WhatsApp Jose</a>' +
+    '<div style="font-size:10px;font-weight:700;color:#999;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px">Your Onboarding</div>' +
+    catsHTML +
+    '<div style="background:#FFF8F5;border:0.5px solid #FFD5B8;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-top:4px">' +
+      '<div style="font-size:22px">💬</div>' +
+      '<div style="flex:1"><div style="font-size:13px;font-weight:500;color:#1A1A1A">Need help?</div>' +
+      '<div style="font-size:12px;color:#999;margin-top:1px">Your admin team is ready to support you</div></div>' +
+      '<a href="https://wa.me/17862804186?text=Hi+Male,+I+need+help+with+my+onboarding" target="_blank" style="background:#E8651A;color:white;text-decoration:none;border-radius:8px;padding:9px 16px;font-size:12px;font-weight:600;white-space:nowrap">WhatsApp Male</a>' +
     '</div>';
 }
 
-function toggleStep(checkbox) {
-  var agentKey = checkbox.dataset.agent;
-  var stepId = checkbox.dataset.step;
-  var done = checkbox.checked;
+function toggleStepExpand(stepId) {
+  var content = document.getElementById('content-'+stepId);
+  var chev = document.getElementById('chev-'+stepId);
+  if (!content) return;
+  var open = content.style.display !== 'none';
+  content.style.display = open ? 'none' : 'block';
+  if (chev) chev.style.transform = open ? '' : 'rotate(180deg)';
+}
+
+function toggleStep(el) {
+  var agentKey = el.dataset.agent;
+  var stepId = el.dataset.step;
+  var done = !el.style.background.includes('E8651A');
   saveProgress(agentKey, stepId, done);
+  el.style.background = done ? '#E8651A' : 'white';
+  el.style.borderColor = done ? '#E8651A' : '#ddd';
+  el.querySelector('svg').style.display = done ? 'block' : 'none';
+
+  // Update header status badge
+  var chk = document.getElementById('chk-'+stepId);
   
-  // Update label styling
-  var label = checkbox.parentElement.querySelector('.step-'+stepId);
-  if (label) {
-    label.style.textDecoration = done ? 'line-through' : '';
-    label.style.color = done ? '#aaa' : '';
-  }
-  
-  // Update progress bar
+  // Refresh progress numbers
   var completed = countCompleted(agentKey);
   var total = ONBOARDING_STEPS.length;
   var pct = Math.round(completed/total*100);
-  var bar = document.getElementById('main-progress-bar');
-  if (bar) bar.style.width = pct + '%';
-  
-  // Update percentage display
-  var firstDiv = document.querySelector('[style*="font-size:42px"]');
-  if (firstDiv) firstDiv.textContent = pct + '%';
+  var bar = document.getElementById('main-bar');
+  if (bar) bar.style.width = pct+'%';
+  var pctEl = document.getElementById('pct-display');
+  if (pctEl) pctEl.textContent = pct+'%';
+  var stepsEl = document.getElementById('steps-display');
+  if (stepsEl) stepsEl.textContent = completed+' of '+total+' steps';
 }
 
 // ─── ADMIN VIEW ─────────────────────────────────────────────────────────────
@@ -1227,6 +1450,15 @@ function renderAdmin() {
 
 // ─── INIT ──────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function() {
+  // ── Sidebar init ──
+  var s = document.getElementById('sidebar');
+  var m = document.getElementById('mainContent');
+  if (s && m) {
+    var c = localStorage.getItem('sidebarCollapsed')==='true' || window.innerWidth < 1100;
+    if (c) { s.classList.add('collapsed'); m.style.marginLeft='60px'; }
+  }
+
+  // ── Agent routing ──
   var agentParam = getParam('agent');
   var adminParam = getParam('admin');
 
@@ -1239,17 +1471,10 @@ window.addEventListener('DOMContentLoaded', function() {
     var agentKey = agentParam.toLowerCase();
     var agent = AGENTS[agentKey];
     if (!agent) {
-      // Unknown agent - show error
-      document.querySelector('.body').innerHTML = 
-        '<div style="text-align:center;padding:80px 20px;font-family:Lato,sans-serif">' +
-        '<div style="font-size:48px;margin-bottom:16px">🤔</div>' +
-        '<div style="font-size:20px;font-weight:700;margin-bottom:8px">Agent not found</div>' +
-        '<div style="color:#888;margin-bottom:24px">We couldn't find "'+agentParam+'" in the Chez team.</div>' +
-        '<a href="?" style="color:#E8651A">Go to main hub</a>' +
-        '</div>';
+      var body = document.querySelector('.body');
+      if (body) body.innerHTML = '<div style="text-align:center;padding:80px 20px;font-family:Lato,sans-serif"><div style="font-size:48px;margin-bottom:16px">🤔</div><div style="font-size:20px;font-weight:700;margin-bottom:8px">Agent not found</div><div style="color:#888;margin-bottom:24px">We couldn\'t find \"'+agentParam+'\" in the Chez team.</div><a href="?" style="color:#E8651A">Go to main hub</a></div>';
       return;
     }
-
     // Record last seen
     var p = getProgress(agentKey);
     p['_lastSeen'] = Date.now();
@@ -1258,22 +1483,17 @@ window.addEventListener('DOMContentLoaded', function() {
     if (isNewAgent(agent)) {
       renderNewAgent(agentKey, agent);
     } else {
-      // Active agent - personalize the existing hub
-      var greeting = document.querySelector('.topbar-greeting');
-      if (greeting) greeting.innerHTML = 'Good morning, <strong>'+agent.name.split(' ')[0]+'</strong>';
+      // Active agent personalization
+      var greet = document.querySelector('.topbar-title');
+      if (greet) greet.textContent = 'Good morning, ' + agent.name.split(' ')[0];
       var suserName = document.querySelector('.suser-name');
       if (suserName) suserName.textContent = agent.name;
       var suserRole = document.querySelector('.suser-role');
       if (suserRole) suserRole.textContent = agent.role;
-      // Update avatar
       var sAvt = document.querySelector('.suser-avt');
-      if (sAvt) {
-        var photoUrl = getPhotoUrl(agent);
-        if (photoUrl) sAvt.src = photoUrl;
-      }
+      if (sAvt && agent.photo) sAvt.src = PHOTO_BASE + agent.photo;
     }
   }
-});
-</script>
+});</script>
 </body>
 </html>
