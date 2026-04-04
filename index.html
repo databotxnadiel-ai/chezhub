@@ -30,8 +30,20 @@ body{font-family:var(--font-body);background:var(--gray-50);color:var(--gray-900
 a{text-decoration:none;color:inherit}
 
 /* SIDEBAR */
-.sidebar{width:230px;min-height:100vh;background:var(--black);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
-.slogo{padding:20px 20px 18px;border-bottom:1px solid rgba(255,255,255,0.07)}.slogo-lockup{display:flex;align-items:center;gap:11px}
+.sidebar{width:230px;min-width:60px;min-height:100vh;background:var(--black);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto;transition:width 0.22s ease}
+.sidebar.collapsed{width:60px}
+.sidebar.collapsed .slogo-text{display:none}
+.sidebar.collapsed .slabel{display:none}
+.sidebar.collapsed .sitem-label{display:none}
+.sidebar.collapsed .sbadge{display:none}
+.sidebar.collapsed .suser-info{display:none}
+.sidebar.collapsed .sitem{justify-content:center;padding:10px 0}
+.sidebar.collapsed .sdot{display:none}
+.sidebar.collapsed .slogo{justify-content:center;padding:20px 0 18px}
+.sidebar.collapsed .stoggle-icon{transform:rotate(180deg)}
+.sidebar.collapsed .sitem{position:relative}
+.sidebar.collapsed .sitem:hover::after{content:attr(data-label);position:absolute;left:68px;background:#333;color:white;font-size:11px;padding:4px 10px;border-radius:6px;white-space:nowrap;pointer-events:none;z-index:200;top:50%;transform:translateY(-50%)}
+.slogo{border-bottom:1px solid rgba(255,255,255,0.07)}.slogo-lockup{display:flex;align-items:center;gap:11px}
 .slogo-chez{font-family:'Lato',sans-serif;font-size:22px;font-weight:900;color:var(--orange);letter-spacing:2px;text-transform:uppercase;line-height:1}
 .slogo-sub{font-size:10px;color:rgba(255,255,255,0.28);letter-spacing:0.2em;text-transform:uppercase;margin-top:3px}
 .snav{padding:12px 0;flex:1}
@@ -49,7 +61,8 @@ a{text-decoration:none;color:inherit}
 .suser-role{font-size:10px;color:rgba(255,255,255,0.28);margin-top:1px}
 
 /* MAIN */
-.main{margin-left:230px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+.main{margin-left:230px;flex:1;display:flex;flex-direction:column;min-height:100vh;transition:margin-left 0.22s ease}
+
 
 /* TOPBAR */
 .topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
@@ -148,19 +161,7 @@ a{text-decoration:none;color:inherit}
 .b-admin{background:var(--gray-100);color:var(--gray-500)}
 
 /* RESPONSIVE */
-@media(max-width:900px){
-  .sidebar{width:60px}
-  .slogo-sub,.sitem span:not(.sdot),.suser-info,.slabel{display:none}
-  .slogo-chez{font-size:18px}
-  .sitem{padding:12px;justify-content:center}
-  .main{margin-left:60px}
-  .grid2{grid-template-columns:1fr}
-  .steps{grid-template-columns:1fr}
-  .mktg-grid{grid-template-columns:repeat(2,1fr)}
-  .topbar{padding:0 16px}
-  .body{padding:16px}
-  .welcome{flex-direction:column;align-items:flex-start}
-}
+
 
 /* HERO */
 .hero-banner{background:#2A2A2A;border-radius:16px;padding:28px 32px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;position:relative;min-height:200px}
@@ -223,36 +224,95 @@ a{text-decoration:none;color:inherit}
 .sale-price{font-size:13px;font-weight:700;color:var(--orange);white-space:nowrap}
 
 @media(max-width:900px){.widgets-row{grid-template-columns:1fr}.hero-visual{display:none}.hero-banner{min-height:160px}}
+
+/* SIDEBAR COLLAPSIBLE */
+.sidebar{transition:width 0.22s ease}
+.sidebar.collapsed{width:60px;min-width:60px}
+.sitem-icon{flex-shrink:0;display:flex !important;align-items:center;justify-content:center;min-width:20px;opacity:0.45}
+.sitem-label{white-space:nowrap;overflow:hidden}
+.sidebar.collapsed .sitem-label{display:none}
+.sidebar.collapsed .sdot{display:none}
+.sidebar.collapsed .slabel{display:none}
+.sidebar.collapsed .suser-info{display:none}
+.sidebar.collapsed .slogo-text{display:none}
+.sidebar.collapsed .sbadge{display:none}
+.sidebar.collapsed .stoggle-icon{transform:rotate(180deg)}
+.sidebar.collapsed .sitem{justify-content:center;padding:10px 0;gap:0;margin:1px 4px;overflow:visible}
+.sidebar.collapsed .slogo{justify-content:center !important;padding:20px 0 18px !important}
+.main{transition:margin-left 0.22s ease}
+
+.sitem-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:18px;opacity:0.5}
+.sitem.active .sitem-icon{opacity:1}
+.sitem:hover .sitem-icon{opacity:0.8}
+.sitem-label{overflow:hidden;white-space:nowrap}
+.sidebar{transition:width 0.2s ease}
+.sidebar.collapsed{width:60px !important}
+.sidebar.collapsed .slogo-text,.sidebar.collapsed .suser-info,.sidebar.collapsed .slabel,.sidebar.collapsed .sitem-label,.sidebar.collapsed .sbadge{display:none !important}
+.sidebar.collapsed .sitem{padding:10px 0 !important;justify-content:center !important;gap:0 !important;margin:1px 4px !important}
+.sidebar.collapsed .sitem-icon{opacity:0.7 !important}
+.sidebar.collapsed .slogo{justify-content:center !important;padding:18px 0 !important}
+@media(max-width:1100px){
+  .sidebar{width:60px}
+  .slogo-text,.suser-info,.slabel,.sitem-label,.sbadge{display:none !important}
+  .sitem{padding:10px 0 !important;justify-content:center !important;gap:0 !important;margin:1px 4px !important}
+  .sitem-icon{opacity:0.7 !important}
+  .slogo{justify-content:center !important;padding:18px 0 !important}
+  .main{margin-left:60px !important}
+}
+
+/* Collapsible Sidebar */
+.sitem-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:18px;opacity:0.5}
+.sitem.active .sitem-icon,.sitem:hover .sitem-icon{opacity:1}
+.sitem-label{overflow:hidden;white-space:nowrap}
+.sidebar{transition:width 0.2s ease}
+.sidebar.collapsed,.sidebar.collapsed{width:60px}
+.sidebar.collapsed .slogo-text,.sidebar.collapsed .suser-info,
+.sidebar.collapsed .slabel,.sidebar.collapsed .sitem-label,
+.sidebar.collapsed .sbadge{display:none}
+.sidebar.collapsed .sitem{padding:10px 0;justify-content:center;gap:0;margin:1px 4px}
+.sidebar.collapsed .sitem-icon{opacity:0.7}
+.sidebar.collapsed .slogo{justify-content:center !important;padding:18px 0 !important}
+@media(max-width:1100px){
+  .sidebar{width:60px}
+  .slogo-text,.suser-info,.slabel,.sitem-label,.sbadge{display:none}
+  .sitem{padding:10px 0;justify-content:center;gap:0;margin:1px 4px}
+  .sitem-icon{opacity:0.7}
+  .slogo{justify-content:center !important;padding:18px 0 !important}
+  .main{margin-left:60px !important}
+}
 </style>
 </head>
 <body>
 
-<div class="sidebar">
-  <div class="slogo">
-    <span style="font-family:'Lato',sans-serif;font-size:22px;font-weight:900;color:#E8651A;letter-spacing:3px;text-transform:uppercase;line-height:1">CHEZ HUB</span>
+<div class="sidebar" id="sidebar">
+  <div class="slogo" style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 18px">
+    <span class="slogo-text" style="font-family:'Lato',sans-serif;font-size:22px;font-weight:900;color:#E8651A;letter-spacing:3px;text-transform:uppercase;line-height:1">CHEZ HUB</span>
+    <button onclick="toggleSidebar()" style="background:none;border:none;cursor:pointer;padding:4px;border-radius:6px;display:flex;align-items:center;justify-content:center;opacity:0.4;transition:opacity 0.15s" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='0.4'">
+      <svg class="stoggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="transition:transform 0.22s ease"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
   </div>
   <nav class="snav">
     <div class="slabel">My Portal</div>
-    <a class="sitem active" href="#inicio"><span class="sdot"></span>Home</a>
-    <a class="sitem" href="#onboarding"><span class="sdot"></span>My Onboarding <span class="sbadge sbadge-pct">40%</span></a>
-    <a class="sitem" href="#perfil"><span class="sdot"></span>My Profile</a>
+    <a class="sitem active" data-label="Home" href="#inicio"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span class="sdot"></span><span class="sitem-label">Home</span></a>
+    <a class="sitem" data-label="My Onboarding" href="#onboarding"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span class="sdot"></span><span class="sitem-label">My Onboarding</span> <span class="sbadge sbadge-pct">40%</span></a>
+    <a class="sitem" data-label="My Profile" href="#perfil"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span><span class="sdot"></span><span class="sitem-label">My Profile</span></a>
     <div class="slabel">Knowledge</div>
-    <a class="sitem" href="#guias"><span class="sdot"></span>Guides & Processes</a>
-    <a class="sitem" href="#scripts"><span class="sdot"></span>Sales Scripts</a>
-    <a class="sitem" href="#cursos"><span class="sdot"></span>Courses</a>
+    <a class="sitem" data-label="Guides & Processes" href="#guias"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span><span class="sdot"></span><span class="sitem-label">Guides & Processes</span></a>
+    <a class="sitem" data-label="Sales Scripts" href="#scripts"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="sdot"></span><span class="sitem-label">Sales Scripts</span></a>
+    <a class="sitem" data-label="Courses" href="#cursos"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span><span class="sdot"></span><span class="sitem-label">Courses</span></a>
     <div class="slabel">Tech & Tools</div>
-    <a class="sitem" href="https://app.followupboss.com" target="_blank"><span class="sdot"></span>Follow Up Boss</a>
-    <a class="sitem" href="https://www.zillow.com" target="_blank"><span class="sdot"></span>Zillow</a>
-    <a class="sitem" href="https://www.miamiresidential.com" target="_blank"><span class="sdot"></span>MLS Miami</a>
-    <a class="sitem" href="https://chezre.com" target="_blank"><span class="sdot"></span>Luxury Presence</a>
+    <a class="sitem" data-label="Follow Up Boss" href="https://app.followupboss.com" target="_blank"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="sdot"></span><span class="sitem-label">Follow Up Boss</span></a>
+    <a class="sitem" data-label="Zillow" href="https://www.zillow.com" target="_blank"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span class="sdot"></span><span class="sitem-label">Zillow</span></a>
+    <a class="sitem" data-label="MLS Miami" href="https://www.miamiresidential.com" target="_blank"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><span class="sdot"></span><span class="sitem-label">MLS Miami</span></a>
+    <a class="sitem" data-label="Luxury Presence" href="https://chezre.com" target="_blank"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg></span><span class="sdot"></span><span class="sitem-label">Luxury Presence</span></a>
     <div class="slabel">Support</div>
-    <a class="sitem" href="#marketing"><span class="sdot"></span>Marketing · Agentz <span class="sbadge sbadge-new">new</span></a>
-    <a class="sitem" href="#legal"><span class="sdot"></span>Legal Support</a>
-    <a class="sitem" href="#admin"><span class="sdot"></span>Admin & Contracts</a>
+    <a class="sitem" data-label="Agentz Marketing" href="#marketing"><span class="sitem-icon" style="font-family:'Lato',sans-serif;font-size:13px;font-weight:900;color:currentColor;letter-spacing:-1px">Z</span><span class="sdot"></span><span class="sitem-label">Agentz Marketing</span> <span class="sbadge sbadge-new">new</span></a>
+    <a class="sitem" data-label="Legal Support" href="#legal"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m14.5 2-8.5 8.5 6 6 8.5-8.5"/><path d="m5 5 3 3"/><path d="m15 19 3 3"/><path d="M5 19 2 22"/></svg></span><span class="sdot"></span><span class="sitem-label">Legal Support</span></a>
+    <a class="sitem" data-label="Admin & Contracts" href="#admin"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><span class="sdot"></span><span class="sitem-label">Admin & Contracts</span></a>
     <div class="slabel">Community</div>
-    <a class="sitem" href="#equipo"><span class="sdot"></span>The Team</a>
-    <a class="sitem" href="#celebraciones"><span class="sdot"></span>Celebrations</a>
-    <a class="sitem" href="#anuncios"><span class="sdot"></span>Announcements</a>
+    <a class="sitem" data-label="The Team" href="#equipo"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="sdot"></span><span class="sitem-label">The Team</span></a>
+    <a class="sitem" data-label="Celebrations" href="#celebraciones"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><span class="sdot"></span><span class="sitem-label">Celebrations</span></a>
+    <a class="sitem" data-label="Announcements" href="#anuncios"><span class="sitem-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span><span class="sdot"></span><span class="sitem-label">Announcements</span></a>
   </nav>
   <div class="suser">
     <img class="suser-avt" src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/JOSE%20MEDINA.jpg" alt="Jose Medina">
@@ -263,7 +323,7 @@ a{text-decoration:none;color:inherit}
   </div>
 </div>
 
-<div class="main">
+<div class="main" id="mainContent">
   <div class="topbar">
     <div style="display:flex;align-items:baseline;gap:8px">
       <span class="topbar-title">Good morning, Jose</span>
@@ -833,6 +893,386 @@ function filterAgents(q) {
 
 window.addEventListener('load', () => {
   setTimeout(() => { document.getElementById('pfill').style.width = '40%'; }, 400);
+});
+</script>
+
+<script>
+function toggleSidebar() {
+  var s = document.getElementById('sidebar');
+  if (!s) return;
+  var collapsed = s.classList.toggle('collapsed');
+  localStorage.setItem('sidebarCollapsed', collapsed);
+  document.getElementById('mainContent').style.marginLeft = collapsed ? '60px' : '230px';
+  s.querySelector('.stoggle-icon').style.transform = collapsed ? 'rotate(180deg)' : '';
+}
+window.addEventListener('DOMContentLoaded', function(){
+  var s = document.getElementById('sidebar');
+  var m = document.getElementById('mainContent');
+  if (!s) return;
+  var c = localStorage.getItem('sidebarCollapsed')==='true' || window.innerWidth < 1100;
+  if (c) { s.classList.add('collapsed'); if(m) m.style.marginLeft='60px'; }
+});
+window.addEventListener('resize', function(){
+  var s = document.getElementById('sidebar');
+  var m = document.getElementById('mainContent');
+  if (!s||!m) return;
+  if (window.innerWidth < 1100) {
+    s.classList.add('collapsed'); m.style.marginLeft='60px';
+  } else if (localStorage.getItem('sidebarCollapsed')!=='true') {
+    s.classList.remove('collapsed'); m.style.marginLeft='230px';
+  }
+});
+</script>
+
+<script>
+
+const AGENTS = {
+  'jose':       { name:'Jose Medina',       role:'Founder',            group:'Chez',    status:'active', photo:'JOSE%20MEDINA.jpg' },
+  'dexter':     { name:'Dexter Brandao',     role:'Founder',            group:'Chez',    status:'active', photo:'DEXTER%20BRANDAO.jpg' },
+  'johanna':    { name:'Johanna Bolick',     role:'Managing Broker',    group:'Chez',    status:'active', photo:'JOHANNA%20BOLICK.png' },
+  'ruben':      { name:'Ruben Grana',        role:'Broker Associate',   group:'Chez',    status:'active', photo:'RUBEN%20GRANA_SQ.png' },
+  'alex':       { name:'Alex Mirambell',     role:'Senior Agent',       group:'Chez',    status:'active', photo:'ALEX%20MIRAMBELL.jpg' },
+  'melissa':    { name:'Melissa Sanchez',    role:'Senior Agent',       group:'Chez',    status:'active', photo:'MELISSA%20SANCHEZ.jpg' },
+  'ramses':     { name:'Ramses Toledo',      role:'Lead Agent',         group:'Toledo',  status:'active', photo:'RAMSES%20TOLEDO.jpg' },
+  'yensi':      { name:'Yensi Fuerte',       role:'Lead Agent',         group:'Toledo',  status:'active', photo:'YENSI%20FUERTE.jpg' },
+  'johana':     { name:'Johana Cabrera',     role:'Lead Agent',         group:'Lo',      status:'active', photo:'JOHANA%20CABRERA.jpg' },
+  'mario-jr':   { name:'Mario Cabrera Jr',   role:'Lead Agent',         group:'Cabrera', status:'active', photo:'MARIO%20CABRERA%20JR.png' },
+  'mario-sr':   { name:'Mario Cabrera Sr',   role:'Team Leader',        group:'Cabrera', status:'active', photo:'MARIO%20CABRERA%20SENIOR.png' },
+  'alexander':  { name:'Alexander Novo',     role:'Agent',              group:'Chez',    status:'active', photo:'ALEXANDER%20NOVO.jpg' },
+  'amalyn':     { name:'Amalyn Cabrera',     role:'Associate',          group:'Cabrera', status:'active', photo:'AMALYN%20CABRERA_SQUARE.png' },
+  'angie':      { name:'Angie Irizarry',     role:'Associate',          group:'Lo',      status:'active', photo:'ANGIE%20IRIZARRI_SQ.png' },
+  'arelis':     { name:'Arelis Fuentes',     role:'Associate',          group:'Toledo',  status:'active', photo:'ARELIS%20FUENTES.png' },
+  'brian':      { name:'Brian Leon',         role:'Associate',          group:'Chez',    status:'active', photo:'BRIAN%20LEON.jpg' },
+  'camila':     { name:'Camila Ciochon',     role:'Associate',          group:'Chez',    status:'active', photo:'CAMILA%20CIOCHON%20SQ.png' },
+  'christian':  { name:'Christian Padron',   role:'Associate',          group:'Chez',    status:'active', photo:'CHRISTIAN%20PADRON%20SQ.png' },
+  'danielle':   { name:'Danielle Urrutia',   role:'Associate',          group:'Chez',    status:'active', photo:'DANIELLE%20URRUTIA_Square.png' },
+  'dayana':     { name:'Dayana Jimenez',     role:'Associate',          group:'Toledo',  status:'active', photo:'DAYANA%20JIMENEZ__SQUARE.png' },
+  'erick':      { name:'Erick Davila',       role:'Associate',          group:'Toledo',  status:'active', photo:'ERICK%20DAVILA_SQ.png' },
+  'franger':    { name:'Franger Cintas',     role:'Associate',          group:'Toledo',  status:'active', photo:'FRANGER%20CINTAS.png' },
+  'jessica-a':  { name:'Jessica Alvarez-Ducos', role:'Associate',       group:'Chez',    status:'active', photo:'JESSICA%20ALVAREZ-DUCOS_SQ.png' },
+  'jessica-g':  { name:'Jessica Gonzalez',   role:'Associate',          group:'Chez',    status:'active', photo:'JESSICA%20GONZALEZ_SQUARE.png' },
+  'kary':       { name:'Kary Valdes',        role:'Associate',          group:'Chez',    status:'active', photo:'KARY%20VALDES_SQ.png' },
+  'kevin':      { name:'Kevin Acosta',       role:'Associate',          group:'Chez',    status:'active', photo:'KEVIN%20ACOSTA_SQ.png' },
+  'laurie':     { name:'Laurie Moreno',      role:'Associate',          group:'Chez',    status:'active', photo:'LAURIE%20MORENO%20SQ.png' },
+  'leonardo':   { name:'Leonardo Fundora',   role:'Associate',          group:'Toledo',  status:'active', photo:'LEONARDO%20FUNDORA_SQ.png' },
+  'linda':      { name:'Linda Escobar',      role:'Associate',          group:'Cabrera', status:'active', photo:'LINDA%20ESCOBAR_SQ.png' },
+  'marc':       { name:'Marc Plasencia',     role:'Associate',          group:'Cabrera', status:'active', photo:'MARC%20PLASENCIA.png' },
+  'maria-g':    { name:'Maria Garcia',       role:'Associate',          group:'Toledo',  status:'active', photo:'MARIA%20GARCIA_SQUARE.png' },
+  'nicole':     { name:'Nicole Paneque',     role:'Associate',          group:'Chez',    status:'active', photo:'NICOLE%20PANEQUE_SQ.png' },
+  'alejandro':  { name:'Alejandro Cubas',    role:'Associate',          group:'Cabrera', status:'active', photo:'ALEJANDRO%20CUBAS_SQ.png' },
+  'yenelis':    { name:'Yenelis Martinez',   role:'Associate',          group:'Lo',      status:'active', photo:'YENELIS%20MARTINEZ_SQUARE.png' },
+  'yeni':       { name:'Yeni Martinez',      role:'Associate',          group:'Chez',    status:'active', photo:'YENI%20MARTINEZ_SQ.png' },
+  'zuzy':       { name:'Zuzy Gonzalez',      role:'Associate',          group:'Toledo',  status:'active', photo:'ZUZY%20GONZALEZ%20SQ.png' },
+  'damian':     { name:'Damian Ruiz',        role:'Associate',          group:'Chez',    status:'active', photo:'DAMIAN%20RUIZ_SQ.png' },
+  'monica':     { name:'Monica Herrera',     role:'Associate',          group:'Cabrera', status:'new',    photo:null, startDate:'2026-03-07' },
+};
+
+const ADMINS = ['admin', 'male', 'jose-admin', 'dexter-admin'];
+const ADMIN_PASSWORD = 'chez2026';
+const PHOTO_BASE = 'https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/';
+
+const ONBOARDING_STEPS = [
+  { id:'w1', cat:'welcome',   icon:'🏠', label:'Office access & parking info' },
+  { id:'w2', cat:'welcome',   icon:'👥', label:'Meet your Lead Agent & team' },
+  { id:'w3', cat:'welcome',   icon:'📱', label:'Join Chez WhatsApp groups' },
+  { id:'w4', cat:'welcome',   icon:'📋', label:'Review Chez culture & values' },
+  { id:'t1', cat:'tech',      icon:'💻', label:'Activate Side account' },
+  { id:'t2', cat:'tech',      icon:'📧', label:'Set up @chezre.com email' },
+  { id:'t3', cat:'tech',      icon:'🔑', label:'Connect Follow Up Boss (FUB)' },
+  { id:'t4', cat:'tech',      icon:'🏘', label:'Activate MLS Miami access' },
+  { id:'t5', cat:'tech',      icon:'✍️', label:'Set up digital signature' },
+  { id:'b1', cat:'brand',     icon:'🏡', label:'Complete Zillow profile' },
+  { id:'b2', cat:'brand',     icon:'🌐', label:'Set up Luxury Presence website' },
+  { id:'b3', cat:'brand',     icon:'📸', label:'Update social media bio & links' },
+  { id:'m1', cat:'marketing', icon:'📷', label:'Schedule professional headshot' },
+  { id:'m2', cat:'marketing', icon:'🎨', label:'Agentz onboarding & brand kit' },
+  { id:'m3', cat:'marketing', icon:'📄', label:'Get your first listing flyers ready' },
+  { id:'f1', cat:'first',     icon:'🎓', label:'Attend first Chez training' },
+  { id:'f2', cat:'first',     icon:'🏠', label:'Host or assist first Open House' },
+  { id:'f3', cat:'first',     icon:'🤝', label:'Close or assist first deal' },
+];
+
+const CAT_META = {
+  welcome:   { label:'Welcome to Chez', color:'#E8651A', steps:4 },
+  tech:      { label:'Tech Setup',       color:'#4A90D9', steps:5 },
+  brand:     { label:'Your Brand',       color:'#7B68EE', steps:3 },
+  marketing: { label:'Marketing',        color:'#E87DB8', steps:3 },
+  first:     { label:'First Steps',      color:'#2ECC71', steps:3 },
+};
+
+
+// ─── ROUTING ───────────────────────────────────────────────────────────────
+function getParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
+}
+
+function getInitials(name) {
+  return name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+}
+
+function getPhotoUrl(agent) {
+  if (agent.photo) return PHOTO_BASE + agent.photo;
+  return null;
+}
+
+function isNewAgent(agent) {
+  if (agent.status === 'new') return true;
+  if (agent.startDate) {
+    var days = (Date.now() - new Date(agent.startDate)) / 86400000;
+    return days < 60;
+  }
+  return false;
+}
+
+// ─── ONBOARDING PROGRESS ───────────────────────────────────────────────────
+function getProgress(agentKey) {
+  try { return JSON.parse(localStorage.getItem('ob_' + agentKey) || '{}'); } 
+  catch(e) { return {}; }
+}
+
+function saveProgress(agentKey, stepId, val) {
+  var p = getProgress(agentKey);
+  p[stepId] = val;
+  p['_lastSeen'] = Date.now();
+  localStorage.setItem('ob_' + agentKey, JSON.stringify(p));
+}
+
+function countCompleted(agentKey) {
+  var p = getProgress(agentKey);
+  return ONBOARDING_STEPS.filter(s => p[s.id]).length;
+}
+
+// ─── AVATAR ────────────────────────────────────────────────────────────────
+function avatarHTML(agent, size) {
+  size = size || 40;
+  var url = getPhotoUrl(agent);
+  if (url) return '<img src="'+url+'" style="width:'+size+'px;height:'+size+'px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0">';
+  var initials = getInitials(agent.name);
+  return '<div style="width:'+size+'px;height:'+size+'px;border-radius:50%;background:#E8651A;display:flex;align-items:center;justify-content:center;font-family:Lato,sans-serif;font-weight:900;font-size:'+(size*0.35)+'px;color:white;flex-shrink:0">'+initials+'</div>';
+}
+
+// ─── NEW AGENT VIEW ────────────────────────────────────────────────────────
+function renderNewAgent(agentKey, agent) {
+  var main = document.getElementById('mainContent');
+  var progress = getProgress(agentKey);
+  var completed = countCompleted(agentKey);
+  var total = ONBOARDING_STEPS.length;
+  var pct = Math.round(completed/total*100);
+
+  // Update topbar greeting
+  var greet = document.querySelector('.topbar-greeting');
+  if (greet) greet.textContent = 'Welcome, ' + agent.name.split(' ')[0] + '!';
+
+  // Update sidebar avatar
+  var suserAvt = document.querySelector('.suser-avt');
+  if (suserAvt) {
+    suserAvt.outerHTML = avatarHTML(agent, 36);
+  }
+  var suserName = document.querySelector('.suser-name');
+  if (suserName) suserName.textContent = agent.name;
+  var suserRole = document.querySelector('.suser-role');
+  if (suserRole) suserRole.textContent = agent.role;
+
+  // Replace main body content with new agent onboarding view
+  var body = document.querySelector('.body');
+  if (!body) return;
+
+  var catHTML = '';
+  Object.keys(CAT_META).forEach(function(cat) {
+    var meta = CAT_META[cat];
+    var steps = ONBOARDING_STEPS.filter(function(s){ return s.cat===cat; });
+    var catDone = steps.filter(function(s){ return progress[s.id]; }).length;
+    var catPct = Math.round(catDone/steps.length*100);
+    
+    catHTML += '<div style="background:white;border:1px solid #eee;border-radius:12px;margin-bottom:12px;overflow:hidden">';
+    catHTML += '<div style="padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">';
+    catHTML += '<div style="width:10px;height:10px;border-radius:50%;background:'+meta.color+';flex-shrink:0"></div>';
+    catHTML += '<div style="flex:1"><div style="font-weight:600;font-size:14px">'+meta.label+'</div>';
+    catHTML += '<div style="font-size:11px;color:#888;margin-top:2px">'+catDone+' of '+steps.length+' complete</div></div>';
+    catHTML += '<div style="width:60px;height:6px;background:#f0f0f0;border-radius:3px;overflow:hidden"><div style="width:'+catPct+'%;height:100%;background:'+meta.color+';border-radius:3px;transition:width 0.3s"></div></div>';
+    catHTML += '</div>';
+    catHTML += '<div style="display:block;padding:0 18px 14px;border-top:1px solid #f5f5f5">';
+    steps.forEach(function(step){
+      var done = !!progress[step.id];
+      catHTML += '<label style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f9f9f9;cursor:pointer">';
+      catHTML += '<input type="checkbox" '+(done?'checked':'')+' data-step="'+step.id+'" data-agent="'+agentKey+'" onchange="toggleStep(this)" style="width:18px;height:18px;accent-color:'+meta.color+';flex-shrink:0">';
+      catHTML += '<span style="font-size:15px">'+step.icon+'</span>';
+      catHTML += '<span style="font-size:13px;'+(done?'text-decoration:line-through;color:#aaa':'')+'" class="step-'+step.id+'">'+step.label+'</span>';
+      catHTML += '</label>';
+    });
+    catHTML += '</div></div>';
+  });
+
+  body.innerHTML = 
+    // Hero
+    '<div style="background:#2A2A2A;border-radius:16px;padding:28px 32px;margin-bottom:20px;display:flex;align-items:center;gap:20px">' +
+      avatarHTML(agent, 64) +
+      '<div style="flex:1">' +
+        '<div style="font-size:11px;font-weight:700;color:#E8651A;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:4px">Welcome to Chez · '+agent.group+' Group</div>' +
+        '<div style="font-family:Lato,sans-serif;font-size:28px;font-weight:900;color:white">'+agent.name+'</div>' +
+        '<div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px">'+agent.role+'</div>' +
+      '</div>' +
+      '<div style="text-align:center">' +
+        '<div style="font-family:Lato,sans-serif;font-size:42px;font-weight:900;color:white;line-height:1">'+pct+'%</div>' +
+        '<div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">'+completed+' of '+total+' steps</div>' +
+        '<div style="width:100%;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;margin-top:8px;overflow:hidden">' +
+          '<div style="width:'+pct+'%;height:100%;background:#E8651A;border-radius:3px;transition:width 0.4s" id="main-progress-bar"></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    // Onboarding steps
+    '<div style="font-family:Lato,sans-serif;font-size:11px;font-weight:700;color:#999;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px">Your Onboarding</div>' +
+    catHTML +
+    // Help button
+    '<div style="margin-top:16px;padding:16px;background:#FFF8F5;border:1px solid #FFD5B8;border-radius:12px;display:flex;align-items:center;gap:12px">' +
+      '<div style="font-size:24px">💬</div>' +
+      '<div style="flex:1"><div style="font-weight:600;font-size:13px">Need help?</div><div style="font-size:12px;color:#888">Your admin team is here for you</div></div>' +
+      '<a href="https://wa.me/17862804186?text=Hi+Jose,+I+need+help+with+my+onboarding" target="_blank" style="background:#E8651A;color:white;text-decoration:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:600">WhatsApp Jose</a>' +
+    '</div>';
+}
+
+function toggleStep(checkbox) {
+  var agentKey = checkbox.dataset.agent;
+  var stepId = checkbox.dataset.step;
+  var done = checkbox.checked;
+  saveProgress(agentKey, stepId, done);
+  
+  // Update label styling
+  var label = checkbox.parentElement.querySelector('.step-'+stepId);
+  if (label) {
+    label.style.textDecoration = done ? 'line-through' : '';
+    label.style.color = done ? '#aaa' : '';
+  }
+  
+  // Update progress bar
+  var completed = countCompleted(agentKey);
+  var total = ONBOARDING_STEPS.length;
+  var pct = Math.round(completed/total*100);
+  var bar = document.getElementById('main-progress-bar');
+  if (bar) bar.style.width = pct + '%';
+  
+  // Update percentage display
+  var firstDiv = document.querySelector('[style*="font-size:42px"]');
+  if (firstDiv) firstDiv.textContent = pct + '%';
+}
+
+// ─── ADMIN VIEW ─────────────────────────────────────────────────────────────
+function renderAdmin() {
+  var pw = prompt('Chez Admin Password:');
+  if (pw !== ADMIN_PASSWORD) {
+    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Lato,sans-serif;flex-direction:column;gap:16px"><div style="font-size:32px">🔒</div><div style="font-size:18px;font-weight:600">Access denied</div><a href="?" style="color:#E8651A">Go back</a></div>';
+    return;
+  }
+
+  // Build admin dashboard
+  var newAgents = Object.keys(AGENTS).filter(function(k){ return isNewAgent(AGENTS[k]); });
+  
+  var rows = newAgents.map(function(key) {
+    var agent = AGENTS[key];
+    var progress = getProgress(key);
+    var completed = countCompleted(key);
+    var total = ONBOARDING_STEPS.length;
+    var pct = Math.round(completed/total*100);
+    var lastSeen = progress._lastSeen ? new Date(progress._lastSeen) : null;
+    var daysSince = lastSeen ? Math.floor((Date.now()-lastSeen)/86400000) : null;
+    var alert = daysSince === null ? '⚪ Never' : daysSince > 7 ? '🔴 '+daysSince+'d ago' : '🟢 '+daysSince+'d ago';
+    var barColor = pct < 30 ? '#E74C3C' : pct < 70 ? '#F39C12' : '#2ECC71';
+    
+    // Category breakdown
+    var catCells = Object.keys(CAT_META).map(function(cat){
+      var steps = ONBOARDING_STEPS.filter(function(s){ return s.cat===cat; });
+      var done = steps.filter(function(s){ return progress[s.id]; }).length;
+      return '<td style="text-align:center;font-size:12px;color:'+(done===steps.length?'#2ECC71':'#999')+'">'+done+'/'+steps.length+'</td>';
+    }).join('');
+
+    return '<tr style="border-bottom:1px solid #f0f0f0">' +
+      '<td style="padding:12px 16px;display:flex;align-items:center;gap:10px">'+avatarHTML(agent,32)+'<div><div style="font-weight:600;font-size:13px">'+agent.name+'</div><div style="font-size:11px;color:#888">'+agent.group+' · '+agent.role+'</div></div></td>' +
+      '<td style="padding:12px 8px;min-width:120px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;background:#f0f0f0;border-radius:3px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+barColor+';border-radius:3px"></div></div><span style="font-size:12px;font-weight:600;min-width:32px">'+pct+'%</span></div></td>' +
+      catCells +
+      '<td style="padding:12px 8px;font-size:12px">'+alert+'</td>' +
+      '<td style="padding:12px 8px"><a href="?agent='+key+'" target="_blank" style="font-size:11px;color:#E8651A;text-decoration:none">View →</a></td>' +
+    '</tr>';
+  }).join('');
+
+  var catHeaders = Object.values(CAT_META).map(function(m){
+    return '<th style="padding:10px 8px;font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.1em;text-align:center">'+m.label.split(' ')[0]+'</th>';
+  }).join('');
+
+  document.getElementById('sidebar').style.display = 'none';
+  document.getElementById('mainContent').style.marginLeft = '0';
+
+  document.body.innerHTML = 
+    '<div style="font-family:Lato,sans-serif;padding:32px;min-height:100vh;background:#F7F5F2">' +
+    '<div style="display:flex;align-items:center;gap:16px;margin-bottom:28px">' +
+      '<div style="font-family:Lato,sans-serif;font-size:22px;font-weight:900;color:#E8651A;letter-spacing:3px">CHEZ HUB</div>' +
+      '<div style="font-size:11px;font-weight:700;color:#999;letter-spacing:0.15em;text-transform:uppercase;padding:4px 12px;background:#FFF0E8;border-radius:20px;color:#E8651A">Admin View</div>' +
+      '<a href="?" style="margin-left:auto;font-size:12px;color:#999;text-decoration:none">← Back to Hub</a>' +
+    '</div>' +
+    '<div style="font-size:13px;font-weight:700;color:#333;margin-bottom:4px">Agents in Onboarding</div>' +
+    '<div style="font-size:12px;color:#888;margin-bottom:20px">'+newAgents.length+' agent'+(newAgents.length!==1?'s':'')+' currently onboarding</div>' +
+    '<div style="background:white;border-radius:16px;border:1px solid #eee;overflow:hidden">' +
+    '<table style="width:100%;border-collapse:collapse">' +
+    '<thead><tr style="background:#FAFAFA;border-bottom:2px solid #f0f0f0">' +
+      '<th style="padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.1em">Agent</th>' +
+      '<th style="padding:12px 8px;text-align:left;font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.1em;min-width:140px">Progress</th>' +
+      catHeaders +
+      '<th style="padding:12px 8px;font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.1em">Last Active</th>' +
+      '<th style="padding:12px 8px"></th>' +
+    '</tr></thead>' +
+    '<tbody>'+rows+'</tbody>' +
+    '</table></div>' +
+    '<div style="margin-top:24px;font-size:11px;color:#bbb;text-align:center">Progress saved locally per device · Share agent links to track activity</div>' +
+    '</div>';
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function() {
+  var agentParam = getParam('agent');
+  var adminParam = getParam('admin');
+
+  if (adminParam !== null) {
+    renderAdmin();
+    return;
+  }
+
+  if (agentParam) {
+    var agentKey = agentParam.toLowerCase();
+    var agent = AGENTS[agentKey];
+    if (!agent) {
+      // Unknown agent - show error
+      document.querySelector('.body').innerHTML = 
+        '<div style="text-align:center;padding:80px 20px;font-family:Lato,sans-serif">' +
+        '<div style="font-size:48px;margin-bottom:16px">🤔</div>' +
+        '<div style="font-size:20px;font-weight:700;margin-bottom:8px">Agent not found</div>' +
+        '<div style="color:#888;margin-bottom:24px">We couldn't find "'+agentParam+'" in the Chez team.</div>' +
+        '<a href="?" style="color:#E8651A">Go to main hub</a>' +
+        '</div>';
+      return;
+    }
+
+    // Record last seen
+    var p = getProgress(agentKey);
+    p['_lastSeen'] = Date.now();
+    localStorage.setItem('ob_' + agentKey, JSON.stringify(p));
+
+    if (isNewAgent(agent)) {
+      renderNewAgent(agentKey, agent);
+    } else {
+      // Active agent - personalize the existing hub
+      var greeting = document.querySelector('.topbar-greeting');
+      if (greeting) greeting.innerHTML = 'Good morning, <strong>'+agent.name.split(' ')[0]+'</strong>';
+      var suserName = document.querySelector('.suser-name');
+      if (suserName) suserName.textContent = agent.name;
+      var suserRole = document.querySelector('.suser-role');
+      if (suserRole) suserRole.textContent = agent.role;
+      // Update avatar
+      var sAvt = document.querySelector('.suser-avt');
+      if (sAvt) {
+        var photoUrl = getPhotoUrl(agent);
+        if (photoUrl) sAvt.src = photoUrl;
+      }
+    }
+  }
 });
 </script>
 </body>
