@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Agent · Monica Herrera · Chez Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#F7F5F2;min-height:100vh}
+.topbar{background:white;border-bottom:1px solid #eee;padding:14px 24px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.logo{font-family:'Lato',sans-serif;font-weight:900;font-size:18px;color:#F15F37;letter-spacing:3px}
+.new-badge{background:#FFF0E8;color:#F15F37;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;margin-left:auto}
+.body{padding:20px 24px;max-width:780px;margin:0 auto}
+.hero{background:#2A2A2A;border-radius:14px;padding:22px 26px;display:flex;align-items:center;gap:18px;margin-bottom:20px}
+.avt{width:60px;height:60px;border-radius:50%;background:#F15F37;display:flex;align-items:center;justify-content:center;font-family:'Lato',sans-serif;font-weight:900;font-size:22px;color:white;flex-shrink:0}
+.hero-tag{font-size:10px;font-weight:700;color:#F15F37;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:4px}
+.hero-name{font-family:'Lato',sans-serif;font-size:24px;font-weight:900;color:white;line-height:1.1}
+.hero-role{font-size:12px;color:rgba(255,255,255,0.4);margin-top:3px}
+.hero-pct{text-align:center;flex-shrink:0}
+.pct-num{font-family:'Lato',sans-serif;font-size:38px;font-weight:900;color:white;line-height:1}
+.pct-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px}
+.pct-bar{width:90px;height:5px;background:rgba(255,255,255,0.1);border-radius:3px;margin-top:8px;overflow:hidden}
+.pct-fill{height:100%;background:#F15F37;border-radius:3px;transition:width 0.4s}
+.section-label{font-size:10px;font-weight:700;color:#999;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px}
+.cat-card{background:white;border:0.5px solid #eee;border-radius:12px;margin-bottom:10px;overflow:hidden}
+.cat-header{padding:14px 16px;display:flex;align-items:center;gap:10px}
+.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cat-title{font-size:13px;font-weight:600;color:#1A1A1A;flex:1}
+.cat-meta{font-size:11px;color:#999}
+.cat-bar-wrap{width:60px;height:5px;background:#f0f0f0;border-radius:3px;overflow:hidden}
+.cat-bar-fill{height:100%;border-radius:3px;transition:width 0.3s}
+.cat-steps{border-top:0.5px solid #f5f5f5}
+.step{border-bottom:0.5px solid #f5f5f5}
+.step:last-child{border-bottom:none}
+.step-header{padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.step-icon{font-size:16px;width:22px;text-align:center;flex-shrink:0}
+.step-title{font-size:13px;font-weight:500;color:#1A1A1A;flex:1}
+.step-title.done{color:#bbb;text-decoration:line-through}
+.step-status{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;flex-shrink:0}
+.step-status.done{background:#E8F5E9;color:#2E7D32}
+.step-status.pending{background:#F5F5F5;color:#999}
+.step-chev{width:14px;height:14px;stroke:#bbb;fill:none;stroke-width:2;flex-shrink:0;transition:transform 0.2s}
+.step-body{display:none;padding:0 16px 16px 50px;background:#FAFAFA;border-top:0.5px solid #f0f0f0}
+.step-body.open{display:block}
+.block-label{font-size:10px;font-weight:700;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin:12px 0 6px}
+.desc{font-size:12px;color:#555;line-height:1.65}
+.video-block{background:#1A1A1A;border-radius:8px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:6px;cursor:pointer;text-decoration:none}
+.play{width:34px;height:34px;border-radius:50%;background:#F15F37;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.play svg{width:12px;height:12px;fill:white;margin-left:2px}
+.video-title{font-size:12px;font-weight:500;color:white}
+.video-dur{font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px}
+.link-item{display:flex;align-items:center;gap:10px;padding:9px 12px;background:white;border:0.5px solid #eee;border-radius:8px;margin-bottom:6px;text-decoration:none}
+.link-ico{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.link-title{font-size:12px;font-weight:500;color:#1A1A1A}
+.link-sub{font-size:10px;color:#999;margin-top:1px}
+.link-arrow{margin-left:auto;flex-shrink:0}
+.arrow-svg{width:12px;height:12px;stroke:#bbb;fill:none;stroke-width:2}
+.info-box{background:#F0F7FF;border:0.5px solid #B8D4F0;border-radius:8px;padding:10px 12px;margin-bottom:6px;font-size:11px;color:#1A4A7A;line-height:1.6}
+.confirm-row{margin-top:14px;padding:12px;background:#FFF8F5;border:1px solid #FFD5B8;border-radius:8px;display:flex;align-items:center;gap:10px}
+.chk{width:20px;height:20px;border-radius:5px;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all 0.15s;background:white}
+.chk.checked{background:#F15F37;border-color:#F15F37}
+.chk svg{width:11px;height:11px;stroke:white;fill:none;stroke-width:3;display:none}
+.chk.checked svg{display:block}
+.confirm-label{font-size:12px;color:#C8601A;font-weight:500}
+.help-card{background:#FFF8F5;border:0.5px solid #FFD5B8;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-top:4px}
+.wa-btn{background:#F15F37;color:white;text-decoration:none;border-radius:8px;padding:9px 16px;font-size:12px;font-weight:600;white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">CHEZ HUB</div>
+  <div style="font-size:13px;color:#bbb;margin-left:6px;font-weight:400">/ new agent /</div>
+  <div style="font-size:13px;color:#F15F37;font-weight:600">monicaherrera</div>
+  <div class="new-badge">Onboarding</div>
+</div>
+
+<div class="body">
+
+  <div class="hero">
+    <div class="avt">MH</div>
+    <div style="flex:1">
+      <div class="hero-tag">Welcome to Chez · Cabrera Group</div>
+      <div class="hero-name">Monica Herrera</div>
+      <div class="hero-role">Associate · Started March 7, 2026</div>
+    </div>
+    <div class="hero-pct">
+      <div class="pct-num" id="pct">0%</div>
+      <div class="pct-sub" id="steps-label">0 of 20 steps</div>
+      <div class="pct-bar"><div class="pct-fill" id="pct-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+
+  <!-- WELCOME BANNER -->
+  <div style="background:#F15F37;border-radius:14px;padding:28px 28px 24px;margin-bottom:20px;text-align:center;position:relative;overflow:hidden">
+    
+
+    <div style="font-family:'Lato',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:10px">Chez Realty · Miami</div>
+
+    <div style="font-family:'Lato',sans-serif;font-size:36px;font-weight:900;color:white;line-height:1.1;margin-bottom:6px">Oh là là, Monica! 🎉</div>
+
+    <div style="font-size:15px;color:rgba(255,255,255,0.9);margin-bottom:16px;line-height:1.6">
+      <em>Oui oui oui</em> — you made it! Welcome to <strong>Chez Realty</strong>,<br>
+      Miami's most <em>magnifique</em> real estate team. 🧡
+    </div>
+
+    <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:14px 20px;margin-bottom:20px;font-size:13px;color:white;line-height:1.7;text-align:left;max-width:520px;margin-left:auto;margin-right:auto">
+      This is your personal onboarding portal — your step-by-step guide to becoming a fully activated Chez agent. Every step has the resources, links, and videos you need. Take it one step at a time, and remember: <strong>we are right here with you.</strong>
+    </div>
+
+    <!-- Ready to start check -->
+    <div style="background:white;border-radius:12px;padding:18px 22px;display:flex;align-items:center;gap:16px;max-width:520px;margin:0 auto;text-align:left">
+      <div id="chk-ready" onclick="markReady()" style="width:24px;height:24px;border-radius:6px;border:2px solid #F15F37;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;background:white;transition:all 0.2s">
+        <svg id="chk-ready-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700;color:#1A1A1A">Are you ready to Chezify yourself?</div>
+        <div id="ready-label" style="font-size:11px;color:#999;margin-top:2px">Click to confirm — <em>"Yes, I'm ready to Chezify myself!"</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Your Onboarding</div>
+
+  <!-- WEEK 1: WELCOME & SETUP -->
+  <div class="cat-card">
+    <div class="cat-header">
+      <div class="cat-dot" style="background:#F15F37"></div>
+      <div class="cat-title">Week 1 · Welcome & Setup</div>
+      <div class="cat-meta" id="meta-w1">0 of 5</div>
+      <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-w1" style="width:0%;background:#F15F37"></div></div>
+    </div>
+    <div class="cat-steps">
+
+      <!-- Step 1 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s1')">
+          <div class="step-icon">📸</div>
+          <div class="step-title" id="title-s1">Professional headshot session</div>
+          <div class="step-status pending" id="status-s1">Pending</div>
+          <svg class="step-chev" id="chev-s1" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s1">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Your headshot is your first impression — it goes on Zillow, Realtor.com, your website, and all Chez marketing. We will schedule your photo session and send you what to wear. Make sure to confirm your appointment as soon as you receive the email.</div>
+          <div class="block-label">What to wear</div>
+          <div class="info-box">Professional attire in solid colors — avoid busy patterns. We recommend navy, white, or grey. No logos. Iron your clothes the night before. Bring two outfit options if possible.</div>
+          <div class="block-label">Office info</div>
+          <div class="info-box">📍 <strong>Chez Realty</strong> — 8749 SW 134th Street, Miami FL 33176<br>🕘 Office Hours: Mon–Fri 9am–5pm<br>🔑 After Hours Code: <strong>9478#</strong></div>
+          <div class="confirm-row"><div class="chk" id="chk-s1" onclick="markDone('s1','w1',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have scheduled my professional headshot session</div></div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s2')">
+          <div class="step-icon">📋</div>
+          <div class="step-title" id="title-s2">Complete your agent info form</div>
+          <div class="step-status pending" id="status-s2">Pending</div>
+          <svg class="step-chev" id="chev-s2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s2">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">We need your key information to set up your agent profile, add you to our systems, and make sure we celebrate your birthday! Fill out the form completely.</div>
+          <div class="block-label">Info needed</div>
+          <div class="info-box">✅ Birthday<br>✅ Shirt size<br>✅ Phone number (verify it is correct)<br>✅ Email address<br>✅ Real estate license number</div>
+          <div class="confirm-row"><div class="chk" id="chk-s2" onclick="markDone('s2','w1',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have submitted my agent info form</div></div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s3')">
+          <div class="step-icon">📱</div>
+          <div class="step-title" id="title-s3">Download & set up all required apps</div>
+          <div class="step-status pending" id="status-s3">Pending</div>
+          <svg class="step-chev" id="chev-s3" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s3">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Download and set up your profiles on all Chez required platforms. Once your headshot is ready, update your photo on all of them. These apps are how you will work every day.</div>
+          <div class="block-label">Apps & platforms to set up</div>
+          <div class="info-box">📲 <strong>Zillow.com</strong> — Agent profile<br>📲 <strong>Realtor.com</strong> — Agent profile<br>📲 <strong>LinkedIn</strong> — Professional profile<br>📲 <strong>Instagram</strong> — Personal brand<br>📲 <strong>Facebook</strong> — Business page<br>📲 <strong>WhatsApp</strong> — Team communication<br>📲 <strong>Supra EKEY App</strong> — Property access<br>📲 <strong>ShowingTime App</strong> — Showing scheduling<br>📲 <strong>Side App</strong> — Brokerage platform</div>
+          <div class="block-label">Side platform setup</div>
+          <a class="link-item" href="https://side.continu.co/#/view/tracks/617b0f0d89fae400120dff91" target="_blank">
+            <div class="link-ico" style="background:#E8F0FE">📚</div>
+            <div><div class="link-title">Side Setup Guide — Chez University</div><div class="link-sub">side.continu.co · Follow all steps</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="confirm-row"><div class="chk" id="chk-s3" onclick="markDone('s3','w1',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have downloaded and set up all required apps</div></div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s4')">
+          <div class="step-icon">🏛️</div>
+          <div class="step-title" id="title-s4">Apply for Miami Association of Realtors</div>
+          <div class="step-status pending" id="status-s4">Pending</div>
+          <svg class="step-chev" id="chev-s4" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s4">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Apply for membership with the Miami Association of Realtors. This gives you MLS access and the right to use the title "REALTOR." Wait until your license is active with Chez before applying.</div>
+          <div class="block-label">Important notes</div>
+          <div class="info-box">✅ Choose the membership that allows you to use the title <strong>"REALTOR"</strong><br>✅ You can pay in full or in 4 equal installments<br>✅ At the end of the application, apply for a <strong>SUPRA EKey</strong> as well<br>⚠️ Only apply AFTER your license is active with Chez</div>
+          <div class="block-label">Resources</div>
+          <a class="link-item" href="https://www.miamire.com" target="_blank">
+            <div class="link-ico" style="background:#E8F5E9">🏛️</div>
+            <div><div class="link-title">Miami Association of Realtors</div><div class="link-sub">miamire.com · Apply for membership</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="link-item" href="tel:3054687005">
+            <div class="link-ico" style="background:#FFF0E8">📞</div>
+            <div><div class="link-title">Miami Realtors Support Line</div><div class="link-sub">(305) 468-7005 · Call if you need help</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="confirm-row"><div class="chk" id="chk-s4" onclick="markDone('s4','w1',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have submitted my Miami Realtors membership application</div></div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s5')">
+          <div class="step-icon">🎓</div>
+          <div class="step-title" id="title-s5">Complete mandatory Side Thursday training</div>
+          <div class="step-status pending" id="status-s5">Pending</div>
+          <svg class="step-chev" id="chev-s5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s5">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Side sends you training emails during your onboarding. The Thursday Side training is <strong>mandatory</strong> — we cannot move forward to Week 2 without this completed. Watch for the email and register immediately.</div>
+          <div class="block-label">Important</div>
+          <div class="info-box">⚠️ This training is MANDATORY. Without completing it we cannot continue with Week 2 of your onboarding.<br><br>📧 Side will send you emails with the training links — check your inbox and spam folder.</div>
+          <div class="confirm-row"><div class="chk" id="chk-s5" onclick="markDone('s5','w1',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have completed the mandatory Side Thursday training</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 2: TECH & CRM -->
+  <div class="cat-card">
+    <div class="cat-header">
+      <div class="cat-dot" style="background:#4A90D9"></div>
+      <div class="cat-title">Week 2 · Tech & CRM Setup</div>
+      <div class="cat-meta" id="meta-w2">0 of 5</div>
+      <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-w2" style="width:0%;background:#4A90D9"></div></div>
+    </div>
+    <div class="cat-steps">
+
+      <!-- Step 6 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s6')">
+          <div class="step-icon">🔑</div>
+          <div class="step-title" id="title-s6">Set up Follow Up Boss (FUB)</div>
+          <div class="step-status pending" id="status-s6">Pending</div>
+          <svg class="step-chev" id="chev-s6" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s6">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">FUB (Follow Up Boss) is our CRM — it is where all your leads live. You will track every conversation, set follow-up reminders, and manage your entire pipeline from here. This is one of the most important tools in your business.</div>
+          <div class="block-label">Training resources</div>
+          <a class="link-item" href="https://www.followupboss.com" target="_blank">
+            <div class="link-ico" style="background:#E8F0FE">🔑</div>
+            <div><div class="link-title">Register for FUB Bootcamp</div><div class="link-sub">followupboss.com · Complete bootcamp first</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="link-item" href="https://www.followupboss.com" target="_blank">
+            <div class="link-ico" style="background:#E8F0FE">📚</div>
+            <div><div class="link-title">FUB 101 Trainings</div><div class="link-sub">followupboss.com · Core training modules</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="link-item" href="https://www.followupboss.com" target="_blank">
+            <div class="link-ico" style="background:#FFF0E8">📧</div>
+            <div><div class="link-title">Enable Emails on FUB</div><div class="link-sub">Connect your @chezre.com email to FUB</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="block-label">Chez University videos</div>
+          <a class="video-block" href="https://side.continu.co/video/65d632f1627c3c6167459307" target="_blank">
+            <div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <div><div class="video-title">Smart Lists & Best Practices</div><div class="video-dur">Chez University · Continu</div></div>
+          </a>
+          <a class="video-block" href="https://side.continu.co/video/65d636deb1507b8d2c10661b" target="_blank">
+            <div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <div><div class="video-title">Handraiser Alerts Best Practices</div><div class="video-dur">Chez University · Continu</div></div>
+          </a>
+          <div class="confirm-row"><div class="chk" id="chk-s6" onclick="markDone('s6','w2',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have completed FUB setup and connected my email</div></div>
+        </div>
+      </div>
+
+      <!-- Step 7 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s7')">
+          <div class="step-icon">🏘</div>
+          <div class="step-title" id="title-s7">Learn Matrix MLS — Best Practices</div>
+          <div class="step-status pending" id="status-s7">Pending</div>
+          <svg class="step-chev" id="chev-s7" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s7">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Matrix is the MLS platform we use to search properties, set up client searches, and pull comps. Watch all 5 training videos from Chez University to learn it correctly.</div>
+          <div class="block-label">Training videos — watch all 5</div>
+          <a class="video-block" href="https://side.continu.co/video/65d79824a3677109fee222ce" target="_blank">
+            <div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <div><div class="video-title">Matrix Best Practices — Vol. 1</div><div class="video-dur">Chez University · Continu</div></div>
+          </a>
+          <a class="video-block" href="https://side.continu.co/video/65d797a0a3677109fee1d027" target="_blank">
+            <div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <div><div class="video-title">Matrix Best Practices — Vol. 2</div><div class="video-dur">Chez University · Continu</div></div>
+          </a>
+          <a class="video-block" href="https://side.continu.co/video/65d79010f9a3b9b57d844d66" target="_blank">
+            <div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <div><div class="video-title">Matrix Best Practices — Vol. 3</div><div class="video-dur">Chez University · Continu</div></div>
+          </a>
+          <a class="video-block" href="https://side.continu.co/video/65d79e60d8c3059c2bdaaa11" target="_blank">
+            <div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <div><div class="video-title">Matrix Best Practices — Vol. 4</div><div class="video-dur">Chez University · Continu</div></div>
+          </a>
+          <a class="video-block" href="https://side.continu.co/video/65d798efd6d6569153390abc" target="_blank">
+            <div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <div><div class="video-title">Matrix Best Practices — Vol. 5</div><div class="video-dur">Chez University · Continu</div></div>
+          </a>
+          <div class="confirm-row"><div class="chk" id="chk-s7" onclick="markDone('s7','w2',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have watched all 5 Matrix training videos</div></div>
+        </div>
+      </div>
+
+      <!-- Step 8 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s8')">
+          <div class="step-icon">🏡</div>
+          <div class="step-title" id="title-s8">Zillow profile & Flex agreement</div>
+          <div class="step-status pending" id="status-s8">Pending</div>
+          <svg class="step-chev" id="chev-s8" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s8">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Zillow is one of our most powerful lead sources. You need to create your profile, join the Chez team on Zillow, and sign the Flex agreement so you can start receiving Zillow leads. Follow every step carefully.</div>
+          <div class="block-label">Step by step</div>
+          <div class="info-box">
+            1️⃣ Create your Zillow profile — add headshot, phone number & license number<br>
+            2️⃣ Let us know once done so we can send you the team invite<br>
+            3️⃣ Accept the invite to join Chez Realty on Zillow<br>
+            4️⃣ Open a new tab and go to <strong>www.zillow.com/pbflex/agent</strong><br>
+            5️⃣ Follow the workflow to sign the Flex Agreement<br>
+            6️⃣ Search for "Chez" as your Broker in the workflow<br>
+            7️⃣ After signing, download or update the <strong>Premier Agent App</strong><br>
+            8️⃣ Enable notifications and enhanced connection calls<br>
+            9️⃣ Save backup number: <strong>(206) 539-0456</strong>
+          </div>
+          <div class="block-label">Resources</div>
+          <a class="link-item" href="https://www.zillow.com/profile/chezrealty" target="_blank">
+            <div class="link-ico" style="background:#E8F0FE">🏡</div>
+            <div><div class="link-title">Chez Realty on Zillow</div><div class="link-sub">5.0★ · 330 reviews · Your future team</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="link-item" href="https://www.zillow.com/pbflex/agent" target="_blank">
+            <div class="link-ico" style="background:#FFF0E8">✍️</div>
+            <div><div class="link-title">Sign Zillow Flex Agreement</div><div class="link-sub">zillow.com/pbflex/agent</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="block-label">Zillow Academy</div>
+          <a class="link-item" href="https://www.zillow.com" target="_blank">
+            <div class="link-ico" style="background:#E8F5E9">🎓</div>
+            <div><div class="link-title">Log in to Zillow Academy</div><div class="link-sub">Complete Flex onboarding learning plan</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="confirm-row"><div class="chk" id="chk-s8" onclick="markDone('s8','w2',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have created my Zillow profile and signed the Flex agreement</div></div>
+        </div>
+      </div>
+
+      <!-- Step 9 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s9')">
+          <div class="step-icon">🌐</div>
+          <div class="step-title" id="title-s9">Accept Realtor.com team invite</div>
+          <div class="step-status pending" id="status-s9">Pending</div>
+          <svg class="step-chev" id="chev-s9" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s9">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">We will send you an invite to join the Chez Realty team on Realtor.com. Accept it and make sure your profile is complete with your headshot, bio, and license information.</div>
+          <div class="info-box">📧 Check your email for the Realtor.com invite from the Chez admin team. Contact Male if you have not received it after 24 hours.</div>
+          <div class="confirm-row"><div class="chk" id="chk-s9" onclick="markDone('s9','w2',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have accepted the Realtor.com invite and completed my profile</div></div>
+        </div>
+      </div>
+
+      <!-- Step 10 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s10')">
+          <div class="step-icon">🖨️</div>
+          <div class="step-title" id="title-s10">Office setup — printer & calendar</div>
+          <div class="step-status pending" id="status-s10">Pending</div>
+          <svg class="step-chev" id="chev-s10" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s10">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Get set up in the physical office — connect to the printer, save your email to the printer address book, and confirm you have been added to the office calendar.</div>
+          <div class="block-label">Office WiFi</div>
+          <div class="info-box">📶 Network: <strong>Chez Realty</strong><br>🔑 Password: <strong>Chez33176</strong></div>
+          <div class="block-label">Printer setup — Kyocera CS 5054ci</div>
+          <div class="info-box">
+            <strong>If your email is NOT saved yet:</strong><br>
+            1. Press "Send" → "Enter Destination"<br>
+            2. Type your email → "Add to Address Book"<br>
+            3. Enter your name → "Register"<br>
+            4. When asked "Add to One Touch Key?" → Yes<br>
+            5. Choose any empty number<br><br>
+            <strong>Next time:</strong> Press "Send" → "One Touch Key" → your number<br><br>
+            📱 When printing from phone, select: <strong>Kyocera CS 5054ci</strong><br><br>
+            🛠️ Printer support: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="87eee9e1e8c7e2e5f4e4e8f7eee2f5f4a9e9e2f3">[email&#160;protected]</a></strong> · (305) 592-9175
+          </div>
+          <div class="confirm-row"><div class="chk" id="chk-s10" onclick="markDone('s10','w2',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I am connected to the office printer and WiFi</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 2 DAY 3: YLOPO -->
+  <div class="cat-card">
+    <div class="cat-header">
+      <div class="cat-dot" style="background:#7B68EE"></div>
+      <div class="cat-title">Week 2 · Ylopo & Lead System</div>
+      <div class="cat-meta" id="meta-w3">0 of 4</div>
+      <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-w3" style="width:0%;background:#7B68EE"></div></div>
+    </div>
+    <div class="cat-steps">
+
+      <!-- Step 11 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s11')">
+          <div class="step-icon">⭐</div>
+          <div class="step-title" id="title-s11">Ylopo Stars — Getting started</div>
+          <div class="step-status pending" id="status-s11">Pending</div>
+          <svg class="step-chev" id="chev-s11" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s11">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Ylopo Stars is our lead management portal. You will use it to edit lead info, customize property searches, set up seller alerts, and manage your automated ISA (Raiya). This connects directly with FUB.</div>
+          <div class="block-label">Resources</div>
+          <a class="link-item" href="https://ylopo.zendesk.com/hc/en-us/articles/360021746612" target="_blank">
+            <div class="link-ico" style="background:#F3E5F5">⭐</div>
+            <div><div class="link-title">Getting Started with Ylopo Stars</div><div class="link-sub">ylopo.zendesk.com</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="link-item" href="https://ylopo.zendesk.com/hc/en-us/articles/360029768772" target="_blank">
+            <div class="link-ico" style="background:#F3E5F5">🔗</div>
+            <div><div class="link-title">Ylopo 101 — Ylopo + Follow Up Boss</div><div class="link-sub">ylopo.zendesk.com</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="confirm-row"><div class="chk" id="chk-s11" onclick="markDone('s11','w3',4)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have completed Ylopo Stars setup</div></div>
+        </div>
+      </div>
+
+      <!-- Step 12 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s12')">
+          <div class="step-icon">🏠</div>
+          <div class="step-title" id="title-s12">Set up listing alerts & push listings</div>
+          <div class="step-status pending" id="status-s12">Pending</div>
+          <svg class="step-chev" id="chev-s12" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s12">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Learn how to send push listings to leads, create listing alerts, and manage your automated follow-up system through Ylopo.</div>
+          <div class="block-label">Resources</div>
+          <a class="link-item" href="https://ylopo.zendesk.com/hc/en-us/articles/360021966851" target="_blank">
+            <div class="link-ico" style="background:#F3E5F5">📤</div>
+            <div><div class="link-title">How to Send a Push Listing</div><div class="link-sub">ylopo.zendesk.com</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="link-item" href="https://ylopo.zendesk.com/hc/en-us/articles/360021754052" target="_blank">
+            <div class="link-ico" style="background:#F3E5F5">🔔</div>
+            <div><div class="link-title">Types of Ylopo Listing Alerts</div><div class="link-sub">ylopo.zendesk.com</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="confirm-row"><div class="chk" id="chk-s12" onclick="markDone('s12','w3',4)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I know how to send push listings and set up listing alerts</div></div>
+        </div>
+      </div>
+
+      <!-- Step 13 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s13')">
+          <div class="step-icon">🤖</div>
+          <div class="step-title" id="title-s13">Ylopo AI texting — Raiya setup</div>
+          <div class="step-status pending" id="status-s13">Pending</div>
+          <svg class="step-chev" id="chev-s13" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s13">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Raiya is Ylopo's AI text assistant that follows up with leads automatically. Learn how it works with FUB and how to manage it correctly so it does not text leads you are already working.</div>
+          <div class="block-label">Resources</div>
+          <a class="link-item" href="https://ylopo.zendesk.com/hc/en-us/articles/360030238472" target="_blank">
+            <div class="link-ico" style="background:#F3E5F5">🤖</div>
+            <div><div class="link-title">Ylopo AI Texting & FUB</div><div class="link-sub">ylopo.zendesk.com</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="link-item" href="https://ylopo.zendesk.com/hc/en-us/articles/360030557052" target="_blank">
+            <div class="link-ico" style="background:#FFF0E8">🔕</div>
+            <div><div class="link-title">How to Turn Off AI Texts</div><div class="link-sub">ylopo.zendesk.com · Use when needed</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="confirm-row"><div class="chk" id="chk-s13" onclick="markDone('s13','w3',4)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I understand how Raiya AI texting works with my leads</div></div>
+        </div>
+      </div>
+
+      <!-- Step 14 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s14')">
+          <div class="step-icon">📞</div>
+          <div class="step-title" id="title-s14">1-on-1 with Jose & Dexter + Scripts</div>
+          <div class="step-status pending" id="status-s14">Pending</div>
+          <svg class="step-chev" id="chev-s14" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s14">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">By the end of Week 2, once everything is set up, we schedule your 1-on-1 with Jose and Dexter. This is where you get aligned on your goals, strategy, and what your first 90 days look like at Chez. Also review the scripts before this call.</div>
+          <div class="block-label">Scripts to review</div>
+          <div class="info-box">📌 Focus on the <strong>Zillow ALM script</strong> — this is your primary lead conversion tool.<br><br>Scripts are available in the Chez Drive — ask Male for the link if you have not received it.</div>
+          <a class="link-item" href="https://wa.me/17862804186?text=Hi+Male,+I+am+ready+for+my+1on1+with+Jose+and+Dexter" target="_blank">
+            <div class="link-ico" style="background:#E8F5E9">💬</div>
+            <div><div class="link-title">Message Male to schedule your 1-on-1</div><div class="link-sub">WhatsApp · (786) 280-4186</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="confirm-row"><div class="chk" id="chk-s14" onclick="markDone('s14','w3',4)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have completed my 1-on-1 with Jose and Dexter and reviewed the scripts</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- YOUR BRAND -->
+  <div class="cat-card">
+    <div class="cat-header">
+      <div class="cat-dot" style="background:#E87DB8"></div>
+      <div class="cat-title">Your Brand & Marketing</div>
+      <div class="cat-meta" id="meta-w4">0 of 3</div>
+      <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-w4" style="width:0%;background:#E87DB8"></div></div>
+    </div>
+    <div class="cat-steps">
+
+      <!-- Step 15 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s15')">
+          <div class="step-icon">🎨</div>
+          <div class="step-title" id="title-s15">Agentz onboarding & brand kit</div>
+          <div class="step-status pending" id="status-s15">Pending</div>
+          <svg class="step-chev" id="chev-s15" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s15">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Agentz is your dedicated marketing team at Chez. Once your headshot is ready, they create your social posts, listing flyers, email campaigns, and more. Complete their onboarding form so they can set up your brand kit.</div>
+          <div class="block-label">Resources</div>
+          <a class="link-item" href="https://form.typeform.com/to/HXQyiAYz?typeform-source=chezre.com" target="_blank">
+            <div class="link-ico" style="background:#FFF0E8">📝</div>
+            <div><div class="link-title">Make a Marketing Request</div><div class="link-sub">Typeform · Order your materials here</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="link-item" href="https://drive.google.com/file/d/1TtVXct5fCa7y3GNiL8P7G6EdV2SL6WjY/view" target="_blank">
+            <div class="link-ico" style="background:#FFF0E8">📋</div>
+            <div><div class="link-title">Agentz Product Catalog</div><div class="link-sub">Google Drive · See all available products</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="link-item" href="https://chezre.com/agentz" target="_blank">
+            <div class="link-ico" style="background:#FFF0E8">🌐</div>
+            <div><div class="link-title">Agentz Website</div><div class="link-sub">chezre.com/agentz</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="confirm-row"><div class="chk" id="chk-s15" onclick="markDone('s15','w4',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have completed my Agentz onboarding and requested my brand kit</div></div>
+        </div>
+      </div>
+
+      <!-- Step 16 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s16')">
+          <div class="step-icon">🌐</div>
+          <div class="step-title" id="title-s16">Update all social media profiles</div>
+          <div class="step-status pending" id="status-s16">Pending</div>
+          <svg class="step-chev" id="chev-s16" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s16">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Update your Instagram, Facebook, and LinkedIn with your new headshot, your role at Chez Realty, and your contact info. Your social media is part of your brand — it should reflect Chez from day one.</div>
+          <div class="info-box">✅ New professional headshot<br>✅ "Associate at Chez Realty" in bio<br>✅ Phone number & email<br>✅ Link to your Zillow or website<br>✅ Location: Miami, FL</div>
+          <div class="confirm-row"><div class="chk" id="chk-s16" onclick="markDone('s16','w4',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">All my social media profiles are updated with my Chez info</div></div>
+        </div>
+      </div>
+
+      <!-- Step 17 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s17')">
+          <div class="step-icon">🏢</div>
+          <div class="step-title" id="title-s17">Set up Luxury Presence website</div>
+          <div class="step-status pending" id="status-s17">Pending</div>
+          <svg class="step-chev" id="chev-s17" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s17">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Luxury Presence is your personal real estate website — branded to you, connected to your listings, and built to capture leads. Chez provides this as part of your membership. Get it live as soon as possible.</div>
+          <a class="link-item" href="https://www.luxurypresence.com" target="_blank">
+            <div class="link-ico" style="background:#E8F0FE">🌐</div>
+            <div><div class="link-title">Luxury Presence Platform</div><div class="link-sub">luxurypresence.com · Your Chez website</div></div>
+            <svg class="arrow-svg link-arrow" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <div class="confirm-row"><div class="chk" id="chk-s17" onclick="markDone('s17','w4',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">My Luxury Presence website is live and configured</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FIRST STEPS -->
+  <div class="cat-card">
+    <div class="cat-header">
+      <div class="cat-dot" style="background:#2ECC71"></div>
+      <div class="cat-title">First Steps in the Field</div>
+      <div class="cat-meta" id="meta-w5">0 of 3</div>
+      <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-w5" style="width:0%;background:#2ECC71"></div></div>
+    </div>
+    <div class="cat-steps">
+
+      <!-- Step 18 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s18')">
+          <div class="step-icon">🎓</div>
+          <div class="step-title" id="title-s18">Attend first Chez training</div>
+          <div class="step-status pending" id="status-s18">Pending</div>
+          <svg class="step-chev" id="chev-s18" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s18">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Chez trainings are one of the most valuable parts of your membership. Attending your first training puts you in the room with your team, accelerates your learning, and makes you feel part of the Chez family immediately.</div>
+          <div class="info-box">📅 Check the April Training Schedule in Chez Hub. Confirm attendance with your Lead Agent — Mario Cabrera Jr.</div>
+          <div class="confirm-row"><div class="chk" id="chk-s18" onclick="markDone('s18','w5',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have attended my first Chez training session</div></div>
+        </div>
+      </div>
+
+      <!-- Step 19 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s19')">
+          <div class="step-icon">🏠</div>
+          <div class="step-title" id="title-s19">Host or assist first Open House</div>
+          <div class="step-status pending" id="status-s19">Pending</div>
+          <svg class="step-chev" id="chev-s19" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s19">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Open Houses are your fastest path to real leads and real experience. Even if you do not have a listing yet, ask your Lead Agent to shadow or assist at one. It is how most Chez agents close their first deal.</div>
+          <div class="info-box">💡 Ask Mario Jr about upcoming open houses you can assist with. Come prepared — bring business cards and review your Zillow ALM script beforehand.</div>
+          <div class="confirm-row"><div class="chk" id="chk-s19" onclick="markDone('s19','w5',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have hosted or assisted at a Chez Open House</div></div>
+        </div>
+      </div>
+
+      <!-- Step 20 -->
+      <div class="step">
+        <div class="step-header" onclick="toggleStep('s20')">
+          <div class="step-icon">🤝</div>
+          <div class="step-title" id="title-s20">Close or assist your first deal</div>
+          <div class="step-status pending" id="status-s20">Pending</div>
+          <svg class="step-chev" id="chev-s20" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="step-body" id="body-s20">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Your first deal is a milestone and Chez will celebrate it with you. Whether you are the lead agent or assisting a teammate in a co-broke, getting that first contract signed is everything. Talk to Jose or Dexter about your pipeline.</div>
+          <div class="info-box">🎉 When you close your first deal, let Male know immediately — we celebrate EVERY closing at Chez. You will be featured in Le Journal!</div>
+          <div class="confirm-row"><div class="chk" id="chk-s20" onclick="markDone('s20','w5',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have closed or assisted in my first Chez deal</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HELP -->
+  <div class="help-card">
+    <div style="font-size:22px">💬</div>
+    <div style="flex:1">
+      <div style="font-size:13px;font-weight:500;color:#1A1A1A">Need help with any step?</div>
+      <div style="font-size:11px;color:#999;margin-top:2px">Male is your go-to for onboarding questions</div>
+    </div>
+    <a class="wa-btn" href="https://wa.me/17862804186?text=Hi+Male,+I+need+help+with+my+onboarding" target="_blank">WhatsApp Male</a>
+  </div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var CATS = {
+  w1:{total:5,done:0}, w2:{total:5,done:0},
+  w3:{total:4,done:0}, w4:{total:3,done:0}, w5:{total:3,done:0}
+};
+var TOTAL = 21;
+
+function markReady(){
+  var chk=document.getElementById('chk-ready');
+  var icon=document.getElementById('chk-ready-icon');
+  var label=document.getElementById('ready-label');
+  var isDone=chk.style.background==='rgb(232, 101, 26)';
+  if(isDone){
+    chk.style.background='white';
+    chk.style.borderColor='#F15F37';
+    icon.style.display='none';
+    label.innerHTML='Click to confirm — <em>"Yes, I\'m ready to Chezify myself!"</em>';
+    label.style.color='#999';
+  } else {
+    chk.style.background='#F15F37';
+    chk.style.borderColor='#F15F37';
+    icon.style.display='block';
+    label.innerHTML='<strong style="color:#F15F37">Oui oui! Yes, I\'m ready to Chezify myself! 🧡</strong>';
+    label.style.color='#F15F37';
+    // Save to localStorage
+    var saved=JSON.parse(localStorage.getItem('ob_monica')||'{}');
+    saved['ready']=true; saved['_lastSeen']=Date.now();
+    localStorage.setItem('ob_monica',JSON.stringify(saved));
+    updateReadyProgress(true);
+  }
+}
+
+function updateReadyProgress(isDone){
+  var pct=0, totalDone=0;
+  Object.keys(CATS).forEach(function(cat){ totalDone+=CATS[cat].done; });
+  if(isDone) totalDone+=1;
+  pct=Math.round(totalDone/TOTAL*100);
+  var pctEl=document.getElementById('pct');
+  var stepsEl=document.getElementById('steps-label');
+  var barEl=document.getElementById('pct-bar');
+  if(pctEl) pctEl.textContent=pct+'%';
+  if(stepsEl) stepsEl.textContent=totalDone+' of '+TOTAL+' steps';
+  if(barEl) barEl.style.width=pct+'%';
+}
+
+function loadProgress(){
+  try{
+    var saved=JSON.parse(localStorage.getItem('ob_monica')||'{}');
+    Object.keys(saved).forEach(function(id){
+      if(id==='_lastSeen'||!saved[id]) return;
+      var cat=id==='s1'||id==='s2'||id==='s3'||id==='s4'||id==='s5'?'w1':
+               id==='s6'||id==='s7'||id==='s8'||id==='s9'||id==='s10'?'w2':
+               id==='s11'||id==='s12'||id==='s13'||id==='s14'?'w3':
+               id==='s15'||id==='s16'||id==='s17'?'w4':'w5';
+      applyDone(id,cat,false);
+    });
+    updateTotals();
+  }catch(e){}
+}
+
+function getCat(id){
+  var n=parseInt(id.replace('s',''));
+  return n<=5?'w1':n<=10?'w2':n<=14?'w3':n<=17?'w4':'w5';
+}
+
+function applyDone(id,cat,save){
+  var chk=document.getElementById('chk-'+id);
+  var status=document.getElementById('status-'+id);
+  var title=document.getElementById('title-'+id);
+  if(chk) chk.classList.add('checked');
+  if(status){status.textContent='Done';status.className='step-status done';}
+  if(title) title.classList.add('done');
+  if(save!==false){
+    CATS[cat].done++;
+    var saved=JSON.parse(localStorage.getItem('ob_monica')||'{}');
+    saved[id]=true; saved['_lastSeen']=Date.now();
+    localStorage.setItem('ob_monica',JSON.stringify(saved));
+    updateTotals();
+  }
+}
+
+function markDone(id,cat,total){
+  var chk=document.getElementById('chk-'+id);
+  if(!chk) return;
+  var isDone=chk.classList.contains('checked');
+  if(isDone){
+    chk.classList.remove('checked');
+    var s=document.getElementById('status-'+id);
+    var t=document.getElementById('title-'+id);
+    if(s){s.textContent='Pending';s.className='step-status pending';}
+    if(t) t.classList.remove('done');
+    CATS[cat].done=Math.max(0,CATS[cat].done-1);
+    var saved=JSON.parse(localStorage.getItem('ob_monica')||'{}');
+    saved[id]=false; saved['_lastSeen']=Date.now();
+    localStorage.setItem('ob_monica',JSON.stringify(saved));
+  } else {
+    applyDone(id,cat,true);
+  }
+  updateTotals();
+}
+
+function updateTotals(){
+  var totalDone=0;
+  Object.keys(CATS).forEach(function(cat){
+    var d=CATS[cat].done, t=CATS[cat].total;
+    totalDone+=d;
+    var meta=document.getElementById('meta-'+cat);
+    var bar=document.getElementById('bar-'+cat);
+    if(meta) meta.textContent=d+' of '+t;
+    if(bar) bar.style.width=Math.round(d/t*100)+'%';
+  });
+  var pct=Math.round(totalDone/TOTAL*100);
+  var pctEl=document.getElementById('pct');
+  var stepsEl=document.getElementById('steps-label');
+  var barEl=document.getElementById('pct-bar');
+  if(pctEl) pctEl.textContent=pct+'%';
+  if(stepsEl) stepsEl.textContent=totalDone+' of '+TOTAL+' steps';
+  if(barEl) barEl.style.width=pct+'%';
+}
+
+function toggleStep(id){
+  var body=document.getElementById('body-'+id);
+  var chev=document.getElementById('chev-'+id);
+  if(!body) return;
+  var open=body.classList.contains('open');
+  body.classList.toggle('open');
+  if(chev) chev.style.transform=open?'':'rotate(180deg)';
+}
+
+loadProgress();
+// Load ready state
+try{
+  var saved=JSON.parse(localStorage.getItem('ob_monica')||'{}');
+  if(saved['ready']){
+    var chk=document.getElementById('chk-ready');
+    var icon=document.getElementById('chk-ready-icon');
+    var label=document.getElementById('ready-label');
+    if(chk){chk.style.background='#F15F37';chk.style.borderColor='#F15F37';}
+    if(icon) icon.style.display='b
