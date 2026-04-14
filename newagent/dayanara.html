@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Agent · Chez Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#F7F5F2;min-height:100vh}
+.topbar{background:white;border-bottom:1px solid #eee;padding:14px 24px;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:10}
+.logo{font-family:'Lato',sans-serif;font-weight:900;font-size:16px;color:#F15F37;letter-spacing:3px}
+.new-badge{background:#FFF0E8;color:#F15F37;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;margin-left:auto}
+.body{padding:20px 24px;max-width:780px;margin:0 auto}
+
+/* HERO */
+.hero{background:#2A2A2A;border-radius:14px;padding:22px 26px;display:flex;align-items:center;gap:18px;margin-bottom:20px}
+.avt{width:60px;height:60px;border-radius:50%;background:#F15F37;display:flex;align-items:center;justify-content:center;font-family:'Lato',sans-serif;font-weight:900;font-size:22px;color:white;flex-shrink:0}
+.hero-tag{font-size:10px;font-weight:700;color:#F15F37;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:4px}
+.hero-name{font-family:'Lato',sans-serif;font-size:24px;font-weight:900;color:white;line-height:1.1}
+.hero-role{font-size:12px;color:rgba(255,255,255,0.4);margin-top:3px}
+.pct-num{font-family:'Lato',sans-serif;font-size:38px;font-weight:900;color:white;line-height:1;text-align:center}
+.pct-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;text-align:center}
+.pct-bar{width:90px;height:5px;background:rgba(255,255,255,0.1);border-radius:3px;margin-top:8px;overflow:hidden}
+.pct-fill{height:100%;background:#F15F37;border-radius:3px;transition:width 0.4s}
+
+/* WELCOME BANNER */
+.welcome-banner{border-radius:14px;padding:28px 28px 24px;margin-bottom:20px;text-align:center;overflow:hidden;position:relative;background-image:url('https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/BG%20CHEZ.png');background-size:cover;background-position:center}
+.banner-overlay{display:none}
+.banner-content{position:relative;z-index:1}
+
+/* SIDE SECTION */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* BLOCKS */
+.section-label{font-size:10px;font-weight:700;color:#999;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px}
+.block-card{background:white;border:0.5px solid #eee;border-radius:12px;margin-bottom:14px;overflow:hidden}
+.block-header{padding:14px 18px;display:flex;align-items:center;gap:12px;background:#F15F37;cursor:pointer;user-select:none}
+.block-num{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-family:'Lato',sans-serif;font-weight:900;font-size:13px;color:white;flex-shrink:0}
+.block-title{font-size:14px;font-weight:700;color:white;flex:1}
+.block-meta{font-size:11px;color:rgba(255,255,255,0.75)}
+.block-bar-wrap{width:60px;height:5px;background:rgba(255,255,255,0.3);border-radius:3px;overflow:hidden}
+.block-bar-fill{height:100%;background:white;border-radius:3px;transition:width 0.3s}
+.block-chev{width:16px;height:16px;stroke:white;fill:none;stroke-width:2;transition:transform 0.2s;flex-shrink:0}
+.block-steps{display:none;border-top:0.5px solid #f5f5f5}
+.block-steps.open{display:block}
+
+/* STEPS */
+.step{border-bottom:0.5px solid #f5f5f5}
+.step:last-child{border-bottom:none}
+.step-header{padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.step-num{width:20px;height:20px;border-radius:50%;background:#F15F37;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;flex-shrink:0}
+.step-num.done{background:#2ECC71}
+.step-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.step-title{font-size:13px;font-weight:500;color:#1A1A1A;flex:1}
+.step-title.done{color:#bbb;text-decoration:line-through}
+.step-status{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;flex-shrink:0}
+.step-status.done{background:#E8F5E9;color:#2E7D32}
+.step-status.pending{background:#F5F5F5;color:#999}
+.step-chev{width:13px;height:13px;stroke:#bbb;fill:none;stroke-width:2;flex-shrink:0;transition:transform 0.2s}
+.step-body{display:none;padding:0 16px 16px 50px;background:#FAFAFA;border-top:0.5px solid #f0f0f0}
+.step-body.open{display:block}
+
+/* CONTENT */
+.block-label{font-size:10px;font-weight:700;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin:12px 0 6px}
+.desc{font-size:12px;color:#555;line-height:1.65}
+.info-box{background:#F0F7FF;border:0.5px solid #B8D4F0;border-radius:8px;padding:10px 12px;margin-bottom:6px;font-size:11px;color:#1A4A7A;line-height:1.7}
+.info-box.orange{background:#FFF8F5;border-color:#FFD5B8;color:#8B3A1A}
+.info-box.green{background:#F0FFF4;border-color:#B8E6C8;color:#1A5C3A}
+.video-block{background:#1A1A1A;border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:6px;text-decoration:none}
+.play{width:30px;height:30px;border-radius:50%;background:#F15F37;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.play svg{width:11px;height:11px;fill:white;margin-left:2px}
+.video-title{font-size:12px;font-weight:500;color:white}
+.video-dur{font-size:10px;color:rgba(255,255,255,0.4);margin-top:1px}
+.link-item{display:flex;align-items:center;gap:10px;padding:9px 12px;background:white;border:0.5px solid #eee;border-radius:8px;margin-bottom:6px;text-decoration:none}
+.link-ico{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.link-title{font-size:12px;font-weight:500;color:#1A1A1A}
+.link-sub{font-size:10px;color:#999;margin-top:1px}
+.arr{width:11px;height:11px;stroke:#bbb;fill:none;stroke-width:2;margin-left:auto;flex-shrink:0}
+.confirm-row{margin-top:14px;padding:12px;background:#FFF8F5;border:1px solid #FFD5B8;border-radius:8px;display:flex;align-items:center;gap:10px}
+.chk{width:20px;height:20px;border-radius:5px;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all 0.15s;background:white}
+.chk.checked{background:#F15F37;border-color:#F15F37}
+.chk svg{width:11px;height:11px;stroke:white;fill:none;stroke-width:3;display:none}
+.chk.checked svg{display:block}
+.confirm-label{font-size:12px;color:#C8601A;font-weight:500}
+.help-card{background:#FFF8F5;border:0.5px solid #FFD5B8;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-top:4px}
+.wa-btn{background:#F15F37;color:white;text-decoration:none;border-radius:8px;padding:9px 16px;font-size:12px;font-weight:600;white-space:nowrap}
+
+/* LOCKED STATE */
+.step.locked .step-title{color:#bbb}
+.step.locked .step-header{cursor:default;opacity:0.5}
+.step.locked .step-chev{display:none}
+.step-lock{width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-lock svg{width:14px;height:14px;stroke:#bbb;fill:none;stroke-width:2}
+.step.unlocked .step-lock{display:none}
+.step.locked .step-num{background:#ddd}
+@keyframes unlock{0%{transform:scale(0.8);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+.step.just-unlocked{animation:unlock 0.4s ease forwards}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">CHEZ HUB</div>
+  <div style="font-size:11px;color:#bbb">/</div>
+  <div style="font-size:11px;color:#bbb;font-weight:400">New Agent Onboarding</div>
+  <div style="font-size:11px;color:#bbb">/</div>
+  <div style="font-size:11px;color:#F15F37;font-weight:600">Dayanara Munoz</div>
+  <img src="https://raw.githubusercontent.com/databotxnadiel-ai/chezhub/main/CHEZLOGO%20HORIZONTAL_ORANGE.png" style="height:24px;width:auto;object-fit:contain;margin-left:auto" alt="Chez Realty">
+</div>
+
+<div class="body">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="avt">DM</div>
+    <div style="flex:1">
+      <div class="hero-tag">Welcome to Chez · Chez Realty</div>
+      <div class="hero-name">Dayanara Munoz</div>
+      <div class="hero-role">Associate Agent / Realtor · Started April 11, 2026</div>
+    </div>
+    <div style="flex-shrink:0">
+      <div class="pct-num" id="pct">0%</div>
+      <div class="pct-sub" id="steps-label">0 of 19 steps</div>
+      <div class="pct-bar"><div class="pct-fill" id="pct-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- WELCOME BANNER -->
+  <div class="welcome-banner">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <div style="font-family:'Lato',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,0.85);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:10px">Chez Realty · Miami</div>
+      <div style="font-family:'Lato',sans-serif;font-size:36px;font-weight:900;color:white;line-height:1.1;margin-bottom:8px">Oh la la, Dayanara! 🎉</div>
+      <div style="font-size:15px;color:rgba(255,255,255,0.9);margin-bottom:18px;line-height:1.6"><em>Oui oui oui</em> — you made it! Welcome to <strong>Chez Realty</strong>,<br>Miami's most <em>magnifique</em> real estate team. 🧡</div>
+      <div style="background:rgba(255,255,255,0.12);border-radius:10px;padding:14px 20px;margin-bottom:20px;font-size:13px;color:white;line-height:1.7;text-align:left;max-width:520px;margin-left:auto;margin-right:auto">
+        Your onboarding is organized in <strong>4 blocks</strong>. Go at your own pace — the faster you move through them, the sooner you're ready to close your first deal. Let's go! 🚀
+      </div>
+      <div style="background:white;border-radius:12px;padding:18px 22px;display:flex;align-items:center;gap:16px;max-width:520px;margin:0 auto;text-align:left">
+        <div id="chk-ready" onclick="markReady()" style="width:24px;height:24px;border-radius:6px;border:2px solid #F15F37;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;background:white;transition:all 0.2s">
+          <svg id="chk-ready-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:#1A1A1A">Are you ready to Chezify yourself?</div>
+          <div id="ready-label" style="font-size:11px;color:#999;margin-top:2px">Click to confirm — <em>"Yes, I'm ready to Chezify myself!"</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDE PRE-ONBOARDING -->
+  <div style="background:#363442;border-radius:12px;padding:12px 16px;margin-bottom:20px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div style="background:#CE87C1;color:#363442;font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.05em;flex-shrink:0">SIDE</div>
+      <div style="font-size:12px;font-weight:600;color:white;flex:1">Brokerage onboarding</div>
+      <div style="font-size:10px;color:#CE87C1;font-weight:700">5/5 ✓</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(206,135,193,0.3);border-radius:8px;padding:8px 4px;text-align:center">
+        <div style="width:18px;height:18px;border-radius:50%;background:#CE87C1;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span style="font-size:9px;color:rgba(255,255,255,0.75);font-weight:500;line-height:1.3">ICA signed</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(206,135,193,0.3);border-radius:8px;padding:8px 4px;text-align:center">
+        <div style="width:18px;height:18px;border-radius:50%;background:#CE87C1;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span style="font-size:9px;color:rgba(255,255,255,0.75);font-weight:500;line-height:1.3">Form completed</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(206,135,193,0.3);border-radius:8px;padding:8px 4px;text-align:center">
+        <div style="width:18px;height:18px;border-radius:50%;background:#CE87C1;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span style="font-size:9px;color:rgba(255,255,255,0.75);font-weight:500;line-height:1.3">Hub access</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(206,135,193,0.3);border-radius:8px;padding:8px 4px;text-align:center">
+        <div style="width:18px;height:18px;border-radius:50%;background:#CE87C1;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span style="font-size:9px;color:rgba(255,255,255,0.75);font-weight:500;line-height:1.3">License transfer</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(206,135,193,0.3);border-radius:8px;padding:8px 4px;text-align:center">
+        <div style="width:18px;height:18px;border-radius:50%;background:#CE87C1;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span style="font-size:9px;color:rgba(255,255,255,0.75);font-weight:500;line-height:1.3">Systems setup</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHEZ ONBOARDING -->
+  <div class="section-label">Chez Onboarding — 4 Blocks to Activation</div>
+
+  <!-- ═══ BLOCK 1: GETTING STARTED ═══ -->
+  <div class="block-card">
+    <div class="block-header" onclick="toggleBlock('b1')">
+      <div class="block-num">1</div>
+      <div>
+        <div class="block-title">Getting Started</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.75);margin-top:1px">Set up your Chez identity</div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div class="block-meta" id="meta-b1">0 of 3</div>
+        <div class="block-bar-wrap"><div class="block-bar-fill" id="bar-b1" style="width:0%"></div></div>
+        <svg class="block-chev" id="bchev-b1" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="block-steps" id="bsteps-b1">
+
+      <div class="step unlocked" data-step="s1">
+        <div class="step-header" onclick="toggleStep('s1')">
+          <div class="step-num" id="snum-s1">1</div>
+          <div class="step-icon">📬</div>
+          <div class="step-title" id="title-s1">Set up your @chezre.com email</div>
+          <div class="step-status pending" id="status-s1">Pending</div>
+          <svg class="step-chev" id="chev-s1" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s1"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s1">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Your @chezre.com email is your professional identity at Chez. Set it up before anything else.</div>
+          <div class="info-box">1️⃣ Check your personal email for a Google Workspace invite<br>2️⃣ Accept and create your password<br>3️⃣ Log in at <strong>mail.google.com</strong> with your @chezre.com address<br>4️⃣ Enable 2-factor authentication</div>
+          <a class="link-item" href="https://wa.me/17862804186?text=Hi+Male,+I+need+help+with+my+Chez+email" target="_blank"><div class="link-ico" style="background:#E8F5E9">💬</div><div><div class="link-title">Contact Male for help</div><div class="link-sub">WhatsApp · (786) 280-4186</div></div><svg class="arr" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          <div class="confirm-row"><div class="chk" id="chk-s1" onclick="markDone('s1','b1',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">My @chezre.com email is active and I can log in</div></div>
+        </div>
+      </div>
+
+      <div class="step unlocked" data-step="s2">
+        <div class="step-header" onclick="toggleStep('s2')">
+          <div class="step-num" id="snum-s2">2</div>
+          <div class="step-icon">📧</div>
+          <div class="step-title" id="title-s2">Read your Chez welcome email</div>
+          <div class="step-status pending" id="status-s2">Pending</div>
+          <svg class="step-chev" id="chev-s2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s2"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s2">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">We sent a welcome email to your Chez address with photographer info, what to wear, and your first steps. Read it carefully.</div>
+          <div class="info-box">📷 Photographer info & what to wear<br>📋 Your first steps this week<br>📬 Sent to your @chezre.com email</div>
+          <div class="confirm-row"><div class="chk" id="chk-s2" onclick="markDone('s2','b1',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have read my Chez welcome email</div></div>
+        </div>
+      </div>
+
+      <div class="step unlocked" data-step="s3">
+        <div class="step-header" onclick="toggleStep('s3')">
+          <div class="step-num" id="snum-s3">3</div>
+          <div class="step-icon">📸</div>
+          <div class="step-title" id="title-s3">Schedule your professional headshot</div>
+          <div class="step-status pending" id="status-s3">Pending</div>
+          <svg class="step-chev" id="chev-s3" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s3"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s3">
+          <div class="block-label">Your photographer</div>
+          <div class="info-box green">📷 <strong>Krastina Dimitrova — Firefly By The Sea</strong><br>📞 (617) 794-2903<br>📍 13020 SW 120th St, Miami, FL 33186</div>
+          <div class="block-label">What to wear</div>
+          <div class="info-box">👔 Soft, neutral colors — black, navy blue, or very light tones<br>👗 Bring two outfit options · Iron clothes the night before</div>
+          <div class="confirm-row"><div class="chk" id="chk-s3" onclick="markDone('s3','b1',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have scheduled my headshot with Krastina</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ BLOCK 2: ACTIVATION ═══ -->
+  <div class="block-card">
+    <div class="block-header" onclick="toggleBlock('b2')">
+      <div class="block-num">2</div>
+      <div>
+        <div class="block-title">Activation</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.75);margin-top:1px">Complete your admin steps</div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div class="block-meta" id="meta-b2">0 of 3</div>
+        <div class="block-bar-wrap"><div class="block-bar-fill" id="bar-b2" style="width:0%"></div></div>
+        <svg class="block-chev" id="bchev-b2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="block-steps" id="bsteps-b2">
+
+      <div class="step unlocked" data-step="s4">
+        <div class="step-header" onclick="toggleStep('s4')">
+          <div class="step-num" id="snum-s4">4</div>
+          <div class="step-icon">🎓</div>
+          <div class="step-title" id="title-s4">Register for mandatory Side Thursday training</div>
+          <div class="step-status pending" id="status-s4">Pending</div>
+          <svg class="step-chev" id="chev-s4" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s4"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s4">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Register for the Thursday Side training once all your Side systems are active. This is <strong>mandatory</strong> — we cannot move forward without it.</div>
+          <div class="info-box orange">⚠️ MANDATORY — without this we cannot continue. Register as soon as your Side systems are active.</div>
+          <a class="link-item" href="https://side.360learning.com/paths/6994d265690dfd97e30d031c/home?lang=" target="_blank"><div class="link-ico" style="background:#E8F0FE">🎓</div><div><div class="link-title">Side Thursday Training — Register Now</div><div class="link-sub">side.360learning.com</div></div><svg class="arr" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          <div class="confirm-row"><div class="chk" id="chk-s4" onclick="markDone('s4','b2',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have completed the mandatory Side Thursday training</div></div>
+        </div>
+      </div>
+
+      <div class="step unlocked" data-step="s5">
+        <div class="step-header" onclick="toggleStep('s5')">
+          <div class="step-num" id="snum-s5">5</div>
+          <div class="step-icon">📋</div>
+          <div class="step-title" id="title-s5">Fill out your agent information form</div>
+          <div class="step-status pending" id="status-s5">Pending</div>
+          <svg class="step-chev" id="chev-s5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s5"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s5">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Fill out all fields below and send them to Male with the orange button.</div>
+          <div style="margin-top:12px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+              <div><div style="font-size:10px;font-weight:700;color:#999;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px">Full Name *</div><input id="f-name" type="text" placeholder="Dayanara Munoz" oninput="autoSaveForm()" style="width:100%;padding:9px 12px;border:1px solid #eee;border-radius:8px;font-size:13px;font-family:inherit;outline:none"></div>
+              <div><div style="font-size:10px;font-weight:700;color:#999;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px">Email Address *</div><input id="f-email" type="email" placeholder="dayanara@chezre.com" oninput="autoSaveForm()" style="width:100%;padding:9px 12px;border:1px solid #eee;border-radius:8px;font-size:13px;font-family:inherit;outline:none"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+              <div><div style="font-size:10px;font-weight:700;color:#999;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px">Phone Number *</div><input id="f-phone" type="tel" placeholder="(305) 000-0000" oninput="autoSaveForm()" style="width:100%;padding:9px 12px;border:1px solid #eee;border-radius:8px;font-size:13px;font-family:inherit;outline:none"></div>
+              <div><div style="font-size:10px;font-weight:700;color:#999;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px">Birthday *</div><input id="f-birthday" type="text" placeholder="March 15" oninput="autoSaveForm()" style="width:100%;padding:9px 12px;border:1px solid #eee;border-radius:8px;font-size:13px;font-family:inherit;outline:none"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+              <div><div style="font-size:10px;font-weight:700;color:#999;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px">Shirt Size *</div><select id="f-shirt" onchange="autoSaveForm()" style="width:100%;padding:9px 12px;border:1px solid #eee;border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:white"><option value="">Select size</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select></div>
+              <div><div style="font-size:10px;font-weight:700;color:#999;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px">License Number *</div><input id="f-license" type="text" placeholder="SL3XXXXXX" oninput="autoSaveForm()" style="width:100%;padding:9px 12px;border:1px solid #eee;border-radius:8px;font-size:13px;font-family:inherit;outline:none"></div>
+            </div>
+            <div style="margin-bottom:10px"><div style="font-size:10px;font-weight:700;color:#999;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px">Home Address *</div><input id="f-address" type="text" placeholder="123 SW 8th St, Miami FL 33130" oninput="autoSaveForm()" style="width:100%;padding:9px 12px;border:1px solid #eee;border-radius:8px;font-size:13px;font-family:inherit;outline:none"></div>
+            <div id="form-status" style="font-size:11px;color:#bbb;text-align:right;margin-bottom:10px;min-height:16px"></div>
+          </div>
+          <button onclick="submitAgentForm()" style="width:100%;background:#F15F37;color:white;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send email to Male
+          </button>
+          <div class="confirm-row"><div class="chk" id="chk-s5" onclick="markDone('s5','b2',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I have sent my information to Male</div></div>
+        </div>
+      </div>
+
+      <div class="step unlocked" data-step="s6">
+        <div class="step-header" onclick="toggleStep('s6')">
+          <div class="step-num" id="snum-s6">6</div>
+          <div class="step-icon">🏛️</div>
+          <div class="step-title" id="title-s6">Apply for Miami Association of Realtors</div>
+          <div class="step-status pending" id="status-s6">Pending</div>
+          <svg class="step-chev" id="chev-s6" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s6"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s6">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">For brand new agents only. If you were already a Realtor, skip this step.</div>
+          <div class="info-box">✅ Choose membership with the title <strong>"REALTOR"</strong><br>✅ Pay in full or 4 equal installments<br>✅ Also apply for <strong>SUPRA EKey</strong> at the end<br>⚠️ Only after your license is active with Chez<br>⏭️ Already a Realtor? Skip this step</div>
+          <a class="link-item" href="https://docs.google.com/document/d/1YJSc-2y_muT5ZWnURfP0pVNvCqmw8VGA/edit" target="_blank"><div class="link-ico" style="background:#E8F5E9">📄</div><div><div class="link-title">Miami MLS Application Instructions</div><div class="link-sub">Google Doc · Step by step</div></div><svg class="arr" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          <div class="confirm-row"><div class="chk" id="chk-s6" onclick="markDone('s6','b2',3)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">Applied for Miami Realtors (or already a member)</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ BLOCK 3: TECH STACK ═══ -->
+  <div class="block-card">
+    <div class="block-header" onclick="toggleBlock('b3')">
+      <div class="block-num">3</div>
+      <div>
+        <div class="block-title">Your Tech Stack</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.75);margin-top:1px">The tools you'll use every day</div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div class="block-meta" id="meta-b3">0 of 5</div>
+        <div class="block-bar-wrap"><div class="block-bar-fill" id="bar-b3" style="width:0%"></div></div>
+        <svg class="block-chev" id="bchev-b3" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="block-steps" id="bsteps-b3">
+
+      <div class="step unlocked" data-step="s7">
+        <div class="step-header" onclick="toggleStep('s7')">
+          <div class="step-num" id="snum-s7">7</div>
+          <div class="step-icon">🔑</div>
+          <div class="step-title" id="title-s7">Follow Up Boss (FUB) — your CRM</div>
+          <div class="step-status pending" id="status-s7">Pending</div>
+          <svg class="step-chev" id="chev-s7" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s7"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s7">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">FUB is where all your leads live. Complete bootcamp, connect your Chez email, and watch both Chez University videos.</div>
+          <a class="link-item" href="https://docs.google.com/document/d/1tjHklCXT6NVRmfFAUFjhhJNwqlAwEIFz/edit" target="_blank"><div class="link-ico" style="background:#E8F0FE">📄</div><div><div class="link-title">FUB Setup Guide — Chez Doc</div><div class="link-sub">Google Doc · Full instructions</div></div><svg class="arr" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          <a class="video-block" href="https://side.continu.co/video/65d632f1627c3c6167459307" target="_blank"><div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div><div class="video-title">Smart Lists & Best Practices</div><div class="video-dur">Chez University</div></div></a>
+          <a class="video-block" href="https://side.continu.co/video/65d636deb1507b8d2c10661b" target="_blank"><div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div><div class="video-title">Handraiser Alerts Best Practices</div><div class="video-dur">Chez University</div></div></a>
+          <div class="confirm-row"><div class="chk" id="chk-s7" onclick="markDone('s7','b3',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">FUB bootcamp complete and email connected</div></div>
+        </div>
+      </div>
+
+      <div class="step unlocked" data-step="s8">
+        <div class="step-header" onclick="toggleStep('s8')">
+          <div class="step-num" id="snum-s8">8</div>
+          <div class="step-icon">🏘</div>
+          <div class="step-title" id="title-s8">Matrix MLS — 5 training videos</div>
+          <div class="step-status pending" id="status-s8">Pending</div>
+          <svg class="step-chev" id="chev-s8" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s8"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s8">
+          <div class="block-label">Watch all 5 videos</div>
+          <a class="video-block" href="https://side.continu.co/video/65d79824a3677109fee222ce" target="_blank"><div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div><div class="video-title">Matrix Best Practices — Vol. 1</div><div class="video-dur">Chez University</div></div></a>
+          <a class="video-block" href="https://side.continu.co/video/65d797a0a3677109fee1d027" target="_blank"><div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div><div class="video-title">Matrix Best Practices — Vol. 2</div><div class="video-dur">Chez University</div></div></a>
+          <a class="video-block" href="https://side.continu.co/video/65d79010f9a3b9b57d844d66" target="_blank"><div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div><div class="video-title">Matrix Best Practices — Vol. 3</div><div class="video-dur">Chez University</div></div></a>
+          <a class="video-block" href="https://side.continu.co/video/65d79e60d8c3059c2bdaaa11" target="_blank"><div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div><div class="video-title">Matrix Best Practices — Vol. 4</div><div class="video-dur">Chez University</div></div></a>
+          <a class="video-block" href="https://side.continu.co/video/65d798efd6d6569153390abc" target="_blank"><div class="play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div><div class="video-title">Matrix Best Practices — Vol. 5</div><div class="video-dur">Chez University</div></div></a>
+          <div class="confirm-row"><div class="chk" id="chk-s8" onclick="markDone('s8','b3',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">All 5 Matrix videos watched</div></div>
+        </div>
+      </div>
+
+      <div class="step unlocked" data-step="s9">
+        <div class="step-header" onclick="toggleStep('s9')">
+          <div class="step-num" id="snum-s9">9</div>
+          <div class="step-icon">🏡</div>
+          <div class="step-title" id="title-s9">Zillow — profile & Flex agreement</div>
+          <div class="step-status pending" id="status-s9">Pending</div>
+          <svg class="step-chev" id="chev-s9" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s9"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s9">
+          <div class="block-label">Part 1 — Profile & team invite</div>
+          <div class="info-box">1️⃣ Create Zillow agent profile — add headshot, phone & license<br>2️⃣ Message Male so we send the team invite<br>3️⃣ Accept the Chez Realty team invite</div>
+          <div class="block-label">Part 2 — Flex agreement & Academy</div>
+          <div class="info-box">4️⃣ Go to <strong>zillow.com/pbflex/agent</strong> · Sign Flex Agreement<br>5️⃣ Download/update the <strong>Premier Agent App</strong><br>6️⃣ Save backup number: <strong>(206) 539-0456</strong><br>7️⃣ Complete Zillow Academy Flex onboarding plan</div>
+          <a class="link-item" href="https://www.zillow.com/pbflex/agent" target="_blank"><div class="link-ico" style="background:#E8F0FE">✍️</div><div><div class="link-title">Sign Zillow Flex Agreement</div><div class="link-sub">zillow.com/pbflex/agent</div></div><svg class="arr" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          <div class="confirm-row"><div class="chk" id="chk-s9" onclick="markDone('s9','b3',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">Zillow profile live and Flex agreement signed</div></div>
+        </div>
+      </div>
+
+      <div class="step unlocked" data-step="s10">
+        <div class="step-header" onclick="toggleStep('s10')">
+          <div class="step-num" id="snum-s10">10</div>
+          <div class="step-icon">🌐</div>
+          <div class="step-title" id="title-s10">Realtor.com — accept team invite</div>
+          <div class="step-status pending" id="status-s10">Pending</div>
+          <svg class="step-chev" id="chev-s10" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s10"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s10">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">We will send you the team invite once you reach this step. Accept it and complete your profile with headshot, bio, and license number.</div>
+          <div class="info-box">📧 Check your Chez email for the Realtor.com invite. Contact Male if not received within 24h.</div>
+          <div class="confirm-row"><div class="chk" id="chk-s10" onclick="markDone('s10','b3',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">Realtor.com invite accepted and profile complete</div></div>
+        </div>
+      </div>
+
+      <div class="step unlocked" data-step="s11">
+        <div class="step-header" onclick="toggleStep('s11')">
+          <div class="step-num" id="snum-s11">11</div>
+          <div class="step-icon">⭐</div>
+          <div class="step-title" id="title-s11">Ylopo — setup & training</div>
+          <div class="step-status pending" id="status-s11">Pending</div>
+          <svg class="step-chev" id="chev-s11" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s11"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s11">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">We fill out the Ylopo questionnaire for you and send the training email. Wait for Male to send it before starting.</div>
+          <div class="info-box orange">📌 Wait for the Ylopo training email from Male before starting this step.</div>
+          <a class="link-item" href="https://ylopo.zendesk.com/hc/en-us/articles/360021746612" target="_blank"><div class="link-ico" style="background:#F3E5F5">⭐</div><div><div class="link-title">Getting Started with Ylopo Stars</div><div class="link-sub">ylopo.zendesk.com</div></div><svg class="arr" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          <a class="link-item" href="https://ylopo.zendesk.com/hc/en-us/articles/360030238472" target="_blank"><div class="link-ico" style="background:#F3E5F5">🤖</div><div><div class="link-title">Ylopo AI Texting (Raiya) & FUB</div><div class="link-sub">ylopo.zendesk.com</div></div><svg class="arr" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          <div class="confirm-row"><div class="chk" id="chk-s11" onclick="markDone('s11','b3',5)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">Ylopo setup and training complete</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ BLOCK 4: READY TO SELL ═══ -->
+  <div class="block-card">
+    <div class="block-header" onclick="toggleBlock('b4')">
+      <div class="block-num">4</div>
+      <div>
+        <div class="block-title">Ready to Sell</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.75);margin-top:1px">Close your first deal</div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div class="block-meta" id="meta-b4">0 of 2</div>
+        <div class="block-bar-wrap"><div class="block-bar-fill" id="bar-b4" style="width:0%"></div></div>
+        <svg class="block-chev" id="bchev-b4" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="block-steps" id="bsteps-b4">
+
+      <div class="step unlocked" data-step="s12">
+        <div class="step-header" onclick="toggleStep('s12')">
+          <div class="step-num" id="snum-s12">12</div>
+          <div class="step-icon">📝</div>
+          <div class="step-title" id="title-s12">Review scripts — focus on Zillow ALM</div>
+          <div class="step-status pending" id="status-s12">Pending</div>
+          <svg class="step-chev" id="chev-s12" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s12"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s12">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Study the Chez scripts. The <strong>Zillow ALM script</strong> is your primary lead conversion tool — read it, practice out loud, know it cold before your 1-on-1.</div>
+          <div class="info-box orange">📌 Ask Male for the Scripts Drive link if you have not received it yet.</div>
+          <a class="link-item" href="https://wa.me/17862804186?text=Hi+Male,+can+you+send+me+the+Scripts+Drive?" target="_blank"><div class="link-ico" style="background:#E8F5E9">💬</div><div><div class="link-title">Request Scripts Drive from Male</div><div class="link-sub">WhatsApp · (786) 280-4186</div></div><svg class="arr" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          <div class="confirm-row"><div class="chk" id="chk-s12" onclick="markDone('s12','b4',2)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">I know the Zillow ALM script</div></div>
+        </div>
+      </div>
+
+      <div class="step unlocked" data-step="s13">
+        <div class="step-header" onclick="toggleStep('s13')">
+          <div class="step-num" id="snum-s13">13</div>
+          <div class="step-icon">🤝</div>
+          <div class="step-title" id="title-s13">1-on-1 with Jose & Dexter</div>
+          <div class="step-status pending" id="status-s13">Pending</div>
+          <svg class="step-chev" id="chev-s13" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="step-lock" id="lock-s13"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="step-body" id="body-s13">
+          <div class="block-label">What you need to do</div>
+          <div class="desc">Your alignment call with the founders — goals, strategy, and your first 90 days at Chez. Come prepared. Contact Male to schedule it.</div>
+          <a class="link-item" href="https://wa.me/17862804186?text=Hi+Male,+I+am+ready+for+my+1on1+with+Jose+and+Dexter!" target="_blank"><div class="link-ico" style="background:#E8F5E9">💬</div><div><div class="link-title">Contact Male to schedule</div><div class="link-sub">WhatsApp · (786) 280-4186</div></div><svg class="arr" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          <div class="confirm-row"><div class="chk" id="chk-s13" onclick="markDone('s13','b4',2)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="confirm-label">1-on-1 with Jose and Dexter complete</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HELP -->
+  <div class="help-card">
+    <div style="font-size:22px">💬</div>
+    <div style="flex:1">
+      <div style="font-size:13px;font-weight:500;color:#1A1A1A">Need help with any step?</div>
+      <div style="font-size:11px;color:#999;margin-top:2px">Male is your go-to for onboarding questions</div>
+    </div>
+    <a class="wa-btn" href="https://wa.me/17862804186?text=Hi+Male,+I+need+help+with+my+onboarding" target="_blank">WhatsApp Male</a>
+  </div>
+
+</div>
+
+<script>
+var SIDE_TOTAL = 5;
+var CATS = { b1:{total:3,done:0}, b2:{total:3,done:0}, b3:{total:5,done:0}, b4:{total:2,done:0} };
+var CHEZ_TOTAL = 14; // 13 steps + ready check
+
+function getCat(id){
+  var n=parseInt(id.replace('s',''));
+  return n<=3?'b1': n<=6?'b2': n<=11?'b3': 'b4';
+}
+
+function loadProgress(){
+  try{
+    // First lock all steps except s1
+    STEP_ORDER.forEach(function(sid,i){
+      if(i > 0) lockStep(sid);
+    });
+    var saved=JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+    // Apply completed steps in order and unlock next
+    var lastCompleted = -1;
+    STEP_ORDER.forEach(function(sid,i){
+      if(saved[sid]){
+        var cat=getCat(sid);
+        if(cat) applyDone(sid,cat,false);
+        lastCompleted=i;
+        // Unlock next step
+        if(i+1 < STEP_ORDER.length) unlockStepSilent(STEP_ORDER[i+1]);
+      }
+    });
+    if(saved['ready']) applyReady();
+    updateTotals();
+    loadFormData();
+  }catch(e){}
+}
+
+function openBlock1(){
+  var bsteps = document.getElementById('bsteps-b1');
+  var bchev = document.getElementById('bchev-b1');
+  if(bsteps && !bsteps.classList.contains('open')){
+    bsteps.classList.add('open');
+    if(bchev) bchev.style.transform='rotate(180deg)';
+  }
+  // Open first incomplete step
+  var saved = JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+  var firstOpen = ['s1','s2','s3'].find(function(sid){ return !saved[sid]; });
+  if(firstOpen){
+    var body = document.getElementById('body-'+firstOpen);
+    var chev = document.getElementById('chev-'+firstOpen);
+    if(body){ body.classList.add('open'); }
+    if(chev) chev.style.transform='rotate(180deg)';
+  }
+}
+
+function unlockStepSilent(id){
+  var el=document.querySelector('[data-step="'+id+'"]');
+  if(!el) return;
+  el.classList.remove('locked');
+  el.classList.add('unlocked');
+}
+
+function applyDone(id,cat,save){
+  var chk=document.getElementById('chk-'+id);
+  var status=document.getElementById('status-'+id);
+  var title=document.getElementById('title-'+id);
+  var snum=document.getElementById('snum-'+id);
+  if(chk) chk.classList.add('checked');
+  if(status){status.textContent='Done'; status.className='step-status done';}
+  if(title) title.classList.add('done');
+  if(snum) snum.classList.add('done');
+  if(save!==false){
+    CATS[cat].done++;
+    var saved=JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+    saved[id]=true; saved['_lastSeen']=Date.now();
+    localStorage.setItem('ob_dayanara',JSON.stringify(saved));
+    updateTotals();
+  }
+}
+
+var STEP_ORDER = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13'];
+
+function getNextStep(id){
+  var idx = STEP_ORDER.indexOf(id);
+  return idx >= 0 && idx < STEP_ORDER.length-1 ? STEP_ORDER[idx+1] : null;
+}
+
+function lockStep(id){
+  var el = document.querySelector('[data-step="'+id+'"]');
+  if(!el) return;
+  el.classList.remove('unlocked','just-unlocked');
+  el.classList.add('locked');
+  // Close body if open
+  var body = document.getElementById('body-'+id);
+  if(body) body.classList.remove('open');
+}
+
+function unlockStep(id){
+  var el = document.querySelector('[data-step="'+id+'"]');
+  if(!el) return;
+  el.classList.remove('locked');
+  el.classList.add('unlocked','just-unlocked');
+  setTimeout(function(){ el.classList.remove('just-unlocked'); }, 500);
+  // Auto-open the newly unlocked step
+  setTimeout(function(){
+    var body = document.getElementById('body-'+id);
+    var chev = document.getElementById('chev-'+id);
+    if(body){ 
+      document.querySelectorAll('.step-body.open').forEach(function(e){ e.classList.remove('open'); });
+      body.classList.add('open');
+    }
+    if(chev) chev.style.transform='rotate(180deg)';
+    // Also open the block if needed
+    var stepEl = document.querySelector('[data-step="'+id+'"]');
+    if(stepEl){
+      var blockSteps = stepEl.closest('.block-steps');
+      if(blockSteps && !blockSteps.classList.contains('open')){
+        blockSteps.classList.add('open');
+        var blockId = blockSteps.id.replace('bsteps-','');
+        var bchev = document.getElementById('bchev-'+blockId);
+        if(bchev) bchev.style.transform='rotate(180deg)';
+      }
+    }
+  }, 300);
+}
+
+function markDone(id,cat,total){
+  var chk=document.getElementById('chk-'+id);
+  if(!chk) return;
+  var stepEl=document.querySelector('[data-step="'+id+'"]');
+  if(stepEl && stepEl.classList.contains('locked')) return;
+  var isDone=chk.classList.contains('checked');
+  if(isDone){
+    // Uncheck — re-lock all subsequent steps
+    chk.classList.remove('checked');
+    var s=document.getElementById('status-'+id);
+    var t=document.getElementById('title-'+id);
+    var snum=document.getElementById('snum-'+id);
+    if(s){s.textContent='Pending'; s.className='step-status pending';}
+    if(t) t.classList.remove('done');
+    if(snum) snum.classList.remove('done');
+    CATS[cat].done=Math.max(0,CATS[cat].done-1);
+    var saved=JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+    saved[id]=false; saved['_lastSeen']=Date.now();
+    localStorage.setItem('ob_dayanara',JSON.stringify(saved));
+    // Re-lock all steps after this one
+    var idx=STEP_ORDER.indexOf(id);
+    for(var i=idx+1;i<STEP_ORDER.length;i++){
+      var s2=JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+      if(!s2[STEP_ORDER[i]]) lockStep(STEP_ORDER[i]);
+    }
+  } else {
+    applyDone(id,cat,true);
+    // Unlock next step
+    var next=getNextStep(id);
+    if(next) unlockStep(next);
+  }
+  updateTotals();
+}
+
+function updateTotals(){
+  var chezDone=0;
+  Object.keys(CATS).forEach(function(cat){
+    var d=CATS[cat].done, t=CATS[cat].total;
+    chezDone+=d;
+    var meta=document.getElementById('meta-'+cat);
+    var bar=document.getElementById('bar-'+cat);
+    if(meta) meta.textContent=d+' of '+t;
+    if(bar) bar.style.width=Math.round(d/t*100)+'%';
+  });
+  try{
+    var saved=JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+    if(saved['ready']) chezDone++;
+  }catch(e){}
+  var totalDone=SIDE_TOTAL+chezDone;
+  var totalAll=SIDE_TOTAL+CHEZ_TOTAL;
+  var pct=Math.round(totalDone/totalAll*100);
+  var pctEl=document.getElementById('pct');
+  var stepsEl=document.getElementById('steps-label');
+  var barEl=document.getElementById('pct-bar');
+  if(pctEl) pctEl.textContent=pct+'%';
+  if(stepsEl) stepsEl.textContent=totalDone+' of '+totalAll+' steps';
+  if(barEl) barEl.style.width=pct+'%';
+}
+
+function toggleBlock(bid){
+  var steps=document.getElementById('bsteps-'+bid);
+  var chev=document.getElementById('bchev-'+bid);
+  if(!steps) return;
+  var open=steps.classList.contains('open');
+  steps.classList.toggle('open');
+  if(chev) chev.style.transform=open?'':'rotate(180deg)';
+}
+
+function toggleStep(id){
+  var stepEl = document.querySelector('[data-step="'+id+'"]');
+  if(stepEl && stepEl.classList.contains('locked')) return;
+  var body=document.getElementById('body-'+id);
+  var chev=document.getElementById('chev-'+id);
+  if(!body) return;
+  var open=body.classList.contains('open');
+  document.querySelectorAll('.step-body.open').forEach(function(el){ el.classList.remove('open'); });
+  document.querySelectorAll('.step-chev').forEach(function(el){ el.style.transform=''; });
+  if(!open){
+    body.classList.add('open');
+    if(chev) chev.style.transform='rotate(180deg)';
+  }
+}
+
+function applyReady(){
+  var chk=document.getElementById('chk-ready');
+  var icon=document.getElementById('chk-ready-icon');
+  var label=document.getElementById('ready-label');
+  if(chk){chk.style.background='#F15F37'; chk.style.borderColor='#F15F37';}
+  if(icon) icon.style.display='block';
+  if(label){label.innerHTML='<strong style="color:#F15F37">Oui oui! Yes, I\'m ready to Chezify myself! 🧡</strong>'; label.style.color='#F15F37';}
+}
+
+function markReady(){
+  var chk=document.getElementById('chk-ready');
+  var isDone=chk.style.background==='rgb(241, 95, 55)';
+  if(isDone){
+    chk.style.background='white'; chk.style.borderColor='#F15F37';
+    document.getElementById('chk-ready-icon').style.display='none';
+    var label=document.getElementById('ready-label');
+    label.innerHTML='Click to confirm — <em>"Yes, I\'m ready to Chezify myself!"</em>';
+    label.style.color='#999';
+    var saved=JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+    saved['ready']=false; localStorage.setItem('ob_dayanara',JSON.stringify(saved));
+  } else {
+    applyReady();
+    var saved=JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+    saved['ready']=true; saved['_lastSeen']=Date.now();
+    localStorage.setItem('ob_dayanara',JSON.stringify(saved));
+    setTimeout(openBlock1, 300);
+  }
+  updateTotals();
+}
+
+function autoSaveForm(){
+  var data=getFormData();
+  var saved=JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+  saved['agentForm']=data; saved['_lastSeen']=Date.now();
+  localStorage.setItem('ob_dayanara',JSON.stringify(saved));
+  var st=document.getElementById('form-status');
+  if(st) st.textContent='✓ Draft saved automatically';
+}
+
+function getFormData(){
+  return {
+    name:(document.getElementById('f-name')||{}).value||'',
+    email:(document.getElementById('f-email')||{}).value||'',
+    phone:(document.getElementById('f-phone')||{}).value||'',
+    birthday:(document.getElementById('f-birthday')||{}).value||'',
+    shirt:(document.getElementById('f-shirt')||{}).value||'',
+    license:(document.getElementById('f-license')||{}).value||'',
+    address:(document.getElementById('f-address')||{}).value||''
+  };
+}
+
+function loadFormData(){
+  try{
+    var saved=JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+    var f=saved['agentForm'];
+    if(!f) return;
+    ['name','email','phone','birthday','shirt','license','address'].forEach(function(k){
+      if(f[k]){var el=document.getElementById('f-'+k); if(el) el.value=f[k];}
+    });
+  }catch(e){}
+}
+
+function submitAgentForm(){
+  var data=getFormData();
+  var missing=[];
+  if(!data.name) missing.push('Full Name');
+  if(!data.email) missing.push('Email');
+  if(!data.phone) missing.push('Phone');
+  if(!data.birthday) missing.push('Birthday');
+  if(!data.shirt) missing.push('Shirt Size');
+  if(!data.license) missing.push('License Number');
+  if(!data.address) missing.push('Home Address');
+  if(missing.length>0){
+    var st=document.getElementById('form-status');
+    if(st){st.textContent='⚠️ Please fill in: '+missing.join(', '); st.style.color='#E74C3C';}
+    return;
+  }
+  var subject=encodeURIComponent('New Agent Info — '+data.name);
+  var body=encodeURIComponent(
+    'New Agent Information\n====================\n\n'+
+    'Full Name:       '+data.name+'\n'+
+    'Email:           '+data.email+'\n'+
+    'Phone:           '+data.phone+'\n'+
+    'Birthday:        '+data.birthday+'\n'+
+    'Shirt Size:      '+data.shirt+'\n'+
+    'License Number:  '+data.license+'\n'+
+    'Home Address:    '+data.address+'\n\n'+
+    'Submitted: '+new Date().toLocaleString()
+  );
+  window.location.href='mailto:admin@chezre.com?subject='+subject+'&body='+body;
+  var saved=JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+  saved['agentForm']=data; saved['_lastSeen']=Date.now();
+  localStorage.setItem('ob_dayanara',JSON.stringify(saved));
+  var st=document.getElementById('form-status');
+  if(st){st.textContent='📧 Email draft opened — press Send!'; st.style.color='#2E7D32';}
+}
+
+loadProgress();
+updateTotals();
+// Pre-fill Dayanara's known info
+setTimeout(function(){
+  var fields = {
+    'f-name': 'Dayanara Munoz',
+    'f-email': 'dayanara@chezre.com',
+    'f-phone': '(561) 382-8445',
+    'f-shirt': 'S',
+    'f-license': '3655526'
+  };
+  Object.keys(fields).forEach(function(id){
+    var el = document.getElementById(id);
+    if(el && !el.value) el.value = fields[id];
+  });
+}, 100);
+// Block 1 opens only after Chezify check — handled by markReady()
+// If already checked, open block 1
+var saved2=JSON.parse(localStorage.getItem('ob_dayanara')||'{}');
+if(saved2['ready']) openBlock1();
+</script>
+</body>
+</html>
